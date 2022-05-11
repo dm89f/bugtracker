@@ -6,7 +6,7 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host:'localhost',
-    dialect:'mysql'
+    dialect:'mariadb'
   }
 );
 
@@ -28,4 +28,4 @@ async function dbConnect(){
 
 dbConnect();
 
-module.exports.db = { sequelize, DataTypes }
+module.exports.db = { sequelize, Sequelize }

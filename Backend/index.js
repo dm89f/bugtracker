@@ -1,15 +1,11 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-
-
-
-const db = require('./config/db_config')
+const {db} = require('./config/dbConfig');
+const {} = require('./models');
 
 app.use( express.json() )
 app.use( express.urlencoded({extended:true} ) );
-
-
 
 //testnig Connection
 app.get('/api', (req, res)=>{
