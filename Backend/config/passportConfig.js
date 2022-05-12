@@ -21,6 +21,7 @@ const verifyCallback = (email, password, done)=>{
 
           bcrypt.compare( password, dev.password_hash, function(err, result){
 
+            
             if(err){
               throw err;
             }
