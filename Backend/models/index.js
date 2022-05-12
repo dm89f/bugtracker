@@ -34,5 +34,6 @@ module.exports = {
     Ticket,
     Tpriority,
     Tstatus,
-    Ttype
+    Ttype,
+    SecQstn
 }

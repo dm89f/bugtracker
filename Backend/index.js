@@ -1,34 +1,84 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-const {db} = require('./config/dbConfig');
-const {} = require('./models');
+const {Developer} = require('./models');
+const session = require('express-session');
+const { db } = require('./config/dbConfig');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const passport = require('passport');
+const LocalStratefy = require('passport-local');
+const { verifyCallback, genPswdHash, customFields } = require('./config/passportConfig');
+const {authRouter} = require('./routes/api_v1/auth');
 
+const myStore = new SequelizeStore({
+  checkExpirationInterval:15*60*1000,
+  db:db.sequelize
+});
+myStore.sync();
+
+app.use( session({
+  secret:process.env.SESSION_SECRET,
+  store:myStore,
+  resave:false,
+  saveUninitialized:false,
+  cookie:{
+    httpOnly:true,
+    maxAge:30*24*60*60*1000 //in milli sec
+  }
+}) )
 app.use( express.json() )
 app.use( express.urlencoded({extended:true} ) );
 
-//testnig Connection
-app.get('/api', (req, res)=>{
+//passport config
+app.use( passport.initialize() );
+app.use( passport.session() );
+const strategy = new LocalStratefy( customFields, verifyCallback );
+passport.use(strategy);
+passport.serializeUser( (user, done)=>{
+
+  console.log("user : ", user);
   
-  console.log("req from client");
-  res.json({"msg":"hello you reached the server"});
-  res.end();
-})
+  done(null, user.id);
+} );
+passport.deserializeUser( (userId, done)=>{
 
-app.post('/api/auth/login', (req, res)=>{
-
-  console.log(req.body);
-  res.json("req received");
-
-})
-
-app.post( '/api/auth/register', (req, res)=>{
-
-  console.log(req.body);
-  res.json({'msg':'reg form sent'}).end();
+  ( async( userId, done )=>{
+      const dev = await Developer.findOne( {
+        where:{
+          id:userId
+        }
+      } );
+      if(dev){
+        done(null, dev);
+      }else{
+        done(null, false);
+      }
+  } )(userId, done);
 
 } )
 
+
+//routers
+app.use( '/api_v1/auth', authRouter )
+
+//testing session
+app.get( '/', (req, res)=>{
+
+  if( req.session.countPageView ){
+
+    req.session.countPageView++
+
+  }else{
+
+    req.session.countPageView=1;
+
+  }
+
+  console.log(req.session.countPageView);
+
+  res.send('page view'+req.session.countPageView);
+
+} );
 
 
 const PORT = process.env.PORT || 3001;
