@@ -7,8 +7,7 @@ import {
 export const Auth = () => {
   return (
     <section>
-      <div>Auth</div>
-     <Outlet/> 
+      <Outlet/> 
     </section> 
   )
 }

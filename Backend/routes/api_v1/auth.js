@@ -1,69 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const {Developer} = require('../../models/DeveloperModel')
-const uuid = require('uuid');
 const passport = require('passport');
-
-router.post('/register', async (req, res)=>{
-
-  const { 
-    firstname:first_name,
-    lastname:last_name,
-    email,
-    password,
-    sec_qstn,
-    sec_ans,
-    phone_no
-
-  } = req.body;
-
-  const devExist = await Developer.findOne( {
-    where:{
-      email:email
-    }
-  } )
-
-  if(devExist){
-  
-    res.send('dev Exist');
-  
-  }else{
-    
-    const newDev = new Developer.create({
-
-      id:uuid.v1(),
-      firstname,
-      lastname,
-      email,
-      phone_no,
-      
-
-    })
-
-  }
+const { registerDev } = require('../../controllers/authController');
+const {
+  isLoggedIn
+} = require('../../middlewares/auth');
 
 
-  res.json(req.body).end();
+router.post('/register', registerDev);
 
+router.post('/login', passport.authenticate('local', {
+  failureRedirect: '/api_v1/auth/login_failed'
+}), (req, res) => {
+
+  res.statusCode = 200;
+  res.statusMessage = "Login Sucessfull";
+  res.end();
 });
 
-router.post('/login', passport.authenticate( 'local', {
-  failureRedirect:'/api_v1/auth/login_failed'
-} ), (req, res)=>{
+router.post('/logout', isLoggedIn, (req, res) => {
 
-  res.json({
-    "msg":"Logged in"
-  })
+  req.logOut();
+  res.statusCode = 200;
+  res.statusMessage = "Logout Message";
+  res.end();
+})
 
-} );
 
-router.get('/login_failed', (req, res)=>{
+router.get('/login_failed', (req, res) => {
 
-    res.json({
-      "msg":"Invalid Credenntials"
-    }).end();
+  res.statusCode = 400;
+  res.statusMessage = "Invalid Credentials";
 
 });
 
 
-module.exports.authRouter=router; 
+module.exports.authRouter = router;

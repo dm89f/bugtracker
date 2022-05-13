@@ -1,21 +1,38 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import {
+  Form, 
+  FormGroup,
+  Label,
+  Input,
+  Button
+} from 'reactstrap'
+import { useNavigate } from 'react-router-dom';
+import {
+  FaUser
+} from 'react-icons/fa'
 
 export const Login = () => {
 
-  const [ username, setUsername ] = useState('');
+  const [ email, setEmail ] = useState('');
   const [ password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e)=>{
     
     e.preventDefault();
 
-    axios.post('/api/auth/login', {
-      username,
+    axios.post('/api_v1/auth/login', {
+      email:email,
       password
     })
     .then((res)=>{
-      console.log(res.data)
+      if( res.status === 200 ){
+        navigate('/index');
+      }else{
+        console.log("Login error")
+      }
+      console.log(res)
     })   
     .catch( (error)=>{
       console.log("error :");
@@ -27,30 +44,38 @@ export const Login = () => {
 
   return (
     <section>
-      <div>
-        <form onSubmit={handleSubmit} >
-          <div>
-            <label htmlFor='username'>Username</label>
-            <input 
-              onChange={ (e)=>{ setUsername(e.target.value) } }
-              type='email' 
-              name="username" 
-              value={username} 
+      <div className='auth-bg' >
+        <Form className='auth-info' onSubmit={handleSubmit} >
+          <h3 className='text-center' > <FaUser/> Login </h3>
+          <FormGroup>
+            <Label htmlFor="email">
+              Email 
+            </Label>
+            <Input
+              id="email"
+              name="email"
+              placeholder="Enter Your Email"
+              type="email"
+              onChange={ (e)=>{ setEmail(e.target.value) } }
+              value={email}
+              required 
             />
-          </div>
-          <div>
-            <label>Password</label>
-            <input 
+          </FormGroup>
+          <FormGroup>
+            <Label htmlFor='password'  >
+              Password
+            </Label>
+            <Input
               onChange={ (e)=>{ setPassword(e.target.value) } }
-              type="password" 
-              name="password" 
               value={password} 
+              placeholder="Enter Password"  
+              required            
             />
-          </div>
+          </FormGroup>
+          <Button type='submit' >Login</Button>
+        </Form>
 
-          <button type='submit' >Login</button>
 
-        </form>
       </div>
 
     </section>

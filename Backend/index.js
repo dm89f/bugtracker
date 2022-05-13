@@ -9,6 +9,7 @@ const passport = require('passport');
 const LocalStratefy = require('passport-local');
 const { verifyCallback, genPswdHash, customFields } = require('./config/passportConfig');
 const {authRouter} = require('./routes/api_v1/auth');
+const { projectsRouter } = require('./routes/api_v1/projectsRouter');
 
 const myStore = new SequelizeStore({
   checkExpirationInterval:15*60*1000,
@@ -22,6 +23,7 @@ app.use( session({
   resave:false,
   saveUninitialized:false,
   cookie:{
+    sameSite:'lax',
     httpOnly:true,
     maxAge:30*24*60*60*1000 //in milli sec
   }
@@ -60,6 +62,7 @@ passport.deserializeUser( (userId, done)=>{
 
 //routers
 app.use( '/api_v1/auth', authRouter )
+app.use( '/api_v1/projects', projectsRouter  )
 
 //testing session
 app.get( '/', (req, res)=>{
@@ -79,6 +82,26 @@ app.get( '/', (req, res)=>{
   res.send('page view'+req.session.countPageView);
 
 } );
+
+app.get( '/notAuthorized', (req, res)=>{
+
+  res.statusCode = 401 ;
+  res.statusMessage = "Unauthrized";
+  
+} )
+
+app.use( (err, req, res, next)=>{
+
+  const{ message='internal server error', status = 500 } = err;
+  console.error(err);
+  res.status(status).json({
+    "msg":message
+  })
+
+
+} )
+
+
 
 
 const PORT = process.env.PORT || 3001;
