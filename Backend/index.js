@@ -85,9 +85,10 @@ app.get( '/', (req, res)=>{
 
 app.get( '/notAuthorized', (req, res)=>{
 
-  res.statusCode = 401 ;
-  res.statusMessage = "Unauthrized";
-  
+  res.status(401).json({
+    "msg":"Unauthorized"
+  })
+
 } )
 
 app.use( (err, req, res, next)=>{

@@ -7,13 +7,9 @@ const { Project } = require('../../models');
 
 router.get( '/', isLoggedIn, async (req, res)=>{
 
-  const projects = await Project.findAll();
-
-  console.log(projects);
-
-  res.json({
-    "projects":JSON.stringify(projects)
-  }).end();
+  res.status(200).json({
+    "msg":"inside project Router"
+  })
 
 }  );
 

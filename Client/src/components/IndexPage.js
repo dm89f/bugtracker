@@ -9,28 +9,24 @@ export const IndexPage = () => {
 
   const navigate = useNavigate();
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //   axios.get('/api_v1/projects')
-  //     .then( res=>{
-        
-  //       if(res.status === 200){
-  //         console.log("inside index Route");
-  //         console.log(res.data);
+    axios.get('/api_v1/projects')
+      .then( res=>{
+        console.log(res);
+      } )
+      .catch(error =>{
 
-  //       }else{
-  //         navigate('/auth/login');        
-  //       }
+        console.error(error);
+        navigate('/auth/login');        
 
-  //     } )
-  //     .catch(error =>{
-  //       console.error(error);
-  //       navigate('/auth/login');        
+      });
 
-  //     });
-  // },[])
+  },[])
 
   return (
+
     <div>IndexPage</div>
+  
   )
 }
