@@ -1,22 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { registerDev } = require('../../controllers/authController');
+const { 
+  registerDev,
+  getSecQstns,
+  loginDev
+} = require('../../controllers/authController');
 const {
   isLoggedIn
 } = require('../../middlewares/auth');
 
 
 router.post('/register', registerDev);
+router.get( '/sec_qstn',getSecQstns );
 
-router.post('/login', passport.authenticate('local', {
+
+router.post( '/login', 
+  passport.authenticate('local', {
   failureRedirect: '/api_v1/auth/login_failed'
-}), (req, res) => {
-
-  res.statusCode = 200;
-  res.statusMessage = "Login Sucessfull";
-  res.end();
-});
+  }),
+  loginDev
+);
 
 router.post('/logout', isLoggedIn, (req, res) => {
 
@@ -29,8 +33,9 @@ router.post('/logout', isLoggedIn, (req, res) => {
 
 router.get('/login_failed', (req, res) => {
 
-  res.statusCode = 400;
-  res.statusMessage = "Invalid Credentials";
+  res.status(400).json({
+    "msg":"Invalid Credentials"
+  })
 
 });
 

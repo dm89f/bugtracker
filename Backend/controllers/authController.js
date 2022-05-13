@@ -56,9 +56,28 @@ const registerDev = catchAsync( async(req, res, next)=>{
   }
 } );
 
-const loginDev = catchAsync(   )
+const getSecQstns = catchAsync( async( req, res, next )=>{
+
+  const sec_qstns = await SecQstn.findAll({});
+  const qstns = []
+  for( let qstn of sec_qstns ){
+    qstns.push( { title:qstn.title } )
+  }
+  // console.log(qstns);
+  res.status(200).json( JSON.stringify(qstns) );
+})
+
+const loginDev = (req, res,next) => {
+
+  res.status(200).json({
+    "msg":"Login Successfull!"
+  })
+  
+}
 
 module.exports = {
   registerDev,
+  loginDev,
+  getSecQstns,
   loginDev
 }

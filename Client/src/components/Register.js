@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import {
   Form, Input,
   Button, Label,
@@ -8,7 +8,7 @@ import {
 import {
   FaUserPlus
 } from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,10 +19,21 @@ export const Register = () => {
   const [ email, setEmail ] = useState('')
   const [ password, setPassword ] = useState('');
   const [ confPassword, setConfPassword ] = useState('');
+  // const [getSecQstns, setGetSecQstns] = useState([]);
   const [ secQstn, setSecQstn] = useState('');
   const [ secAns, setSecAns ] =useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const navigate = useNavigate();
+
+  // useEffect(()=>{
+
+  //   (async()=>{
+  //     const res  = await axios.get('/api_v1/auth/sec_qstn');
+  //     console.log(JSON.parse(res.data))
+  //     setGetSecQstns( JSON.parse(res.data) );      
+  //   })()
+
+  // },[])
 
   const validateForm = ()=>{
     
@@ -221,7 +232,13 @@ export const Register = () => {
                 <option value='What is your nick name ?' >What is your nick name ?</option>
                 <option value='What is your native city ?' >What is your native city ?</option>
                 <option value='what is your favorite color ?' >what is your favorite color ?</option>
-                
+                {/* {
+                  getSecQstns.forEach( (qstn)=>{
+                    return (
+                      <option value={qstn.title} >{qstn.title}</option>
+                    )
+                  } )
+                } */}
               </select> 
             </FormGroup>
             <FormGroup>
@@ -235,7 +252,12 @@ export const Register = () => {
             </FormGroup>
 
             <Button type='submit'>Register</Button>
-
+            <div className='mt-3'>
+              <p className='text-secondary'>
+                Already have an account Login {"   "}
+                <Link className='text-primary' to={"/auth/login"} >here</Link>
+              </p>
+          </div>
         </Form>
       </div>
     </section>

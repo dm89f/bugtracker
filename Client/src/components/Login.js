@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import {
   Form, 
   FormGroup,
@@ -7,10 +7,11 @@ import {
   Input,
   Button
 } from 'reactstrap'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   FaUser
 } from 'react-icons/fa'
+import { toast, ToastContainer } from 'react-toastify';
 
 export const Login = () => {
 
@@ -35,8 +36,11 @@ export const Login = () => {
       console.log(res)
     })   
     .catch( (error)=>{
-      console.log("error :");
-      console.log(error);
+      
+      setEmail("");
+      setPassword("");
+      toast.error( error.response.data.msg );
+
     } )
 
   }
@@ -44,6 +48,7 @@ export const Login = () => {
 
   return (
     <section>
+      <ToastContainer/>
       <div className='auth-bg' >
         <Form className='auth-info' onSubmit={handleSubmit} >
           <h3 className='text-center' > <FaUser/> Login </h3>
@@ -67,15 +72,20 @@ export const Login = () => {
             </Label>
             <Input
               onChange={ (e)=>{ setPassword(e.target.value) } }
+              type='password'
               value={password} 
               placeholder="Enter Password"  
               required            
             />
           </FormGroup>
           <Button type='submit' >Login</Button>
+          <div className='mt-3'>
+              <p className='text-secondary'>
+                Dont Have an account Sign Up {"   "}
+                <Link className='text-primary' to={"/auth/register"} >here</Link>
+              </p>
+          </div>
         </Form>
-
-
       </div>
 
     </section>
