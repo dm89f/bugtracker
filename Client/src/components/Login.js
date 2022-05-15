@@ -39,7 +39,8 @@ export const Login = () => {
       
       setEmail("");
       setPassword("");
-      toast.error( error.response.data.msg );
+      console.log(error);
+      // toast.error( error.response.data.msg );
 
     } )
 

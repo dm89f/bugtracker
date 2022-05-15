@@ -75,9 +75,31 @@ const loginDev = (req, res,next) => {
   
 }
 
+const logoutDev =  (req, res) => {
+  req.logOut();
+  res.status(200).json({
+    "msg":"Logout Successfully"
+  })
+}
+
+const loginFailed = (req, res) => {
+
+  res.status(400).json({
+    "msg":"Invalid Credentials"
+  })
+
+};
+
+const checkDevLogin =(req, res)=>{
+  res.status(200).json({"msg":"your logged in"});
+}
+
 module.exports = {
   registerDev,
   loginDev,
   getSecQstns,
-  loginDev
+  loginDev,
+  checkDevLogin,
+  logoutDev,
+  loginFailed
 }

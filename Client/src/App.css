@@ -15,4 +15,71 @@
   border-radius: 10px;  
 }
 
+.side-nav{
+  position: fixed;
+  top:0px;
+  left:0px;
+  width:250px;
+  min-height: 100vh;
+}
 
+.main-contnr{
+
+  margin-left: 250px;
+  min-height: 100vh;
+  background-color: #f2fdffeb;
+  
+}
+
+.brand-nav{
+  height:250px;
+  display: flex;
+  background-color: skyblue;
+  color: #fff;
+}
+
+.hero-contnr{
+  
+  position: relative;
+  top:-100px;
+  background-color:transparent;
+  margin:0px 50px;
+}
+
+.tickets-graph-container{
+  border:1px solid black;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.ticket-graph{
+  width:450px;
+  height: 350px;
+}
+
+.side-menu{
+  display: none;
+}
+
+@media( max-width: 1200px ){
+  
+  .side-menu{
+    color:white;
+    display: block;
+    position: fixed;
+    top:10px;
+    left:10px;
+  }
+
+  .side-nav{   
+    width:250px;
+    display: none; 
+  }
+  .main-contnr{
+    margin-left: 0px;
+  }
+
+}

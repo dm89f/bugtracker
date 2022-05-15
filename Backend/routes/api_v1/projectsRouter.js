@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const { getProjects } = require('../../controllers/projectsController');
 const {isLoggedIn} = require('../../middlewares/auth');
 const { Project } = require('../../models');
 
-
-router.get( '/', isLoggedIn, async (req, res)=>{
-
-  res.status(200).json({
-    "msg":"inside project Router"
-  })
-
-}  );
+router.get( '/', isLoggedIn, getProjects);
 
 module.exports.projectsRouter = router

@@ -4,7 +4,10 @@ const passport = require('passport');
 const { 
   registerDev,
   getSecQstns,
-  loginDev
+  loginDev,
+  checkDevLogin,
+  logoutDev,
+  loginFailed
 } = require('../../controllers/authController');
 const {
   isLoggedIn
@@ -12,32 +15,16 @@ const {
 
 
 router.post('/register', registerDev);
-router.get( '/sec_qstn',getSecQstns );
-
-
 router.post( '/login', 
   passport.authenticate('local', {
   failureRedirect: '/api_v1/auth/login_failed'
   }),
   loginDev
 );
-
-router.post('/logout', isLoggedIn, (req, res) => {
-
-  req.logOut();
-  res.statusCode = 200;
-  res.statusMessage = "Logout Message";
-  res.end();
-})
-
-
-router.get('/login_failed', (req, res) => {
-
-  res.status(400).json({
-    "msg":"Invalid Credentials"
-  })
-
-});
+router.get( '/sec_qstn',getSecQstns );
+router.get( '/is_loggedin',isLoggedIn, checkDevLogin );
+router.post('/logout', isLoggedIn, logoutDev);
+router.get('/login_failed', loginFailed );
 
 
 module.exports.authRouter = router;
