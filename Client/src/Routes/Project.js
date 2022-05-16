@@ -9,7 +9,7 @@ import {
   FaEdit
 } from 'react-icons/fa'
 
-export const Project = () => {
+const Project = () => {
   return (
    <section className='hero-contnr'>
     <section className='container-fluid mt--5'>
@@ -159,3 +159,6 @@ export const Project = () => {
    </section>
   )
 }
+
+
+export default Project;

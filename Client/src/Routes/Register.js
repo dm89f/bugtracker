@@ -12,7 +12,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Register = () => {
+const Register = () => {
   
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
@@ -255,7 +255,7 @@ export const Register = () => {
             <div className='mt-3'>
               <p className='text-secondary'>
                 Already have an account Login {"   "}
-                <Link className='text-primary' to={"/auth/login"} >here</Link>
+                <Link className='text-primary' to={"/login"} >here</Link>
               </p>
           </div>
         </Form>
@@ -263,3 +263,5 @@ export const Register = () => {
     </section>
   )
 }
+
+export default Register;

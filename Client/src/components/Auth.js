@@ -10,9 +10,9 @@ export const Auth = ({isLoggedIn}) => {
 
   useEffect(()=>{
     if(!isLoggedIn){
-      navigate('/auth/login');
+      navigate('/login');
     }else{
-      navigate('/index');
+      navigate('/dashboard');
     }
   },[isLoggedIn]);
 

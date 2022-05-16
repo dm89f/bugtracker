@@ -4,7 +4,7 @@ import { Button, Row, Col } from 'reactstrap';
 
 
 
-export const Projects = () => {
+const Projects = () => {
   return (
     <div>
       <section className='hero-contnr' >
@@ -37,3 +37,5 @@ export const Projects = () => {
     </div>
   )
 }
+
+export default Projects;
