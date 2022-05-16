@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import axios from 'axios';
-import {
-  Form, FormGroup, Label, Input, Button
-} from 'reactstrap'
+import {  Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { useNavigate, Link } from 'react-router-dom';
-import {
-  FaUser
-} from 'react-icons/fa'
+import {  FaUser } from 'react-icons/fa'
 import { toast, ToastContainer } from 'react-toastify';
 
 
@@ -57,8 +53,8 @@ function Login({isLoggedIn, setIsLoggedIn}) {
   return (
     <section>
       <ToastContainer/>
-        <div className='auth-bg' >
-          <Form className='auth-info' onSubmit={handleSubmit} >
+        <div className='auth-bg light ' >
+          <Form className='auth-info card shadow' onSubmit={handleSubmit} >
             <h3 className='text-center' > <FaUser/> Login </h3>
             <FormGroup>
               <Label htmlFor="email">
@@ -86,7 +82,7 @@ function Login({isLoggedIn, setIsLoggedIn}) {
                 required            
               />
             </FormGroup>
-            <Button type='submit' >Login</Button>
+            <Button className='btn primary' type='submit' >Login</Button>
             <div className='mt-3'>
                 <p className='text-secondary'>
                   Dont Have an account Sign Up {"   "}

@@ -15,7 +15,7 @@ const Projects = () => {
                 <h5>Projects</h5>
               </div>
               <div className='col'>
-                <Button className=' d-block ms-auto btn btn-sm btn-primary'>Add New Project</Button>
+                <Button className='d-block ms-auto btn btn-sm btn-primary'>Add New Project</Button>
               </div>   
             </div>           
           </div>

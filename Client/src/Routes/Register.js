@@ -136,8 +136,8 @@ const Register = () => {
   return (
     <section>
       <ToastContainer/>
-      <div className='auth-bg' >
-        <Form className='auth-info' onSubmit={handleSubmit} >
+      <div className='auth-bg light' >
+        <Form className='auth-info shadow card' onSubmit={handleSubmit} >
           <h3 className='text-center' > <FaUserPlus/> Register</h3>
           <Row>
             <Col md={6} >
@@ -192,8 +192,7 @@ const Register = () => {
                   ></Input>
                 </FormGroup>
             </Col>
-          </Row>
-           
+          </Row>          
 
             <FormGroup>
               <Label htmlFor='password'> Password</Label>
@@ -251,7 +250,7 @@ const Register = () => {
               ></Input>
             </FormGroup>
 
-            <Button type='submit'>Register</Button>
+            <Button className='btn primary' type='submit'>Register</Button>
             <div className='mt-3'>
               <p className='text-secondary'>
                 Already have an account Login {"   "}
