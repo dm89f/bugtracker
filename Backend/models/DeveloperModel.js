@@ -20,6 +20,11 @@ const Developer = db.sequelize.define( 'developer',{
     type:DataTypes.STRING,
     allowNull:false
   },
+  isAvailable:{
+    type:DataTypes.BOOLEAN,
+    allowNull:false,
+    defaultValue:true
+  },
   phone_no:{
     type:DataTypes.STRING,
     allowNull:false

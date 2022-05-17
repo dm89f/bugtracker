@@ -91,6 +91,15 @@ app.get( '/notAuthorized', (req, res)=>{
 
 } )
 
+
+app.use((req, res, next)=>{
+
+  res.status(404).json({
+    "msg":"Page Not Found"
+  })
+
+})
+
 app.use( (err, req, res, next)=>{
 
   const{ message='internal server error', status = 500 } = err;
