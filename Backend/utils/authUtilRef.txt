@@ -2,24 +2,23 @@
 
 
 
-// LEVEL 1 isLoggedIn
-// LEVEL 2 seniorDev
-// LEVEL 3 logged in part of team or admin
-// LEVEL 4 logged in part of team and senior dev or admin
-// LEVEL 5 logged in ( part of team and senior dev and contributor ) || ( admin )
-// LEVEL 6 admin
+// LEVEL 1 seniorDev or admin
+// LEVEL 2 logged in part of team or admin
+// LEVEL 3 logged in part of team and senior dev or admin
+// LEVEL 4 logged in ( part of team and senior dev and contributor ) || ( admin )
+// LEVEL 5  admin
  
 
-//project creating LEVEL 2
-//project viewing  LEVEL 3
-//project update  LEVEL 5
-//project delete LEVEL 5
+//project creating LEVEL 1
+//project viewing  LEVEL 2
+//project update  LEVEL 4
+//project delete LEVEL 4
 
-//devTam creating LEVEL 2  
-//devTam viewing  LEVEL 2
-//devTam update LEVEL 5
+//devTam creating LEVEL 1  
+//devTam viewing  LEVEL 1
+//devTam update LEVEL 4
 
-//ticket creating LEVEL 3
-//ticket viewing  LEVEL 3
-//ticket update LEVEL 3
-//ticket delete LEVEL 5
+//ticket creating LEVEL 2
+//ticket viewing  LEVEL 2
+//ticket update LEVEL 2
+//ticket delete LEVEL 4
