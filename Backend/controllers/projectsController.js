@@ -36,12 +36,15 @@ const getProjects = catchAsync(async (req, res,next)=>{
 
 } );
 
+//included project contributor to dev team
 const addProject = catchAsync( async(req, res, next)=>{
 
+  const testAdminAuth = await isAdminUtil(req.user.authorizationId);
+  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
 
+  if( !testAdminAuth || !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can add Projects" );
 
   const { title, description, assignedDevs } = req.body;
-
   const isProjectExist = await Project.findOne( { title } );
 
   if(isProjectExist) throw new AppError( "Project with that title alreaady exist", 400 );
@@ -60,11 +63,13 @@ const addProject = catchAsync( async(req, res, next)=>{
     "msg":"project added successfully"
   })
 
-} )
+} );
 
 const getAllOpenDevs = catchAsync( async(req, res, next)=>{
 
-} )
+
+
+} );
 
 
 module.exports = {
