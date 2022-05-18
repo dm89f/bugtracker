@@ -2,7 +2,9 @@ const { Project, Developer, DevTeam } = require("../models");
 const { catchAsync, AppError } = require("../utils/handleError");
 const { isAdminUtil, isSeniorDevUtil } = require("../utils/utils");
 const uuid = require('uuid');
-//not done
+
+
+//get all projects that dev part of
 const getProjects = catchAsync(async (req, res,next)=>{
 
   const devProjectIds = await DevTeam.findAll({
@@ -13,23 +15,25 @@ const getProjects = catchAsync(async (req, res,next)=>{
 
   if( devProjectIds === [] ) throw new AppError( "developer is not part of any project", 404 );
 
-  let devProjects = devProjectIds.map( async (dev)=>{
-      
-    const project =await Project.findOne( {
-        include:Developer,
-        where:{
-          id:dev.projectId
-        } 
-    } )
-    
-    return { 
-            projectId:project.id,
-            title:project.title, 
-            description:project.description, 
-            contributed_by:`${project.developer.firstname} ${project.lastname}`
-          };
+  let devProjects = [];
 
-  } )
+  for(let dev of devProjectIds ){
+    const project =await Project.findOne( {
+      include:Developer,
+      where:{
+        id:dev.projectId
+      } 
+    })
+  
+    devProjects.push({ 
+      projectId:project.id,
+      title:project.title, 
+      description:project.description, 
+      contributed_by:`${project.developer.firstname} ${project.developer.lastname}`
+    });
+  }
+
+
   console.log( "projects : ", devProjects);
   res.status(500).json(devProjects);
 
@@ -37,7 +41,7 @@ const getProjects = catchAsync(async (req, res,next)=>{
 } );
 
 //included project contributor to dev team
-const addProject = catchAsync( async(req, res, next)=>{
+const addProject = catchAsync( async(req, res, next)=>{ 
 
   const testAdminAuth = await isAdminUtil(req.user.authorizationId);
   const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
@@ -66,7 +70,6 @@ const addProject = catchAsync( async(req, res, next)=>{
 } );
 
 const getAllOpenDevs = catchAsync( async(req, res, next)=>{
-
 
 
 } );
