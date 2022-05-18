@@ -1,5 +1,6 @@
 const { Project, Developer } = require("../models");
-const { catchAsync } = require("../utils/handleError");
+const { catchAsync, AppError } = require("../utils/handleError");
+const { isAdminUtil, isSeniorDevUtil } = require("../utils/utils");
 
 
 const getProjects = catchAsync(async (req, res,next)=>{
@@ -9,11 +10,30 @@ const getProjects = catchAsync(async (req, res,next)=>{
       
   //   }
   // })
+  console.log(req.user) 
 
-  res.status(500).end();
+  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId);
+  if(!testSeniorDevAuth) throw new AppError( { "msg":"not senior dev" } );
+
+
+  res.status(500).json({ "msg":"senior dev Auth successfull" });
+
+} );
+
+const addProject = catchAsync( async(req, res, next)=>{
+  
 
 } )
 
+const getAllOpenDevs = catchAsync( async(req, res, next)=>{
+
+
+
+} )
+
+
 module.exports = {
-  getProjects
+  getProjects,
+  addProject,
+  getAllOpenDevs
 }

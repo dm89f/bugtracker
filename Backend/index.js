@@ -10,6 +10,7 @@ const LocalStratefy = require('passport-local');
 const { verifyCallback, genPswdHash, customFields } = require('./config/passportConfig');
 const {authRouter} = require('./routes/api_v1/auth');
 const { projectsRouter } = require('./routes/api_v1/projectsRouter');
+const {testRouter} = require('./routes/api_v1/test')
 
 const myStore = new SequelizeStore({
   checkExpirationInterval:15*60*1000,
@@ -63,6 +64,7 @@ passport.deserializeUser( (userId, done)=>{
 //routers
 app.use( '/api_v1/auth', authRouter )
 app.use( '/api_v1/projects', projectsRouter  )
+app.use( '/api_v1/test', testRouter );
 
 //testing session
 app.get( '/', (req, res)=>{

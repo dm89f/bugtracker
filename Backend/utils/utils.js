@@ -1,4 +1,6 @@
 const { SecQstn } = require("../models");
+const {Authorization} = require('../models');
+const { AppError } = require("./handleError");
 
 const findSecQstn= async( sec_qstn )=>{
 
@@ -14,4 +16,40 @@ const findSecQstn= async( sec_qstn )=>{
 
 }
 
-module.exports = {findSecQstn}
+const isAdminUtil = async(reqAuth)=>{
+  
+  if(!reqAuth) throw new AppError("reqAuth null or undefined");
+
+  const adminAuth = await Authorization.findOne({
+    where:{
+      title:'admin'
+    }
+  });
+
+  return reqAuth === adminAuth.id;
+
+}
+
+const isSeniorDevUtil = async (reqAuth)=>{
+
+  if(!reqAuth) throw new AppError("reqAuth null or undefined");
+
+
+  const seniorDevAuth = await Authorization.findOne({
+    where:{
+      title:'senior dev'
+    },
+  })
+
+  return reqAuth === seniorDevAuth.id;
+}
+
+
+
+
+
+module.exports = {
+  findSecQstn,
+  isAdminUtil,
+  isSeniorDevUtil
+}

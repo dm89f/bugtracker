@@ -8,3 +8,4 @@ const { Project } = require('../../models');
 router.get( '/', isLoggedIn, getProjects);
 
 module.exports.projectsRouter = router
+  
