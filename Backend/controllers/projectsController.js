@@ -69,6 +69,7 @@ const addProject = catchAsync( async(req, res, next)=>{
 
 } );
 
+//return devs whoose isAvailable set to true
 const getAllOpenDevs = catchAsync( async(req, res, next)=>{
 
   const testAdminAuth = await isAdminUtil(req.user.authorizationId);
