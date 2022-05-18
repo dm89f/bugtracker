@@ -40,7 +40,6 @@ const getProjects = catchAsync(async (req, res,next)=>{
 
 } );
 
-//included project contributor to dev team
 const addProject = catchAsync( async(req, res, next)=>{ 
 
   const testAdminAuth = await isAdminUtil(req.user.authorizationId);
@@ -48,24 +47,22 @@ const addProject = catchAsync( async(req, res, next)=>{
 
   if( !testAdminAuth && !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can add Projects" );
 
-  const { title, description, assignedDevs } = req.body;
-  const isProjectExist = await Project.findOne( { title } );
+  const { title, description} = req.body;
 
+  const isProjectExist = await Project.findOne( { title } );
   if(isProjectExist) throw new AppError( "Project with that title alreaady exist", 400 );
 
-  const project = await Project.create( { id: uuid.v1(),title ,description, contributed_by:req.user.id} );
-  if( !assignedDevs || assignedDevs === [] ){
-    throw new AppError("Empty assigned devs error", 400);
-  }
+  const newProject = await Project.create( { id: uuid.v1(),title ,description, contributed_by:req.user.id} );
+  const project = await Project.findOne({
+    where:{
+      id:newProject.id
+    },
+    include:Developer
+  });
 
-  await DevTeam.create( { developerId:req.user.id, projectId:project.id } );
-  for( let asgnDev of assignedDevs ){
-    await DevTeam.create( { developerId:asgnDev, projectId:project.id } );
-  }
+  console.log(project);
 
-  res.status(201).json({
-    "msg":"project added successfully"
-  })
+  res.status(201).json(project)
 
 } );
 
