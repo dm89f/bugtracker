@@ -93,5 +93,6 @@ const getAllOpenDevs = catchAsync( async(req, res, next)=>{
 module.exports = {
   getProjects,
   addProject,
-  getAllOpenDevs
+  getAllOpenDevs,
+  
 }
