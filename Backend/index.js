@@ -68,7 +68,7 @@ passport.deserializeUser( (userId, done)=>{
 app.use( '/api_v1/auth', authRouter );
 app.use( '/api_v1/projects', projectsRouter  );
 app.use( '/api_v1/project', projectRouter )
-// app.use( '/api_v1/project/:id/tickets', ticketsRouter );
+app.use( '/api_v1/project/:id/tickets', ticketsRouter );
 // app.use( '/api_v1/project/:id/ticket', ticketRouter );
 app.use( '/api_v1/test', testRouter );
 

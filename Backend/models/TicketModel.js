@@ -21,7 +21,7 @@ const Ticket = db.sequelize.define( 'ticket',{
     allowNull:false
   },
   time_est:{
-    type:DataTypes.DATE,
+    type:DataTypes.DECIMAL,
     allowNull:false
   },
   
