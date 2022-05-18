@@ -1,19 +1,25 @@
 const express = require('express');
-const { getProject, getProjectTeam, addProjectTeam, updateProject, updateProjectTeam } = require('../../controllers/ProjectController');
 const router = express.Router();
-const {isLoggedIn} = require('../../middlewares/auth')
 
-router.get('/:id', isLoggedIn, getProject  );
+const { 
+  getProject, 
+  getProjectTeam, addProjectTeam, 
+  updateProject, updateProjectTeam, deleteProject 
+} = require('../../controllers/ProjectController');
 
-router.put('/:id', isLoggedIn, updateProject)
+const {
+  isLoggedIn,reqAuthLevel1, reqAuthLevel2, 
+  reqAuthLevel3, reqAuthLevel4
+} = require('../../middlewares/auth');
 
-router.delete( '/:id', (req, res)=>{
 
-} )
+router.get('/:id', isLoggedIn, reqAuthLevel2, getProject  );
+router.put('/:id', isLoggedIn, reqAuthLevel4, updateProject);
+router.delete( '/:id', isLoggedIn, reqAuthLevel4, deleteProject );
 
-router.get( '/:id/team', getProjectTeam );
-router.post('/:id/team', addProjectTeam );
-router.put( '/:id/team', updateProjectTeam );
+router.get( '/:id/team',reqAuthLevel1, getProjectTeam );
+router.post('/:id/team',reqAuthLevel1, addProjectTeam );
+router.put( '/:id/team',reqAuthLevel4, updateProjectTeam );
 
 
 module.exports.projectRouter = router

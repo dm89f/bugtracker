@@ -28,7 +28,7 @@ const Ticket = db.sequelize.define( 'ticket',{
 
 } );
 
-Project.hasMany( Ticket );
+Project.hasMany( Ticket, { onDelete:'CASCADE' } );
 Ticket.belongsTo(Project);
 
 Developer.hasMany( Ticket, { foreignKey:'raised_by_dev' } );

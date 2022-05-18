@@ -6,7 +6,6 @@ const { Op, where } = require('sequelize')
 const getProject = catchAsync( async(req, res, next)=>{
   
   const {id} = req.params;
-  if( !id ) throw new AppError("Provide project id", 400);
 
   const project =await Project.findOne({
     where:{
@@ -22,6 +21,7 @@ const getProject = catchAsync( async(req, res, next)=>{
     ]
   })
 
+  console.log(project)
 
   res.status(200).json(project);
 
@@ -83,19 +83,25 @@ const updateProject = catchAsync( async( req, res, next )=>{
 
 const deleteProject = catchAsync( async( req, res, next )=>{
 
+  const {id} = req.params;
+  
+  const delProj = await Project.destroy({
+    where:{
+      id
+    }
+  })
+
+  if(delProj) return res.status(400).json({ msg:"request completed" });
+  else throw new AppError( "not able to delete project", 500 );
+
 } );
 
 
 //project team routes
 const addProjectTeam = catchAsync( async( req, res, next )=>{
   
-  const testAdminAuth = await isAdminUtil(req.user.authorizationId);
-  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
-
   const { id } = req.params;
   const { assignedDevs } = req.body;
-
-  if( !testAdminAuth && !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can make Project Team" );
 
   if( !assignedDevs || assignedDevs === [] ){
     throw new AppError("Empty assigned devs error", 400);
@@ -114,7 +120,7 @@ const addProjectTeam = catchAsync( async( req, res, next )=>{
 const getProjectTeam = catchAsync( async (req, res, next)=>{
 
   const { id} = req.params;
-  if( !id ) throw new AppError("Provide project id", 400);
+
   const team = await getProjectTeamUtil(id);  
   res.status(200).json(team)
 
@@ -122,29 +128,7 @@ const getProjectTeam = catchAsync( async (req, res, next)=>{
 
 const updateProjectTeam = catchAsync( async( req, res, next )=>{ 
 
-  const testAdminAuth = await isAdminUtil(req.user.authorizationId);
-  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
-
   const { id } = req.params;
-  
-  if( testSeniorDevAuth ) {
-    
-    const getTeamInfo = await DevTeam.findOne({
-      where:{
-        [Op.and]:[
-          { projectId:id },
-          { developerId:req.user.id }
-        ]
-      }
-    });
-
-
-    if( !getTeamInfo || getTeamInfo.developerId !== req.user.id ){
-      throw new AppError( "Only Admin and Senior dev in the Team can update Team members");
-    }
-
-  }else if( !testAdminAuth ) throw new AppError( "Only Admin and Senior dev in the Team can update Team members");
-
   const { assignedDevs=[] } = req.body;
 
   if( !assignedDevs || assignedDevs.length == 0 ) throw new AppError( "Project Team must contain atleast one Dev" );
@@ -163,6 +147,8 @@ const updateProjectTeam = catchAsync( async( req, res, next )=>{
 
   const projTeam = await getProjectTeamUtil(id);
   
+  console.log(projTeam);
+
   res.json(200).json(projTeam);
   
   
@@ -193,8 +179,8 @@ const getProjectTeamUtil = async (projectId)=>{
     team.push( {id, firstname, lastname, email, phone_no} );
   }
 
-  return team;
-
+  if( team.length !== 0 ) return team;
+  else throw new AppError( "project id error", 400 );
 }
 
 
@@ -202,6 +188,7 @@ const getProjectTeamUtil = async (projectId)=>{
 module.exports = {
   getProject,
   updateProject,
+  deleteProject,
   addProjectTeam,
   getProjectTeam,
   updateProjectTeam

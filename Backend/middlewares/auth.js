@@ -31,7 +31,7 @@ const reqAuthLevel1 = catchAsync( async ( req, res, next )=>{
 const reqAuthLevel2 = catchAsync( async( req, res, next )=>{
 
   const { id  } = req.params;
-  const userId = req.userId;
+  const userId = req.user.id;
 
   const adminAuth = await isAdmin(req.user.id);
   const teamMem = await isTeamMember(userId, id)
@@ -78,7 +78,7 @@ const reqAuthLevel4 = catchAsync( async( req, res, next )=>{
 const reqAuthLevel5 = catchAsync( async( req, res, next )=>{
 
   const userId = req.user.id;
-  const adminAuth = await isAdmin(req.user.id);
+  const adminAuth = await isAdmin(userId);
 
   if(adminAuth) next();
   else throw new AppError("only admin has access");
@@ -88,32 +88,56 @@ const reqAuthLevel5 = catchAsync( async( req, res, next )=>{
 
 async function isTeamMember(userId, projectId){
 
-  const teamInfo = await DevTeam.findOne({
-    where:{
-      [Op.and]:[
-        { developerId:userId },
-        { projectId }
-      ]
-    }
-  })
+  const projectExist = await isProjectExist(projectId);
 
-  if(teamInfo) return true;
-  else return false;
+  if( projectExist ){
+
+    const teamInfo = await DevTeam.findOne({
+      where:{
+        [Op.and]:[
+          { developerId:userId },
+          { projectId }
+        ]
+      }
+    })
+  
+    if(teamInfo) return true;
+    else return false;
+
+  }else{
+    return false;
+  }
+
+
 
 }
 
 async function isProjectContributer( userId, projectId ){
 
-  const project = await Project.findOne({
-    where:{
-      id:projectId
-    }
-  })
+  const projectExist = await isProjectExist(projectId);
+  if( projectExist ){
+    const project = await Project.findOne({
+      where:{
+        id:projectId
+      }
+    })
+  
+    return userId === project.contributed_by;
+    
+  }
+  return false;
 
-  return userId === project.contributed_by;
 
 }
 
+async function isProjectExist( projectId ){
+
+  const proj = await Project.findOne({ where:{ id:projectId } }) 
+
+  if(!proj) throw new AppError("invalid project id", 400);
+  else return true;
+
+}
 
 
 module.exports = {
