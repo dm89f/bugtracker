@@ -9,6 +9,18 @@ const {Tstatus} = require('./TstatusModel');
 const {Ttype} = require('./TtypeModel');
 const { SecQstn } = require('./SecQstnModel')
 
+const AUTH={
+  SENIORDEV:'',
+  JUNIORDEV:'',
+  ADMINDEV:''
+} 
+
+initModels();
+
+
+
+
+
 async function initModels(){
 
   await Tstatus.sync( {alter:true} );
@@ -21,11 +33,57 @@ async function initModels(){
   await TicketAssignedDev.sync( {alter:true} );
   await DevTeam.sync( {alter:true} )
   await SecQstn.sync( {alter:true} );
+  await setAuthIds();
+
+
 }
 
-initModels();
+async function setAuthIds(){
+
+  AUTH.SENIORDEV = await getSeniorDevAuthId();
+  AUTH.JUNIORDEV = await getJuniorDevAuthId();
+  AUTH.ADMINDEV = await getAdminAuthId();
+
+}
+
+
+
+const getSeniorDevAuthId = async()=>{
+  const auth = await Authorization.findOne({
+    where:{
+      title:'senior dev'
+    }
+  })
+
+  return auth.id;
+}
+
+
+const getJuniorDevAuthId = async()=>{
+ const auth = await Authorization.findOne({
+   where:{
+     title:'junior dev'
+   }
+ })
+
+ return auth.id;
+}
+
+const getAdminAuthId = async()=>{
+ const auth = await Authorization.findOne({
+   where:{
+     title:'admin'
+   }
+ })
+
+ return auth.id;
+}
+
+
+
 
 module.exports = {
+    AUTH,
     Authorization,
     DevTeam,
     Developer,

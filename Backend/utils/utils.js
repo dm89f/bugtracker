@@ -45,9 +45,6 @@ const isSeniorDevUtil = async (reqAuth)=>{
 }
 
 
-
-
-
 module.exports = {
   findSecQstn,
   isAdminUtil,
