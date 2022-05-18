@@ -3,12 +3,14 @@ const router = express.Router();
 const passport = require('passport');
 const { getProjects, addProject, 
   getAllOpenDevs } = require('../../controllers/projectsController');
-const {isLoggedIn} = require('../../middlewares/auth');
 const { Project } = require('../../models');
 
+const { isLoggedIn ,reqAuthLevel1, reqAuthLevel2} = require('../../middlewares/auth')
+
+
 router.get( '/', isLoggedIn, getProjects);
-router.post( '/', isLoggedIn, addProject )
-router.get( '/devs', isLoggedIn, getAllOpenDevs );
+router.post( '/', isLoggedIn,reqAuthLevel1, addProject )
+router.get( '/devs', isLoggedIn,reqAuthLevel1, getAllOpenDevs );
 
 module.exports.projectsRouter = router
   

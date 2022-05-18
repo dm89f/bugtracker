@@ -42,11 +42,6 @@ const getProjects = catchAsync(async (req, res,next)=>{
 
 const addProject = catchAsync( async(req, res, next)=>{ 
 
-  const testAdminAuth = await isAdminUtil(req.user.authorizationId);
-  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
-
-  if( !testAdminAuth && !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can add Projects" );
-
   const { title, description} = req.body;
 
   const isProjectExist = await Project.findOne( { title } );

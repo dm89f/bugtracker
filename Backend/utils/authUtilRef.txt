@@ -22,3 +22,6 @@
 //ticket viewing  LEVEL 2
 //ticket update LEVEL 2
 //ticket delete LEVEL 4
+
+
+//get all open devs; Level1
