@@ -6,7 +6,7 @@ const uuid = require('uuid');
 
 //get all projects that dev part of
 const getProjects = catchAsync(async (req, res,next)=>{
-
+  
   const devProjectIds = await DevTeam.findAll({
     where:{
       developerId:req.user.id
@@ -46,7 +46,7 @@ const addProject = catchAsync( async(req, res, next)=>{
   const testAdminAuth = await isAdminUtil(req.user.authorizationId);
   const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
 
-  if( !testAdminAuth || !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can add Projects" );
+  if( !testAdminAuth && !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can add Projects" );
 
   const { title, description, assignedDevs } = req.body;
   const isProjectExist = await Project.findOne( { title } );
@@ -71,9 +71,26 @@ const addProject = catchAsync( async(req, res, next)=>{
 
 const getAllOpenDevs = catchAsync( async(req, res, next)=>{
 
+  const testAdminAuth = await isAdminUtil(req.user.authorizationId);
+  const testSeniorDevAuth = await isSeniorDevUtil(req.user.authorizationId );
+
+  if( !testAdminAuth && !testSeniorDevAuth ) throw new AppError( "Only Admin and Senior Dev can have access", 401 );
+
+  const developers = await Developer.findAll({
+    where:{
+      isAvailable:true
+    }
+  })
+
+  let openDevs = []
+
+  for( let openDev of developers ){
+    openDevs.push( { fullname:`${openDev.firstname} ${openDev.lastname}`, devId: openDev.id } );
+  }
+
+  res.status(200).json(openDevs);  
 
 } );
-
 
 module.exports = {
   getProjects,
