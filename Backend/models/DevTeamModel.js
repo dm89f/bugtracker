@@ -11,6 +11,6 @@ const DevTeam = db.sequelize.define( 'dev_team',{
 
 
 Developer.belongsToMany(Project, { through:'dev_team' });
-Project.belongsToMany(Developer, { through:'dev_team' });
+Project.belongsToMany(Developer, { through:'dev_team', onDelete:'CASCADE' });
 
 module.exports = { DevTeam };

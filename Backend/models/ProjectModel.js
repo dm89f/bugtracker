@@ -9,9 +9,14 @@ const Project = db.sequelize.define( 'project', {
     primaryKey:true,
   },  
   title:{
+    // unique:true, leads to error
     type:DataTypes.STRING,
     allowNull:false
   },
+  description:{
+    type:DataTypes.TEXT,
+    allowNull:false
+  }
 
 } )
 
