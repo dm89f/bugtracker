@@ -5,8 +5,8 @@ const { isLoggedIn,reqAuthLevel2 } =require('../../middlewares/auth')
 const {addTicket, getTickets} = require('../../controllers/ticketsController')
 
 
-router.get('/', reqAuthLevel2, getTickets );
-router.post('/',reqAuthLevel2,addTicket )
+router.get('/', isLoggedIn,reqAuthLevel2, getTickets );
+router.post('/',isLoggedIn,reqAuthLevel2,addTicket )
 
 
 module.exports.ticketsRouter =router;
