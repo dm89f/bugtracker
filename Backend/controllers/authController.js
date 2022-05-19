@@ -69,9 +69,7 @@ const getSecQstns = catchAsync( async( req, res, next )=>{
 
 const loginDev = (req, res,next) => {
 
-  res.status(200).json({
-    "msg":"Login Successfull!"
-  })
+  res.status(200).json(req.user); //send userInfo back for client USe
   
 }
 
