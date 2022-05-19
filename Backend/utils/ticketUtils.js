@@ -1,4 +1,5 @@
-const {T ,Tpriority, Tstatus, Ttype, Developer, Project} = require('../models')
+const res = require('express/lib/response');
+const {Ticket ,Tpriority, Tstatus, Ttype, Developer, Project} = require('../models')
 
 async function getTicketInfo(ticked_id){
 
@@ -17,6 +18,19 @@ async function getTicketInfo(ticked_id){
 
 }
 
+async function deleteTicketUtil(  ticked_id ){
+
+  const isDeleted = await Ticket.destroy({
+    where:{
+      id:ticked_id
+    }
+  })
+  
+  
+  return isDeleted;
+}
+
 module.exports = {
-  getTicketInfo
+  getTicketInfo,
+  deleteTicketUtil
 }
