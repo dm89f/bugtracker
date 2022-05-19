@@ -95,7 +95,7 @@ app.get( '/', (req, res)=>{
 app.get( '/notAuthorized', (req, res)=>{
 
   res.status(401).json({
-    "msg":"Unauthorized"
+    "error_msg":"Unauthorized"
   })
 
 } )

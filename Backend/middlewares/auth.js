@@ -1,5 +1,8 @@
 const {catchAsync, AppError} = require('../utils/handleError')
 const {Op} = require('sequelize')
+
+
+
 const isLoggedIn = (req, res, next)=>{
 
   if( req.isAuthenticated() ){

@@ -5,6 +5,9 @@ const { Developer, SecQstn } = require('../models');
 const { genPswdHash } = require('../config/passportConfig');
 const { findSecQstn } = require('../utils/utils');
 
+const {getDevInfo} = require('../utils/authUtil')
+
+
 const registerDev = catchAsync( async(req, res, next)=>{
 
   const {
@@ -67,11 +70,13 @@ const getSecQstns = catchAsync( async( req, res, next )=>{
   res.status(200).json( JSON.stringify(qstns) );
 })
 
-const loginDev = (req, res,next) => {
+const loginDev = catchAsync(async (req, res,next) => {
 
-  res.status(200).json(req.user); //send userInfo back for client USe
+  const dev = await getDevInfo(req.user.id);
+
+  res.status(200).json(dev); //send userInfo back for client USe
   
-}
+})
 
 const logoutDev =  (req, res) => {
   req.logOut();
@@ -82,8 +87,8 @@ const logoutDev =  (req, res) => {
 
 const loginFailed = (req, res) => {
 
-  res.status(400).json({
-    "msg":"Invalid Credentials"
+  res.status(401).json({
+    "error_msg":"Invalid Credentials"
   })
 
 };
