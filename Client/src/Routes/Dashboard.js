@@ -4,12 +4,15 @@ import {AiOutlineMenuUnfold, AiOutlineUser} from 'react-icons/ai';
 import Sidebar from '../components/Sidebar'
 import { Link } from 'react-router-dom';
 import {Button} from 'reactstrap';
+import {useGetDevLogout, useGetDev} from '../contexts/UserContext'
 
-
-const Dashboard = ({ devInfo, reqDevLogout }) => {
+const Dashboard = () => {
 
   const navigate = useNavigate();
-
+ 
+  const devInfo = useGetDev();
+  const reqDevLogout = useGetDevLogout();
+  
   useEffect(()=>{
 
     if(!devInfo){
@@ -24,7 +27,7 @@ const Dashboard = ({ devInfo, reqDevLogout }) => {
 
   return (
     <div >
-      <Sidebar reqLogout={reqDevLogout} />
+      <Sidebar/>
       <section className='main-contnr'>
         <div className="side-menu"><AiOutlineMenuUnfold size={40}/></div>        
         <section className='brand-nav' >

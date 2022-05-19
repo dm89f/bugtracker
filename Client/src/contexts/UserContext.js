@@ -92,10 +92,10 @@ export function useGetDevRegister(){
 }
 
 
-
 export function UserContextProvider({children}){
 
   const [ user, dispatch ] = useReducer( reducer, initUser() );
+
 
   async function loginDev( devInfo ){
 
@@ -169,13 +169,3 @@ export function UserContextProvider({children}){
 
 }
 
-
-
-
-// function registerUser(userInfo){
-  
-// }
-
-// function logoutUser(){
-
-// }

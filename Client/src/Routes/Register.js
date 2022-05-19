@@ -12,8 +12,12 @@ import { useNavigate, Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 
-const Register = ({ reqDevRegister }) => {
+import { useGetDevRegister } from '../contexts/UserContext'
+
+const Register = () => {
   
+  const reqDevRegister = useGetDevRegister();
+
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
   const [ email, setEmail ] = useState('')

@@ -9,10 +9,13 @@ import {FaUserShield} from 'react-icons/fa'
 import {GrUserAdmin} from 'react-icons/gr';
 import {  Button, Nav, NavItem } from 'reactstrap';
 
+const {useGetDevLogout} = require('../contexts/UserContext')
 
 
+function Sidebar() {
 
-function Sidebar({reqLogout}) {
+  const reqDevLogout = useGetDevLogout();
+
   return (
     <section >
       <Nav className='side-nav shadow' vertical>
@@ -35,7 +38,7 @@ function Sidebar({reqLogout}) {
           <FaUserShield /> Admin  
         </NavLink>
           <NavItem >
-            <Button onClick={()=>{ reqLogout(); }}  className='ms-3 mt-3 btn-lg  btn-danger'>Logout</Button>
+            <Button onClick={reqDevLogout}  className='ms-3 mt-3 btn-lg  btn-danger'>Logout</Button>
           </NavItem>
         
       </Nav>

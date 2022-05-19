@@ -6,9 +6,13 @@ import { useNavigate, Link } from 'react-router-dom';
 import {  FaUser } from 'react-icons/fa'
 import { toast, ToastContainer } from 'react-toastify';
 
+const { useGetDev, useGetDevLogin } = require('../contexts/UserContext')
 
 
-function Login({devInfo, reqDevLogin}) {
+function Login() {
+
+  const devInfo = useGetDev();
+  const reqDevLogin =useGetDevLogin();
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword] = useState('');

@@ -22,28 +22,23 @@ const { useGetDev, useGetDevLogin, useGetDevLogout, useGetDevRegister } = requir
 
 function App() {
 
-  const devInfo = useGetDev();
-  const reqDevLogin = useGetDevLogin();
-  const reqDevLogout = useGetDevLogout();
-  const reqDevRegister = useGetDevRegister();
-  console.log(devInfo);
+  // const devInfo = useGetDev();
+  // const reqDevLogin = useGetDevLogin();
+  // const reqDevLogout = useGetDevLogout();
+  // const reqDevRegister = useGetDevRegister();
+  // console.log(devInfo);
 
   return (
       <BrowserRouter>
       <Routes>
         <Route path='/'  >
           <Route path='login' 
-            element={
-              <Login devInfo={devInfo} 
-                reqDevLogin={reqDevLogin} 
-                reqDevLogout={reqDevLogout} 
-              />
-            }
+            element={ <Login /> }
           />
-          <Route path='register' element={ <Register reqDevRegister={reqDevRegister} /> }  />
+          <Route path='register' element={ <Register/> }  />
         </Route>
         
-        <Route  path="/dev" element={<Dashboard devInfo={devInfo} reqDevLogout={reqDevLogout} />}>
+        <Route  path="/dev" element={<Dashboard />}>
           <Route path="dashboard" element={<Projects/>} />
           <Route path='tickets' element={<Tickets/>} />
           <Route path="project/:id" element={<Project/>}  />
