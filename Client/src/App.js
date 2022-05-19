@@ -17,45 +17,33 @@ import{
 } from 'react-router-dom'
 
 
+const { useGetDev, useGetDevLogin, useGetDevLogout, useGetDevRegister } = require('./contexts/UserContext')
+
 
 function App() {
 
-  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-
-  useEffect(()=>{    
-    axios.get('/api_v1/auth/is_logged_in')
-      .then((res)=>{
-        if(res.status === 200 ) {
-          setIsLoggedIn(true);
-        }
-      })
-      .catch((err)=>{
-        setIsLoggedIn(false);
-      })
-  },[])
-
-  async function reqLogout(){
-    try{
-      const res = await axios.post('/api_v1/auth/logout');
-      if( res.status === 200 ){
-        setIsLoggedIn(false);
-      }
-    }catch(err){
-      console.log(err);
-    }
-    
-  }
-
+  const devInfo = useGetDev();
+  const reqDevLogin = useGetDevLogin();
+  const reqDevLogout = useGetDevLogout();
+  const reqDevRegister = useGetDevRegister();
+  console.log(devInfo);
 
   return (
       <BrowserRouter>
       <Routes>
         <Route path='/'  >
-          <Route path='login' element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}  />
-          <Route path='register' element={ <Register /> }  />
+          <Route path='login' 
+            element={
+              <Login devInfo={devInfo} 
+                reqDevLogin={reqDevLogin} 
+                reqDevLogout={reqDevLogout} 
+              />
+            }
+          />
+          <Route path='register' element={ <Register reqDevRegister={reqDevRegister} /> }  />
         </Route>
         
-        <Route  path="/dev" element={<Dashboard isLoggedIn={isLoggedIn} reqLogout={reqLogout}  />}>
+        <Route  path="/dev" element={<Dashboard devInfo={devInfo} reqDevLogout={reqDevLogout} />}>
           <Route path="dashboard" element={<Projects/>} />
           <Route path='tickets' element={<Tickets/>} />
           <Route path="project/:id" element={<Project/>}  />

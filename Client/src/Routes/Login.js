@@ -8,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 
 
 
-function Login({isLoggedIn, setIsLoggedIn}) {
+function Login({devInfo, reqDevLogin}) {
 
   const [ email, setEmail ] = useState('');
   const [ password, setPassword] = useState('');
@@ -16,35 +16,32 @@ function Login({isLoggedIn, setIsLoggedIn}) {
 
   useEffect(()=>{
 
-    if(isLoggedIn) navigate('/dev/dashboard');
-    
-  },[isLoggedIn])
+    if(devInfo){
+      alert("already logged in");
+    }
 
+  },[devInfo])
 
-  const handleSubmit = (e)=>{
+  
+  const handleSubmit = async (e)=>{
     
     e.preventDefault();
-    axios.post('/api_v1/auth/login', {
-      email:email,
-      password
-    })
-    .then((res)=>{
-      if( res.status === 200 ){
-        setIsLoggedIn(true);
-        console.log("login successfull");
-      }else{
-        toast.error("Login error")
-      }
-      console.log(res)
-    })   
-    .catch( (error)=>{
+
+    try{
       
+      await reqDevLogin({email, password})
+      navigate('/dev/dashboard')
+
+
+    }catch(error){
+
+      console.log(error);
       setEmail("");
       setPassword("");
-      console.log(error);
-      toast.error( error.response.data.msg );
 
-    } )
+    }
+
+   
 
   }
 
@@ -52,7 +49,6 @@ function Login({isLoggedIn, setIsLoggedIn}) {
 
   return (
     <section>
-      <ToastContainer/>
         <div className='auth-bg light ' >
           <Form className='auth-info card shadow' onSubmit={handleSubmit} >
             <h3 className='text-center' > <FaUser/> Login </h3>

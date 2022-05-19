@@ -9,10 +9,10 @@ import {
   FaUserPlus
 } from 'react-icons/fa'
 import { useNavigate, Link } from 'react-router-dom'
-import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
-const Register = () => {
+const Register = ({ reqDevRegister }) => {
   
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
@@ -24,16 +24,6 @@ const Register = () => {
   const [ secAns, setSecAns ] =useState('');
   const [phoneNo, setPhoneNo] = useState('');
   const navigate = useNavigate();
-
-  // useEffect(()=>{
-
-  //   (async()=>{
-  //     const res  = await axios.get('/api_v1/auth/sec_qstn');
-  //     console.log(JSON.parse(res.data))
-  //     setGetSecQstns( JSON.parse(res.data) );      
-  //   })()
-
-  // },[])
 
   const validateForm = ()=>{
     
@@ -99,12 +89,14 @@ const Register = () => {
 
     e.preventDefault();
     e.stopPropagation();
+    
     if(!validateForm()){                                  //handle formValidation error
       return;
     }    
 
-    axios.post( '/api_v1/auth/register',{      
-      
+    try{
+
+      await reqDevRegister( {
         first_name:firstName,
         last_name:lastName,
         email:email,
@@ -112,26 +104,17 @@ const Register = () => {
         sec_qstn:secQstn,
         sec_ans:secAns,
         phone_no:phoneNo
-      
-    } ).then( (res)=>{
-        
-      if(res.status === 201){
-        toast.success("Registration Successfull !");
-        navigate('/auth/login');
-      }else{
-        toast.error(res.reponse.data);
-      }
+      } );
+      navigate('/login');
 
-    } ).catch( (err)=>{
-                                                            //handle Client Errors
-      toast.error(err.response.data.msg);
+
+    }catch(err){
+      console.log(err);
       resetFormFields();
-      console.error(err);
-
-    } )
-
+    }
 
   }
+
 
   return (
     <section>

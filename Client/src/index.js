@@ -5,10 +5,14 @@ import 'bootstrap/dist/js/bootstrap';
 import './App.css'
 import App from './App';
 
+import { UserContextProvider } from './contexts/UserContext'
+
 
 const root = ReactDOM.createRoot( document.getElementById("root") );
 
 root.render(
-  <App/>
+  <UserContextProvider>
+    <App/>
+  </UserContextProvider>
 );
 

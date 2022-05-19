@@ -3,38 +3,28 @@ import {  Outlet, useNavigate,} from 'react-router-dom'
 import {AiOutlineMenuUnfold, AiOutlineUser} from 'react-icons/ai';
 import Sidebar from '../components/Sidebar'
 import { Link } from 'react-router-dom';
-import {Button} from 'reactstrap'
-const Dashboard = ({isLoggedIn, reqLogout}) => {
+import {Button} from 'reactstrap';
 
-  const [ projects, setProjects ] = useState([]);
+
+const Dashboard = ({ devInfo, reqDevLogout }) => {
+
   const navigate = useNavigate();
+
   useEffect(()=>{
 
-    if(!isLoggedIn){
-      navigate( '/login' )
+    if(!devInfo){
+      
+      navigate('/login');
+
     }
 
-  },[isLoggedIn])
 
-  useEffect(()=>{
+  }, [devInfo])
 
-    fetch('/api_v1/projects')
-      .then(res=>{
-        return res.json();
-      })
-      .then((data)=>{
-        setProjects(JSON.parse(data));
-        console.log(projects);
-      })
-      .catch(err =>{
-        console.log(err);
-      })
-  },[]); 
-  
 
   return (
     <div >
-      <Sidebar reqLogout={reqLogout } />
+      <Sidebar reqLogout={reqDevLogout} />
       <section className='main-contnr'>
         <div className="side-menu"><AiOutlineMenuUnfold size={40}/></div>        
         <section className='brand-nav' >
@@ -54,7 +44,7 @@ const Dashboard = ({isLoggedIn, reqLogout}) => {
                   </Link>
                 </li>
                 <li className='text-center' >
-                  <Link to="#" className="dropdown-item" onClick={()=>{ reqLogout(); }}s>
+                  <Link to="#" className="dropdown-item" onClick={reqDevLogout}s>
                     <h5>Logout</h5>
                   </Link>
                 </li>                
