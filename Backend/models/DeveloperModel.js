@@ -12,6 +12,15 @@ const Developer = db.sequelize.define( 'developer',{
     type:DataTypes.STRING,
     allowNull:false
   },
+  fullName: {
+    type: DataTypes.VIRTUAL,
+    get() {
+      return `${this.firstname} ${this.lastname}`;
+    },
+    set(value) {
+      throw new Error('Do not try to set the `fullName` value!');
+    }
+  },
   lastname:{
     type:DataTypes.STRING,
     allowNull:false
