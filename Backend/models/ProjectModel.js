@@ -13,6 +13,11 @@ const Project = db.sequelize.define( 'project', {
     type:DataTypes.STRING,
     allowNull:false
   },
+  isActive:{
+    type:DataTypes.BOOLEAN,
+    allowNull:false,
+    defaultValue:true
+  },
   description:{
     type:DataTypes.TEXT,
     allowNull:false
