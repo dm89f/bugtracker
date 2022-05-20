@@ -7,15 +7,15 @@ import {  FaUser } from 'react-icons/fa'
 import { toast, ToastContainer } from 'react-toastify';
 
 const { useGetDev, useGetDevLogin } = require('../contexts/UserContext')
-
+const {useTheme} = require('../contexts/ThemeContext')
 
 function Login() {
 
   const devInfo = useGetDev();
   const reqDevLogin =useGetDevLogin();
-
   const [ email, setEmail ] = useState('');
   const [ password, setPassword] = useState('');
+  const darkTheme = useTheme();
   const navigate = useNavigate();
 
   useEffect(()=>{
@@ -53,14 +53,15 @@ function Login() {
 
   return (
     <section>
-        <div className='auth-bg light ' >
-          <Form className='auth-info card shadow' onSubmit={handleSubmit} >
+        <div className={`auth-bg light  ${darkTheme?"d-theme":""}`} >
+          <Form className={`auth-info card shadow ${darkTheme?"d-theme":""}`} onSubmit={handleSubmit} >
             <h3 className='text-center' > <FaUser/> Login </h3>
             <FormGroup>
               <Label htmlFor="email">
                 Email 
               </Label>
               <Input
+                className={`${darkTheme?"d-theme":""}`}
                 id="email"
                 name="email"
                 placeholder="Enter Your Email"
@@ -75,6 +76,7 @@ function Login() {
                 Password
               </Label>
               <Input
+                className={`${darkTheme?"d-theme":""}`}
                 onChange={ (e)=>{ setPassword(e.target.value) } }
                 type='password'
                 value={password} 
@@ -82,7 +84,7 @@ function Login() {
                 required            
               />
             </FormGroup>
-            <Button className='btn primary' type='submit' >Login</Button>
+            <Button className={`btn primary ${darkTheme?"d-theme":""}`} type='submit' >Login</Button>
             <div className='mt-3'>
                 <p className='text-secondary'>
                   Dont Have an account Sign Up {"   "}

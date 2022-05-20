@@ -11,12 +11,14 @@ import {
 import { useNavigate, Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-
 import { useGetDevRegister } from '../contexts/UserContext'
+
+import {useTheme} from '../contexts/ThemeContext'
 
 const Register = () => {
   
   const reqDevRegister = useGetDevRegister();
+  const darkTheme = useTheme();
 
   const [ firstName, setFirstName ] = useState('');
   const [ lastName, setLastName ] = useState('');
@@ -123,9 +125,9 @@ const Register = () => {
   return (
     <section>
       <ToastContainer/>
-      <div className='auth-bg light' >
-        <Form className='auth-info shadow card' onSubmit={handleSubmit} >
-          <h3 className='text-center' > <FaUserPlus/> Register</h3>
+      <div className={`auth-bg light ${darkTheme?'d-theme':""}`} >
+        <Form className={`auth-info shadow card ${darkTheme?'d-theme':""}`} onSubmit={handleSubmit} >
+          <h3 className={`text-center ${darkTheme?'d-theme':""}`} > <FaUserPlus/> Register</h3>
           <Row>
             <Col md={6} >
               <FormGroup>                
@@ -206,7 +208,7 @@ const Register = () => {
                 Select secret question
               </Label>
               <select
-                className='form-select' 
+                className={`form-select ${darkTheme?'d-theme':""}`} 
                 name='sec_qstn' 
                 id='sec_qstn'
                 value = { secQstn } 
@@ -237,11 +239,11 @@ const Register = () => {
               ></Input>
             </FormGroup>
 
-            <Button className='btn primary' type='submit'>Register</Button>
-            <div className='mt-3'>
-              <p className='text-secondary'>
+            <Button className={`btn primary ${darkTheme?'d-theme':""}`} type='submit'>Register</Button>
+            <div className={`mt-3 ${darkTheme?'d-theme':""}`}>
+              <p className={`text-secondary ${darkTheme?'d-theme':""}`}>
                 Already have an account Login {"   "}
-                <Link className='text-primary' to={"/login"} >here</Link>
+                <Link className={`text-primary ${darkTheme?'d-theme':""}`} to={"/login"} >here</Link>
               </p>
           </div>
         </Form>

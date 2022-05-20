@@ -10,35 +10,36 @@ import {GrUserAdmin} from 'react-icons/gr';
 import {  Button, Nav, NavItem } from 'reactstrap';
 
 const {useGetDevLogout} = require('../contexts/UserContext')
-
+const { useTheme } = require('../contexts/ThemeContext')
 
 function Sidebar() {
 
   const reqDevLogout = useGetDevLogout();
+  const darkTheme = useTheme();
 
   return (
     <section >
-      <Nav className='side-nav shadow' vertical>
+      <Nav className={`side-nav shadow ${darkTheme?"d-theme":""}`} vertical>
 
         <NavItem>
-          <div className='text-center mt-4'>
+          <div className={`text-center mt-4 ${darkTheme?"d-theme":""}`}>
             <FaBug size={35}/>
           </div>
-          <h3 className='text-center' >Bug Tracker</h3>
+          <h3 className={`text-center ${darkTheme?"d-theme":""}`} >Bug Tracker</h3>
         </NavItem>
 
-        <NavLink className={"nav-link"} to="/dev/dashboard" >
+        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/dashboard" >
           <FiMonitor /> Dashboard
         </NavLink>
 
-        <NavLink className={"nav-link"} to="/dev/tickets" >
+        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/tickets" >
           <AiTwotoneNotification /> Tickets 
         </NavLink> 
-        <NavLink className={"nav-link"} to="/dev/admin" >
+        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
           <FaUserShield /> Admin  
         </NavLink>
           <NavItem >
-            <Button onClick={reqDevLogout}  className='ms-3 mt-3 btn-lg  btn-danger'>Logout</Button>
+            <Button onClick={reqDevLogout} color={'danger'} className={`ms-3 mt-3 ${darkTheme?"d-theme":""}`}>Logout</Button>
           </NavItem>
         
       </Nav>
