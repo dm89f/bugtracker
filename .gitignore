@@ -1,6 +1,7 @@
 Backend/node_modules
 Backend/.env
-
+.gitignore
 
 Client/node_modules
 Client/.env
+Client/tasks.txt

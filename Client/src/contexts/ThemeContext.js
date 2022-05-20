@@ -17,7 +17,7 @@ export function useToggleTheme(){
 }
 
 
-export function ThemeCtxProvider({childrens}){
+export function ThemeCtxProvider({children}){
 
 
   const [darkTheme, setDarkTheme] = useState(false);
@@ -31,11 +31,11 @@ export function ThemeCtxProvider({childrens}){
 
   return(
     <ThemeContext.Provider value={darkTheme} >
-      <ThemeToggleContext value={toggleTheme} >
+      <ThemeToggleContext.Provider value={toggleTheme} >
         {
-          childrens
+          children
         }
-      </ThemeToggleContext>
+      </ThemeToggleContext.Provider>
     </ThemeContext.Provider>
   )
 

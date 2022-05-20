@@ -4,8 +4,6 @@ const TicketContext = createContext();
 
 function TicketCtxProvider( {childrens} ){
 
-  
-
   return(
     <TicketContext.Provider>
       {
