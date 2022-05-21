@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const {Developer} = require('./models');
 const session = require('express-session');
 const { db } = require('./config/dbConfig');
@@ -21,6 +22,8 @@ const myStore = new SequelizeStore({
 });
 myStore.sync();
 
+app.use( cors( { origin:"http://localhost:3000", credentials:true } ))
+// app.use(cors({credentials:true, origin:true}));
 app.use( session({
   secret:process.env.SESSION_SECRET,
   store:myStore,

@@ -13,7 +13,10 @@ const getProjects = catchAsync(async (req, res,next)=>{
     }
   });
 
-  if( devProjectIds === [] ) throw new AppError( "developer is not part of any project", 404 );
+
+  if( devProjectIds.length === 0 ){
+    return res.status(200).json([]);
+  }
 
   let devProjects = [];
 
@@ -34,8 +37,8 @@ const getProjects = catchAsync(async (req, res,next)=>{
   }
 
 
-  console.log( "projects : ", devProjects);
-  res.status(500).json(devProjects);
+  console.log( "projects : ", devProjectIds);
+  res.status(200).json(devProjects);
 
 
 } );

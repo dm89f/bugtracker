@@ -9,8 +9,8 @@ import Project from "./Routes/Project";
 import Register from "./Routes/Register";
 import Tickets from "./Routes/Tickets";
 import AdminDashboard from "./Routes/AdminDashboard";
-// import { ThemeCtxProvider } from './contexts/ThemeContext'
-// import {UserContextProvider} from './contexts/UserContext'
+
+import { ProjectsContextProvider } from './contexts/ProjectsContext'
 
 import{
   BrowserRouter,

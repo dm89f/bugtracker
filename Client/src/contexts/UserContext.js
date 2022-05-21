@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useReducer, useState } from "react";
 import { AuthError, AppError } from '../utils/handleError';
-
+import {API} from '../constants/routes'
 const UserContext = createContext();
 
 export const ACTIONS = {
@@ -101,7 +101,9 @@ export function UserContextProvider({children}){
 
     const {email, password} = devInfo;
     
-    const resp = await axios.post('/api_v1/auth/login', { email, password });
+    const resp = await axios.post(API.LOGIN_REQ, { email, password }, {
+      withCredentials:true
+    });
     console.log(resp)
 
     if( resp.status === 200 ){
@@ -128,8 +130,14 @@ export function UserContextProvider({children}){
 
   async function logoutDev(){
 
-    const resp = await axios.post('/api_v1/auth/logout');
+    const resp = await axios({
+      method:'POST',
+      url:API.LOGOUT_REQ,
+      withCredentials:true
+    });
     
+
+
     if(resp.status === 200){
       
       dispatch( { type:ACTIONS.REMOVE_DEV_INFO } );
@@ -145,9 +153,11 @@ export function UserContextProvider({children}){
 
   async function registerDev(devInfo){
 
-    const res = await axios.post( '/api_v1/auth/register',{
+    const res = await axios.post( API.REGISTER_REQ,{
       ...devInfo
-    } )
+    } ,{
+      // withCredentials:true
+    })
 
     if(res.status === 201)  return true;
     else{
