@@ -9,6 +9,7 @@ import {useGetDevLogout, useGetDev} from '../contexts/UserContext'
 import {useTheme, useToggleTheme} from '../contexts/ThemeContext'
 
 import {ProjectsContextProvider} from '../contexts/ProjectsContext'
+import {DevTeamContextProvider} from '../contexts/DevTeamCtx'
 
 const Dashboard = () => {
 
@@ -33,7 +34,7 @@ const toggleTheme = useToggleTheme();
 
 
   return (
-    <ProjectsContextProvider >
+    <section>
       <Sidebar/>
       <section className={`main-contnr ${darkTheme?'d-theme':""}`}>
         <div className={`side-menu ${darkTheme?'d-theme':""}`}><AiOutlineMenuUnfold size={40}/></div>        
@@ -64,9 +65,15 @@ const toggleTheme = useToggleTheme();
           </div>
           </div>
         </section>
-        <Outlet/>
+
+        <ProjectsContextProvider>
+          <DevTeamContextProvider>
+            <Outlet/>
+          </DevTeamContextProvider>
+        </ProjectsContextProvider>
+
       </section>
-    </ProjectsContextProvider>
+    </section>
   )
 }
 

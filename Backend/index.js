@@ -101,8 +101,7 @@ app.get( '/notAuthorized', (req, res)=>{
     "error_msg":"Unauthorized"
   })
 
-} )
-
+} );
 
 app.use((req, res, next)=>{
 

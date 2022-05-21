@@ -47,7 +47,11 @@ const addProject = catchAsync( async(req, res, next)=>{
 
   const { title, description} = req.body;
 
-  const isProjectExist = await Project.findOne( { title } );
+  const isProjectExist = await Project.findOne( {
+    where:{
+      title:title
+    }
+  } );
   if(isProjectExist) throw new AppError( "Project with that title alreaady exist", 400 );
 
   const newProject = await Project.create( { id: uuid.v1(),title ,description, contributed_by:req.user.id} );
@@ -91,6 +95,5 @@ const getAllOpenDevs = catchAsync( async(req, res, next)=>{
 module.exports = {
   getProjects,
   addProject,
-  getAllOpenDevs,
-  
+  getAllOpenDevs,  
 }

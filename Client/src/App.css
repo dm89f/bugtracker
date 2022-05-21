@@ -113,6 +113,12 @@
   display: none;
 }
 
+.open-devs{
+  padding: auto;
+  max-height:200px;
+  overflow-y: scroll;
+}
+
 
 
 /* d-theme setting */

@@ -13,23 +13,34 @@ export function ProjectsContextProvider({children}){
 
   useEffect(()=>{
 
-    getAllDevProjects();  
+    refDevProjects();  
 
   },[])
 
-  const getAllDevProjects = async()=>{    
+  const refDevProjects = async()=>{    
 
-    const resp = await  axios.get(API.CHECK_LOGGED_IN, { withCredentials:true });
-    console.log(resp);
-  }
-
-  const AddNewDevProject = (projectInfo) =>{
+    const resp = await  axios.get(API.PROJECTS_REQ, { withCredentials:true });
+    let newProjects = resp.data;
+    dispatch({ type:ACTION.INIT_PROJECTS, payload:newProjects });
 
   }
-  const DeleteDevProject = (projectId ) =>{
+
+  const addNewDevProject = async (projectInfo) =>{
+    
+    const resp = await axios.post( API.ADD_NEW_PROJECT,{
+      ...projectInfo
+      },{
+        withCredentials:true
+      }  
+    );
+    const newProject = resp.data;
+    return newProject;
 
   }
-  const UpdateDevProject = ( projectInfo ) =>{
+  const deleteDevProject = async (projectId ) =>{
+
+  }
+  const updateDevProject = async ( projectInfo ) =>{
 
   }
 
@@ -38,10 +49,12 @@ export function ProjectsContextProvider({children}){
     <ProjectsContext.Provider 
       value={
         {
-          projects,
-          AddNewDevProject,
-          DeleteDevProject,
-          UpdateDevProject,  
+          refDevProjects,
+          projects:projects,
+          addNewDevProject,
+          deleteDevProject,
+          updateDevProject,  
+          
         }
       } 
     >
@@ -54,32 +67,33 @@ export function ProjectsContextProvider({children}){
 }
 
 
-export function useGetAllDevProjects(){
+export function useRefDevProjects(){
+  const {refDevProjects} = useContext(ProjectsContext);
+  return refDevProjects;
+}
 
-  return useContext(ProjectsContext);
+export function useGetAllDevProjects(){
+  const {projects} = useContext(ProjectsContext);
+  return projects;
 }
 
 export function useAddNewDevProject(){
-
-  return useContext(ProjectsContext);
+  const {addNewDevProject} = useContext(ProjectsContext); 
+  return addNewDevProject;
 }
 
 export function useDeleteDevProject(){
 
-  return useContext(ProjectsContext);
+  const {deleteDevProject} = useContext(ProjectsContext);
+  return deleteDevProject;
 }
 
 export function useUpdateDevProject(){
 
-  return useContext(ProjectsContext);
+  const {updateDevProject} = useContext(ProjectsContext);
+
+  return updateDevProject;
 }
 
 
 
-
-
-
-function TicketsContextProvoder(){
-
-
-}
