@@ -27,8 +27,6 @@ export function projectsReducer( state, action ){
 
 function addProject(state, newProject){
 
-
-
 }
 
 

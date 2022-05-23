@@ -1,26 +1,27 @@
 import React, {useEffect, useState} from 'react'
 
 import axios from 'axios';
-import {API} from '../constants/routes'
-import {getOpenDevs, } from '../utils/utils'
+import {API} from '../constants/routes';
+import {getOpenDevs, } from '../utils/utils';
 import { 
   Modal, ModalBody, ModalHeader, ModalFooter ,
-  Form, FormGroup, Label, Input, Button
-} from 'reactstrap'
+  Form, FormGroup, Label, Input, Button,
+} from 'reactstrap';
 
-import {useAddNewDevProject, useRefDevProjects} from '../contexts/ProjectsContext'
-import { useAddProjTeam }  from '../contexts/DevTeamCtx'
+import {useAddNewDevProject, useRefDevProjects} from '../contexts/ProjectsContext';
+import { useAddProjTeam }  from '../contexts/DevTeamCtx';
 
 function AddProject({addProj, toggleAddProj}) {
-  
+ 
   
   const [openDevs, setOpenDevs] = useState([]);
-  const [projTeam, setProjTeam] = useState([]);
+  const [projTeam, setProjTeam] = useState({ "project_team":[] });
   const [projTitle, setProjTitle] = useState('');
   const [projDesc, setProjDesc] = useState('');
   const addProjectTeam = useAddProjTeam()
   const addNewDevProject = useAddNewDevProject();
   const refDevProjects = useRefDevProjects();
+
   useEffect(()=>{
 
     if(addProj){
@@ -43,9 +44,9 @@ function AddProject({addProj, toggleAddProj}) {
       const title = projTitle;
       const description = projDesc;
       const newProject = await addNewDevProject( { title, description } );
-      const newTeam = await addProjectTeam(newProject.id, projTeam);
+      const newTeam = await addProjectTeam(newProject.id, projTeam.project_team);
       refDevProjects();
-      setProjTeam([])
+      setProjTeam({ "project_team":[] })
       setProjTitle('')
       setProjDesc('')
       toggleAddProj((prev)=>(!prev))
@@ -56,16 +57,24 @@ function AddProject({addProj, toggleAddProj}) {
 
     }
 
-    setProjDesc('')
-    setProjTitle('');
   }
 
   function handleChange(e){
-    
-    if(e.target.checked){
-      setProjTeam([ ...projTeam, e.target.value]);
-    }
+  
+    const selectedDevs = e.target.selectedOptions;
+    let sDev = Array.from(selectedDevs, option=> option.value );
+    sDev = sDev.filter( (option)=>{
+      if(option.length !== 0) return sDev;
+    } )
+
+    setProjTeam({ [e.target.name]:sDev });
+    console.log(projTeam)
   }
+
+  function handleClick(e){
+    console.log(e.target.firstChild.checked=true);
+  }
+
 
   return (
     <Modal isOpen={addProj} keyboard={true} >
@@ -73,13 +82,12 @@ function AddProject({addProj, toggleAddProj}) {
         Add New Project
       </ModalHeader>
       <ModalBody>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} id="add_proj">
           <FormGroup>
             <Label htmlFor='title'>
               Project Title
             </Label>
-            <Input required id='title' onChange={(e)=>{ setProjTitle(e.target.value) }} value={projTitle}  type='text'>
-                
+            <Input required id='title' onChange={(e)=>{ setProjTitle(e.target.value) }} value={projTitle}  type='text'>                
             </Input>
           </FormGroup>
           <FormGroup>
@@ -89,23 +97,31 @@ function AddProject({addProj, toggleAddProj}) {
               type='textarea' 
             ></Input>
           </FormGroup>
-          <FormGroup className='open-devs'>
+          <FormGroup className='open-devs p-1'>
+            <label htmlFor={`project_team`}> Select Project Team</label>
+            <select  
+              className={"form-select"}
+              required
+              name={`project_team`} 
+              id={`project_team`} 
+              value={projTeam.project_team}
+              onChange={handleChange}
+              multiple={true}
+            >
+            <option value={""} >-- SELECT TEAM ---</option>
             {
-              openDevs.map((dev)=>{
-                return(
-                  <div key={dev.devId}>
-                    <Input id={`${dev.devId}`} name='devTeam[]' 
-                      value={dev.devId} 
-                      onChange={handleChange}
-                      type="checkbox" 
-                      />
-                    <label className='ms-3' htmlFor={`${dev.devId}`}>{dev.fullname} </label>
-                  </div>
+              openDevs.map( (dev)=>{
+                return (
+                  <option key={dev.devId} value={dev.devId}>
+                    {dev.fullname}
+                  </option>
                 )
-              })
-            }
-            
+              } )
+            } 
+            </select>
+           <p className={`text-muted fw-lighter`}>hold shift while selecting</p>
           </FormGroup>
+
           <ModalFooter >
             <Button className='me-auto' type='submit' >Submit</Button>
             <Button onClick={()=>{ toggleAddProj((prev)=>(!prev)) }} className='ms-auto btn-danger' >Close</Button>

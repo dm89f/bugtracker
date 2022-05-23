@@ -108,10 +108,11 @@ export function UserContextProvider({children}){
 
     if( resp.status === 200 ){
       
-      const { firstname, lastname, fullname, email, phone_no,authorization } = resp.data;
+      const { id, firstname, lastname, fullname, email, phone_no,authorization } = resp.data;
       dispatch({ 
         type:ACTIONS.SAVE_DEV_INFO, 
         payload:{
+          userId:id,
           firstname, lastname, fullname, email, 
           phone_no,authorization:authorization.title,
           authId:authorization.id

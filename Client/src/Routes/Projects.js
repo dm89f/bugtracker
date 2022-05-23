@@ -1,24 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'reactstrap' 
+import {FaRegEdit} from 'react-icons/fa'
+
 import {useTheme} from '../contexts/ThemeContext'
-import {useGetAllDevProjects} from '../contexts/ProjectsContext'
+import {useGetAllDevProjects, useRefDevProjects} from '../contexts/ProjectsContext'
 import AddProject from '../components/AddProject';
 import {isArray} from '../utils/utils'
+import { Link } from 'react-router-dom';
+import {useGetDev} from '../contexts/UserContext'
 
 const Projects = () => {
   
   const darkTheme = useTheme();
   const projects = useGetAllDevProjects();
+  const refreshProjects = useRefDevProjects();
   const [showProjects, setShowProjects] = useState([]) ;
   const [addProj, toggleAddProj ] = useState(false);
-
-  console.log(projects);  
+  const dev = useGetDev();
 
   useEffect(()=>{
     if(isArray(projects)){
       setShowProjects(projects);
     }
   },[projects])
+
+  useEffect(()=>{
+
+    if(!addProj){
+      refreshProjects();
+    }
+
+  },[addProj])
 
   return (
     <div>
@@ -56,9 +68,23 @@ const Projects = () => {
                       showProjects.map( (project, idx)=>{
                         return(
                           <tr key={project.projectId}>
-                            <th>{project.title}</th>
+                            <th>
+                              <Link className='link' to={`../project/${project.projectId}`} >   {project.title}
+                              </Link>
+                            </th>
                             <td>{project.description}</td>
                             <td>{project.contributed_by}</td>
+                            <td>
+                              <div className={`btn-group dropend`}>
+                                <button type="button" className={`btn btn-sm dropdown-toggle`} data-bs-toggle="dropdown" aria-expanded="false">
+                                  <FaRegEdit/>
+                                </button>
+                                <ul className={`dropdown-menu proj-opt`}>
+                                  <li className ={`dropdown-item`}>Edit</li>
+                                  <li className  ={`dropdown-item`}>Delete</li>
+                                </ul>
+                              </div>
+                            </td>
                           </tr>
                         )
                       } )

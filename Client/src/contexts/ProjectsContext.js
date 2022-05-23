@@ -19,7 +19,7 @@ export function ProjectsContextProvider({children}){
 
   const refDevProjects = async()=>{    
 
-    const resp = await  axios.get(API.PROJECTS_REQ, { withCredentials:true });
+    const resp = await  axios.get( API.PROJECTS_REQ, { withCredentials:true } );
     let newProjects = resp.data;
     dispatch({ type:ACTION.INIT_PROJECTS, payload:newProjects });
 
@@ -37,6 +37,7 @@ export function ProjectsContextProvider({children}){
     return newProject;
 
   }
+  
   const deleteDevProject = async (projectId ) =>{
 
   }
