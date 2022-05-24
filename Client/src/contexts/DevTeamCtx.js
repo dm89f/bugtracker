@@ -11,6 +11,11 @@ export function useGetProjTeam(){
   return getProjectTeam;
 }
 
+export function useProjTeam(){
+  const {projTeam} = useContext(DevTeamContext);
+  return projTeam;
+}
+
 
 export function useAddProjTeam(){
   const {addProjectTeam} = useContext(DevTeamContext);
@@ -27,20 +32,18 @@ export function DevTeamContextProvider({ children }){
 
   const [ projTeam, setProjTeam ] = useState({});
 
-  // const getProjTeam
 
   const getProjectTeam = async (projectId)=>{
     
     const resp = await axios.get( `${API.PROJECT_ROUTE}/${projectId}/team` , {withCredentials:true});
     const team = resp.data;
     setProjTeam( { projectId:projectId, team:team } );
+    return projTeam;
   }
 
   const addProjectTeam = async (projectId, projTeam)=>{
     
-    console.log(projectId);
-    console.log(projTeam);
-    
+   
     const resp = await axios.post( `${API.PROJECT_ROUTE}/${projectId}/team` , 
       { assignedDevs:projTeam },
       {withCredentials:true}

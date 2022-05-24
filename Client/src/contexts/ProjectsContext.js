@@ -1,6 +1,5 @@
-import  { useReducer, createContext, useContext, useEffect } from 'react'
+import  { useReducer, createContext, useContext, useEffect, useState } from 'react'
 import axios from 'axios';
-import {projectsReducer, ACTION} from './reducers/projectsReducer'
 import {API} from '../constants/routes'
 const ProjectsContext = createContext();
 
@@ -9,7 +8,7 @@ const ProjectsContext = createContext();
 
 export function ProjectsContextProvider({children}){
 
-  const [ projects, dispatch ] = useReducer(projectsReducer, {} );
+  const [ projects, setProjects ] = useState([]);
 
   useEffect(()=>{
 
@@ -20,8 +19,7 @@ export function ProjectsContextProvider({children}){
   const refDevProjects = async()=>{    
 
     const resp = await  axios.get( API.PROJECTS_REQ, { withCredentials:true } );
-    let newProjects = resp.data;
-    dispatch({ type:ACTION.INIT_PROJECTS, payload:newProjects });
+    setProjects(resp.data)
 
   }
 
@@ -33,16 +31,28 @@ export function ProjectsContextProvider({children}){
         withCredentials:true
       }  
     );
-    const newProject = resp.data;
-    return newProject;
-
+    refDevProjects();
+    return resp.data;
   }
   
   const deleteDevProject = async (projectId ) =>{
-
+    
+    await axios.delete( `${API.PROJECT_ROUTE}/${projectId}`, {
+      withCredentials:true
+    } )
+    refDevProjects();  
   }
-  const updateDevProject = async ( projectInfo ) =>{
 
+  const updateDevProject = async ( projectInfo ) =>{
+   
+    const updProject = await axios.put( `${API.PROJECT_ROUTE}/${projectInfo.id}`,{
+      title:projectInfo.title,
+      description:projectInfo.description
+    },{
+      withCredentials:true
+    } );
+    await refDevProjects();
+    return updProject.data;
   }
 
 

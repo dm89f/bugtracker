@@ -16,3 +16,11 @@ export function isArray ( obj ) {
 export function isObject ( obj ) {
   return obj && (typeof obj  === "object");
 }
+
+
+
+export async function getProjectTeam(projectId){
+  const resp = await axios.get( `${API.PROJECT_ROUTE}/${projectId}/team` , {withCredentials:true});
+  const team = resp.data;
+  return { projectId:projectId, team:team };
+}

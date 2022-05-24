@@ -5,9 +5,11 @@ import {FaRegEdit} from 'react-icons/fa'
 import {useTheme} from '../contexts/ThemeContext'
 import {useGetAllDevProjects, useRefDevProjects} from '../contexts/ProjectsContext'
 import AddProject from '../components/AddProject';
+import EditProject from '../components/EditProject'
 import {isArray} from '../utils/utils'
 import { Link } from 'react-router-dom';
 import {useGetDev} from '../contexts/UserContext'
+
 
 const Projects = () => {
   
@@ -17,6 +19,7 @@ const Projects = () => {
   const [showProjects, setShowProjects] = useState([]) ;
   const [addProj, toggleAddProj ] = useState(false);
   const dev = useGetDev();
+  const [projectInfo, setProjectInfo] = useState({})
 
   useEffect(()=>{
     if(isArray(projects)){
@@ -26,7 +29,7 @@ const Projects = () => {
 
   useEffect(()=>{
 
-    if(!addProj){
+    if(!addProj ){
       refreshProjects();
     }
 
@@ -35,6 +38,7 @@ const Projects = () => {
   return (
     <div>
       <AddProject addProj={addProj} toggleAddProj={toggleAddProj} />
+      <EditProject projectInfo={projectInfo} />
       <section className={`hero-contnr ${darkTheme?"d-theme":""}`} >
         <section className={`shadow card ${darkTheme?"d-theme":""}`}>
           <div className={`card-header ${darkTheme?"d-theme":""}`}>
@@ -80,7 +84,16 @@ const Projects = () => {
                                   <FaRegEdit/>
                                 </button>
                                 <ul className={`dropdown-menu proj-opt`}>
-                                  <li className ={`dropdown-item`}>Edit</li>
+                                  <li 
+                                    onClick={()=>{ 
+                                      setProjectInfo( { 
+                                        id:project.projectId, 
+                                        title:project.title,
+                                        description:project.description,
+                                        contributed_by:project.contributed_by
+                                      } )
+                                    }} 
+                                  className ={`dropdown-item`}>Edit</li>
                                   <li className  ={`dropdown-item`}>Delete</li>
                                 </ul>
                               </div>
@@ -108,6 +121,7 @@ const Projects = () => {
           </div>
         </section>
       </section>
+
     </div>
   )
 }

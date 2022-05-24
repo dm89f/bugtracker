@@ -8,22 +8,18 @@ import {
   Form, FormGroup, Label, Input, Button,
 } from 'reactstrap';
 
-import {useAddNewDevProject, useRefDevProjects} from '../contexts/ProjectsContext';
-import { useAddProjTeam }  from '../contexts/DevTeamCtx';
-
+import {useAddNewDevProject} from '../contexts/ProjectsContext';
+import {addProjectTeam} from '../utils/devTeamUtils'
 function AddProject({addProj, toggleAddProj}) {
- 
-  
+   
   const [openDevs, setOpenDevs] = useState([]);
   const [projTeam, setProjTeam] = useState({ "project_team":[] });
   const [projTitle, setProjTitle] = useState('');
   const [projDesc, setProjDesc] = useState('');
-  const addProjectTeam = useAddProjTeam()
   const addNewDevProject = useAddNewDevProject();
-  const refDevProjects = useRefDevProjects();
 
   useEffect(()=>{
-
+    
     if(addProj){
       getOpenDevs()
       .then((devs)=>{
@@ -40,12 +36,11 @@ function AddProject({addProj, toggleAddProj}) {
     e.preventDefault();
 
     try{
-      
+            
       const title = projTitle;
       const description = projDesc;
       const newProject = await addNewDevProject( { title, description } );
       const newTeam = await addProjectTeam(newProject.id, projTeam.project_team);
-      refDevProjects();
       setProjTeam({ "project_team":[] })
       setProjTitle('')
       setProjDesc('')
@@ -71,9 +66,6 @@ function AddProject({addProj, toggleAddProj}) {
     console.log(projTeam)
   }
 
-  function handleClick(e){
-    console.log(e.target.firstChild.checked=true);
-  }
 
 
   return (
