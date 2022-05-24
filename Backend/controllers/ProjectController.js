@@ -91,7 +91,7 @@ const deleteProject = catchAsync( async( req, res, next )=>{
     }
   })
 
-  if(delProj) return res.status(400).json({ msg:"request completed" });
+  if(delProj) return res.status(200).json({ msg:"request completed" });
   else throw new AppError( "not able to delete project", 500 );
 
 } );
