@@ -1,7 +1,10 @@
 const {AppError, catchAsync} = require('../utils/handleError');
 const {Op} = require('sequelize');
 const uuid = require('uuid');
-const { Developer, SecQstn } = require('../models');
+const { 
+  Developer, SecQstn, 
+  Tpriority, Tstatus, Ttype
+} = require('../models');
 const { genPswdHash } = require('../config/passportConfig');
 const { findSecQstn } = require('../utils/utils');
 
@@ -97,6 +100,32 @@ const checkDevLogin =(req, res)=>{
   res.status(200).json({"msg":"your logged in"});
 }
 
+const getTicketPriorities = catchAsync( async(req, res, next)=>{
+  
+  const tPriorities = await Tpriority.findAll({});
+  res.status(201).json(tPriorities).end();
+
+} )
+const getTicketStatuses = catchAsync( async(req, res, next)=>{
+
+  const tStatuses = await Tstatus.findAll({});
+  res.status(201).json(tStatuses).end();
+
+} )
+const getTicketTypes = catchAsync( async(req, res, next)=>{
+
+  const tTypes = await Tstatus.findAll({});
+  res.status(201).json(tTypes).end();
+
+} )
+
+
+
+
+
+
+
+
 module.exports = {
   registerDev,
   loginDev,
@@ -104,5 +133,8 @@ module.exports = {
   loginDev,
   checkDevLogin,
   logoutDev,
-  loginFailed
+  loginFailed,
+  getTicketPriorities,
+  getTicketStatuses,
+  getTicketTypes
 }
