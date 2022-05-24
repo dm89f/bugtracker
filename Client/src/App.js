@@ -5,19 +5,15 @@ import AddressNotFound from './Routes/AddressNotFound'
 import Login from './Routes/Login'
 import Dashboard from './Routes/Dashboard'
 import Projects from './Routes/Projects';
-import Project from "./Routes/Project";
 import Register from "./Routes/Register";
 import Tickets from "./Routes/Tickets";
 import AdminDashboard from "./Routes/AdminDashboard";
-
-import { ProjectsContextProvider } from './contexts/ProjectsContext'
-
 import{
   BrowserRouter,
   Routes,
   Route,
 } from 'react-router-dom'
-
+import ProjectRoute from "./Routes/ProjectRoute";
 
 function App() {
 
@@ -35,7 +31,10 @@ function App() {
           <Route  path="/dev" element={<Dashboard />}>
             <Route path="dashboard" element={<Projects/>} />
             <Route path='tickets' element={<Tickets/>} />
-            <Route path="project/:id" element={<Project/>}  />
+            <Route path="project/:id" 
+              element={ 
+                  <ProjectRoute/>              }  
+            />
             <Route path="admin" element={<AdminDashboard/>} / >
           </Route>
           <Route path="*" element={<AddressNotFound/>} />

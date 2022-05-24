@@ -10,7 +10,8 @@ export const API={
   "GET_OPEN_DEVS":`${API_DOMAIN}/api_v1/projects/devs`,
   "PROJECTS_REQ":`${API_DOMAIN}/api_v1/projects`,
   "ADD_NEW_PROJECT":`${API_DOMAIN}/api_v1/projects/`,
-
+  
   "PROJECT_ROUTE":`${API_DOMAIN}/api_v1/project`,
+
 
 }
