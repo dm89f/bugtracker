@@ -38,7 +38,7 @@ const Projects = () => {
   return (
     <div>
       <AddProject addProj={addProj} toggleAddProj={toggleAddProj} />
-      <EditProject projectInfo={projectInfo} />
+      <EditProject projectInfo={projectInfo} setProjectInfo={setProjectInfo} />
       <section className={`hero-contnr ${darkTheme?"d-theme":""}`} >
         <section className={`shadow card ${darkTheme?"d-theme":""}`}>
           <div className={`card-header ${darkTheme?"d-theme":""}`}>

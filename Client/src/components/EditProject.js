@@ -1,41 +1,51 @@
 import React, {useEffect, useState} from 'react'
-import axios from 'axios';
 import { 
   Modal, ModalBody, ModalHeader, ModalFooter ,
   Form, FormGroup, Label, Input, Button,
 } from 'reactstrap';
 
-import {API} from '../constants/routes';
 import {getOpenDevs, } from '../utils/utils';
-import {useAddNewDevProject, useRefDevProjects, useUpdateDevProject  } from '../contexts/ProjectsContext';
+import {useUpdateDevProject  } from '../contexts/ProjectsContext';
+import { updateProjectTeam } from '../utils/devTeamUtils'
 
-function EditProject({editProj, projectInfo}) {
+function EditProject({setProjectInfo, projectInfo}) {
    
   const [openDevs, setOpenDevs] = useState([]);
   const [projTeam, setProjTeam] = useState({ "project_team":[] });
   const [projTitle, setProjTitle] = useState('');
   const [projDesc, setProjDesc] = useState('');
   const updateDevProject = useUpdateDevProject();
-  const updateProjTeam = useUpdateDevProject();
-  const refDevProjects = useRefDevProjects();
   const [ editModal, toggleEditModal ] = useState(false);
 
   useEffect(()=>{
 
-    getOpenDevs()
-    .then(val=>{
-      setOpenDevs(val)
-    })
 
     if( projectInfo && projectInfo.id ){
-      toggleEditModal(true);
-      setProjTitle(projectInfo.title);
-      setProjDesc(projectInfo.description);
+      
+      initEditProject();
+
     }else{
       toggleEditModal(false);
     }
 
   },[projectInfo])
+
+
+  async function initEditProject(){
+    
+    try{
+
+      const resp = await getOpenDevs();
+      setOpenDevs(resp);
+      toggleEditModal(true);
+      setProjTitle(projectInfo.title);
+      setProjDesc(projectInfo.description);
+
+    }catch(error){
+      console.log(error);
+    }    
+
+  }
 
   
   async function handleSubmit(e){
@@ -47,8 +57,8 @@ function EditProject({editProj, projectInfo}) {
       const title = projTitle;
       const description = projDesc;
       const updProject = await updateDevProject({id:projectInfo.id, title, description});
-      const updTeam = await updateProjTeam(projectInfo.id, projTeam.project_team);
-      refDevProjects();
+      const updTeam = await updateProjectTeam(projectInfo.id, projTeam.project_team);
+      setProjectInfo({})
       setProjTeam({ "project_team":[] })
       setProjTitle('')
       setProjDesc('')
@@ -109,7 +119,7 @@ function EditProject({editProj, projectInfo}) {
             >
             <option value={""} >-- SELECT TEAM ---</option>
             {
-              openDevs.map( (dev)=>{
+              openDevs&&openDevs.map( (dev)=>{
                 return (
                   <option key={dev.devId} value={dev.devId}>
                     {dev.fullname}

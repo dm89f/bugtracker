@@ -9,7 +9,8 @@ import {
 } from 'reactstrap';
 
 import {useAddNewDevProject} from '../contexts/ProjectsContext';
-import {addProjectTeam} from '../utils/devTeamUtils'
+import {addProjectTeam} from '../utils/devTeamUtils';
+
 function AddProject({addProj, toggleAddProj}) {
    
   const [openDevs, setOpenDevs] = useState([]);
@@ -36,7 +37,7 @@ function AddProject({addProj, toggleAddProj}) {
     e.preventDefault();
 
     try{
-            
+
       const title = projTitle;
       const description = projDesc;
       const newProject = await addNewDevProject( { title, description } );
