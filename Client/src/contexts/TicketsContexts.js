@@ -28,16 +28,21 @@ export function TicketsCtxProvider( {children, projectId} ){
   }
 
 
-  async function addTicket(projectId, ticketId){
+  async function addTicket(ticketInfo){
+
 
   }
 
-  async function updateTicket(projectId, ticketId){
+  async function updateTicket(ticketId){
+
+
 
   }
 
 
-  async function deleteTicket(projectId, ticketId){
+  async function deleteTicket(ticketId){
+
+
 
   }
 

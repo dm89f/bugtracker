@@ -120,7 +120,6 @@ function AddProject({addProj, toggleAddProj}) {
             <Button onClick={()=>{ toggleAddProj((prev)=>(!prev)) }} className='ms-auto btn-danger' >Close</Button>
           </ModalFooter>
         </Form>
-
       </ModalBody>
 
     </Modal>
