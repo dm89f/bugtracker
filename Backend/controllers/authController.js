@@ -54,7 +54,7 @@ const registerDev = catchAsync( async(req, res, next)=>{
       password_hash: genPswdHash(password),
       secQstnId:secQstn.id,
       sec_ans: sec_ans,
-      authorizationId:'b3ea2db1-d1b4-11ec-ac37-f5176ea110d2'
+      authorizationId:'1095b841-dc73-11ec-b88c-b9d3e621ba43' //senoir dev
     });
 
     return res.status(201).json(JSON.stringify(newDev));
@@ -114,7 +114,7 @@ const getTicketStatuses = catchAsync( async(req, res, next)=>{
 } )
 const getTicketTypes = catchAsync( async(req, res, next)=>{
 
-  const tTypes = await Tstatus.findAll({});
+  const tTypes = await Ttype.findAll({});
   res.status(201).json(tTypes).end();
 
 } )

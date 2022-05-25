@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import {  Form,Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap'
-import { getTicketPriority, getTicketStatus, getTicketType } from '../utils/ticketUtils'
+import { getTicketPriority, getTicketStatus, getTicketType, addTicketUtil } from '../utils/ticketUtils'
 
 
 function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
@@ -11,11 +12,11 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
   const [ ticketType, setTicketType ] = useState('')
   const [ ticketPriority, setTicketPrioritiy ] = useState('')
   const [ ticketStatus, setTicketStatus ] = useState('')
-
+  const [ timeEst, setTimeEst ] = useState();
   const [ticketTypes, setTicketTypes] = useState([]);
   const [ticketPriorities, setTicketPriorities] = useState([]);
   const [ticketStatuses, setTicketStatuses] = useState([]);
-
+  const {id} = useParams();
   useEffect(()=>{
 
     initAddTicket();
@@ -45,13 +46,27 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
 
   async function handleSubmit(e){
     e.preventDefault();
-    console.log(title)
-    console.log(description)
-    console.log(ticketTeam)
-    console.log(ticketType)
-    console.log(ticketPriority)
-    console.log(ticketStatus)
+    const ticketInfo = {
+      title: title ,
+      description: description ,
+      time_est: timeEst ,
+      tpriorityId: ticketPriority,
+      tstatusId: ticketStatus,
+      ttypeId: ticketType
+    }
 
+    try{
+
+      await addTicketUtil( id, ticketInfo );
+
+    }catch(error){
+
+      console.log(error);
+
+    }
+
+
+    // console.log(ticketTeam)
   }
 
   function handleTiketAsgn(e){
@@ -87,26 +102,38 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
               name='description'
             />
           </FormGroup>
-          <FormGroup>
-            <Label htmlFor='t_asgn_devs' >Assign Dev</Label>
-            <select 
-              required
-              name='t_asgn_devs'
-              className='form-select'
-              onChange={handleTiketAsgn}
-              multiple
-            >
-            {
-              projectTeam.project_team.map((item)=>{
-                return(
-                  <option key={item.id} value={item.id}>
-                    { item.firstname + " " + item.lastname + "( " + item.email +" )" }
-                  </option>
-                )
-              })
-            }
-            </select>
-          </FormGroup>
+          <Row>
+            <Col sm={8}>
+              <FormGroup>
+                <Label htmlFor='t_asgn_devs' >Assign Dev</Label>
+                <select 
+                  required
+                  name='t_asgn_devs'
+                  className='form-select'
+                  onChange={handleTiketAsgn}
+                  multiple
+                >
+                {
+                  projectTeam.project_team.map((item)=>{
+                    return(
+                      <option key={item.id} value={item.id}>
+                        { item.firstname + " " + item.lastname + "( " + item.email +" )" }
+                      </option>
+                    )
+                  })
+                }
+                </select>
+              </FormGroup>
+            </Col>
+            <Col sm={4}>
+              <Label htmlFor='time_est'>Time Estimated</Label>
+              <Input 
+                onChange={(e)=>{ setTimeEst(e.target.value) }}  name='time_est' type='number' step={0.5} 
+                value={timeEst}                
+              >
+              </Input>
+            </Col>
+          </Row>
           <Row>
             <Col sm={6}>              
               <FormGroup>
