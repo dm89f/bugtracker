@@ -18,19 +18,5 @@ export async function getTicketPriority(){
   return resp.data;
 }
 
-export async function addTicketUtil( projectId,  ticketInfo ){
 
-  // console.log(projectId);
-  // console.log(ticketInfo);
-  const resp = await axios.post( `${API.PROJECT_ROUTE}/${projectId}/tickets`,{
-    ...ticketInfo
-  },{
-    withCredentials:true
-  } );
-  console.log(resp.data);
 
-}
-
-export async function updateTicket( ticketInfo ){
-
-}

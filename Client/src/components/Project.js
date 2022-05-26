@@ -12,6 +12,7 @@ import { getProjectTeam } from '../utils/devTeamUtils'
 import {getDevProject} from '../utils/projectUtil'
 import {useProjTickets} from '../contexts/TicketsContexts'
 import AddTicket from './AddTicket';
+import { useDeleteTicket } from '../contexts/TicketsContexts'
 
 const Project = () => {
 
@@ -21,10 +22,15 @@ const Project = () => {
   const [ticket, setTicket] = useState({});
   const [ projectTeam, setProjectTeam ] = useState({"project_team":[]});
   const [addTicket, setAddTicket] = useState(false);
+  const deleteTicket = useDeleteTicket();
 
   useEffect(()=>{
     initProject();
   },[]); 
+
+  useEffect(()=>{
+    setTicket([])
+  },[tickets])
 
   const toggleAddTicket = ()=>{
     setAddTicket((prev)=>(!prev))
@@ -143,6 +149,7 @@ const Project = () => {
                                     className ={`dropdown-item`}>Edit</li>
                                     <li 
                                       className  ={`dropdown-item`}
+                                      onClick = { ()=>{ deleteTicket(ticket.id) } }
                                     >Delete</li>
                                   </ul>
                                 </div>

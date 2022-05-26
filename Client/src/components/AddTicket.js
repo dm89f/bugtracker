@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import {  Form,Col, FormGroup, Input, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap'
-import { getTicketPriority, getTicketStatus, getTicketType, addTicketUtil } from '../utils/ticketUtils'
+import { 
+    getTicketPriority, getTicketStatus, 
+    getTicketType
+      
+} from '../utils/ticketUtils'
+import { useAddTicket, useAddTicketTeam } from '../contexts/TicketsContexts'
+
 
 
 function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
@@ -12,11 +18,14 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
   const [ ticketType, setTicketType ] = useState('')
   const [ ticketPriority, setTicketPrioritiy ] = useState('')
   const [ ticketStatus, setTicketStatus ] = useState('')
-  const [ timeEst, setTimeEst ] = useState();
+  const [ timeEst, setTimeEst ] = useState('');
   const [ticketTypes, setTicketTypes] = useState([]);
   const [ticketPriorities, setTicketPriorities] = useState([]);
   const [ticketStatuses, setTicketStatuses] = useState([]);
   const {id} = useParams();
+  const addTicketHook = useAddTicket();
+  const addTicketTeam = useAddTicketTeam()
+
   useEffect(()=>{
 
     initAddTicket();
@@ -45,6 +54,7 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
   }
 
   async function handleSubmit(e){
+
     e.preventDefault();
     const ticketInfo = {
       title: title ,
@@ -57,7 +67,17 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
 
     try{
 
-      await addTicketUtil( id, ticketInfo );
+      const ticket = await addTicketHook( ticketInfo );
+      const devs = [...ticketTeam.ticket_team]
+      await addTicketTeam(ticket.id, devs ); 
+
+      setDescription('');
+      setTicketTeam([]);
+      setTicketType('');
+      setTicketPrioritiy('');
+      setTicketStatus('');
+      setTimeEst('');
+      toggleAddTicket();
 
     }catch(error){
 
@@ -66,7 +86,6 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
     }
 
 
-    // console.log(ticketTeam)
   }
 
   function handleTiketAsgn(e){
@@ -88,7 +107,8 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
             <Label htmlFor='title' >Title</Label>
             <Input 
               required
-              onChange={(e)=>{  setTitle(e.target.value) }} value={title}  
+              onChange={(e)=>{  setTitle(e.target.value) }} 
+              value={title}  
               type='text' name='title' 
             />
           </FormGroup>
@@ -160,7 +180,8 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
                 {
                   <select
                     required
-                    onChange={(e)=>{ setTicketStatus(e.target.value) }} value={ticketStatus} 
+                    onChange={(e)=>{ setTicketStatus(e.target.value) }} 
+                    value={ticketStatus} 
                     className='form-select' type={"select"}>
                     {
                       ticketStatuses&&ticketStatuses.map( (item)=>{
@@ -179,7 +200,8 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
                 {
                   <select 
                     required
-                    onChange={(e)=>{ setTicketType(e.target.value) }} value={ticketType} 
+                    onChange={(e)=>{ setTicketType(e.target.value) }} 
+                    value={ticketType} 
                     className='form-select' type={"select"}
                   >
                     {
