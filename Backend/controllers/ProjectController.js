@@ -132,24 +132,25 @@ const updateProjectTeam = catchAsync( async( req, res, next )=>{
   const { assignedDevs=[] } = req.body;
 
   if( !assignedDevs || assignedDevs.length == 0 ) throw new AppError( "Project Team must contain atleast one Dev" );
+  else{
 
-  await DevTeam.destroy({
-    where:{
-      projectId:id
+    await DevTeam.destroy({
+      where:{
+        projectId:id
+      }
+    });
+
+    for( let teamDev of  assignedDevs ){
+
+      await DevTeam.create( { projectId:id, developerId:teamDev } );
+
     }
-  });
 
-  for( let teamDev of  assignedDevs ){
+    const projTeam = await getProjectTeamUtil(id);
+    
 
-    await DevTeam.create( { projectId:id, developerId:teamDev } );
-
+    return res.json(200).json(projTeam).end();
   }
-
-  const projTeam = await getProjectTeamUtil(id);
-  
-  console.log(projTeam);
-
-  res.json(200).json(projTeam);
   
   
 } )

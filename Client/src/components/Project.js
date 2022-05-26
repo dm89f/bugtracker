@@ -14,6 +14,7 @@ import {useProjTickets} from '../contexts/TicketsContexts'
 import AddTicket from './AddTicket';
 import { useDeleteTicket } from '../contexts/TicketsContexts'
 import EditTicket from './EditTicket';
+import UpdateDevTeam from './UpdateDevTeam';
 
 const Project = () => {
 
@@ -25,15 +26,19 @@ const Project = () => {
   const [addTicket, setAddTicket] = useState(false);
   const deleteTicket = useDeleteTicket();
   const [ editTicket, setEditTicket  ] = useState({});
-
+  const [ devTeamModal, setDevTeamModal ] = useState(false);
 
   useEffect(()=>{
+
     initProject();
-  },[]); 
+
+  },[devTeamModal]); 
 
   useEffect(()=>{
     setTicket([])
   },[tickets])
+
+
 
   const toggleAddTicket = ()=>{
     setAddTicket((prev)=>(!prev))
@@ -58,8 +63,9 @@ const Project = () => {
   return (
 
    <section className='hero-contnr'>
+     <UpdateDevTeam projectId={id} devTeamModal={devTeamModal} setDevTeamModal={setDevTeamModal} />
      <AddTicket toggleAddTicket={toggleAddTicket} addTicket={addTicket} projectTeam={projectTeam} />
-     <EditTicket setEditTicket={setEditTicket} editTicket={editTicket} projectTeam={projectTeam} />
+     <EditTicket  setEditTicket={setEditTicket} editTicket={editTicket} projectTeam={projectTeam} />
     <section className='container-fluid mt--5'>
       <div className='row'>
         <div className='col-xl-4 mt-3'>
@@ -70,7 +76,10 @@ const Project = () => {
                   <h5 className='mb-0' >Team</h5>
                 </div>
                 <div className='col'>
-                  <Button className=' btn-sm d-block ms-auto'>Add New Member</Button>
+                  <Button 
+                    onClick={()=>setDevTeamModal(true)}
+                    className=' btn-sm d-block ms-auto'
+                  >Update Team</Button>
                 </div>
               </div>
               <div className='table-responsive'>
@@ -91,7 +100,6 @@ const Project = () => {
                                 <td>{member.firstname + " " + member.lastname }</td>
                                 <td>{ member.email }</td>
                                 <td>{member.phone_no}</td>
-                                <td><CgRemove color={`red`} /></td>
                               </tr>
                             )                          
                           } 

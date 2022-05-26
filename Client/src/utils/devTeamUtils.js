@@ -26,5 +26,5 @@ export const updateProjectTeam = async (projectId, projTeam)=>{
   );
   const team = resp.data;
   return team;
-
+  
 }
