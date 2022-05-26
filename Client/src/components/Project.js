@@ -209,6 +209,7 @@ const Project = () => {
                                       }} 
                                     className ={`dropdown-item`}>Edit</li>
                                     <li 
+                                      onClick = { ()=>{ deleteTicket(ticket.id) } }
                                       className  ={`dropdown-item`}
                                     >Delete</li>
                                   </ul>
@@ -224,14 +225,16 @@ const Project = () => {
                         <table className='table'>
                           <thead>
                             <tr>
-                                <th>Ticket Priority</th>
-                                <th>Ticket Status</th>
-                                <th>Ticket Type</th>
+                              <th>Ticket Priority</th>
+                              <th>Ticket Status</th>
+                              <th>Ticket Type</th>
                             </tr>
                           </thead>
                           <tbody>
                             <tr>
-
+                              <td>{ ticket.id && ticket.tpriority.title }</td>
+                              <td>{  ticket.id && ticket.tstatus.title }</td>
+                              <td>{ ticket.id && ticket.ttype.title }</td>
                             </tr>
                           </tbody>
                         </table>
