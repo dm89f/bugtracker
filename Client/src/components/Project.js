@@ -13,6 +13,7 @@ import {getDevProject} from '../utils/projectUtil'
 import {useProjTickets} from '../contexts/TicketsContexts'
 import AddTicket from './AddTicket';
 import { useDeleteTicket } from '../contexts/TicketsContexts'
+import EditTicket from './EditTicket';
 
 const Project = () => {
 
@@ -23,6 +24,8 @@ const Project = () => {
   const [ projectTeam, setProjectTeam ] = useState({"project_team":[]});
   const [addTicket, setAddTicket] = useState(false);
   const deleteTicket = useDeleteTicket();
+  const [ editTicket, setEditTicket  ] = useState({});
+
 
   useEffect(()=>{
     initProject();
@@ -56,6 +59,7 @@ const Project = () => {
 
    <section className='hero-contnr'>
      <AddTicket toggleAddTicket={toggleAddTicket} addTicket={addTicket} projectTeam={projectTeam} />
+     <EditTicket setEditTicket={setEditTicket} editTicket={editTicket} projectTeam={projectTeam} />
     <section className='container-fluid mt--5'>
       <div className='row'>
         <div className='col-xl-4 mt-3'>
@@ -145,7 +149,7 @@ const Project = () => {
                                   </button>
                                   <ul className={`dropdown-menu proj-opt`}>
                                     <li 
-                                      onClick={()=>{}} 
+                                    onClick={()=>{ setEditTicket(ticket) }}   
                                     className ={`dropdown-item`}>Edit</li>
                                     <li 
                                       className  ={`dropdown-item`}
@@ -204,9 +208,7 @@ const Project = () => {
                                   </button>
                                   <ul className={`dropdown-menu proj-opt`}>
                                     <li 
-                                      onClick={()=>{ 
-                                        setTicket( ticket )
-                                      }} 
+                                      onClick={()=>{ setEditTicket(ticket) }} 
                                     className ={`dropdown-item`}>Edit</li>
                                     <li 
                                       onClick = { ()=>{ deleteTicket(ticket.id) } }

@@ -39,9 +39,14 @@ export function TicketsCtxProvider( {children, projectId} ){
     return resp.data;
   }
 
-  async function updateTicket(ticketId){
+  async function updateTicket(ticketId, ticketInfo){
+
+    const resp = await axios.put( `${API.PROJECT_ROUTE}/${projectId}/ticket/${ticketId}`,ticketInfo, {  
+      withCredentials:true 
+    } );
 
     await refTickets(projectId);
+
   }
 
 
@@ -69,7 +74,7 @@ export function TicketsCtxProvider( {children, projectId} ){
   
   async function updateTicketTeam(ticketId, teamInfo ){
   
-    const resp = await axios.post( `${API.PROJECT_ROUTE}/${projectId}/ticket/${ticketId}/team`,{
+    const resp = await axios.put( `${API.PROJECT_ROUTE}/${projectId}/ticket/${ticketId}/team`,{
       devs:teamInfo
     },{
       withCredentials:true

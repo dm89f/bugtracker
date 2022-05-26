@@ -113,7 +113,11 @@ const updateTicketTeam =catchAsync( async(req, res, next)=>{
   
   if( !isArray(devs) && devs.length>0 ) throw new AppError("devs is not array",400)
 
-  await TicketTeam.destroy({});
+  await TicketTeam.destroy({
+    where:{
+      ticketId:tid
+    }
+  });
 
   for ( let devId of devs ){
     await TicketTeam.create(
