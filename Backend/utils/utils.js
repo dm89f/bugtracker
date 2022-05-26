@@ -44,9 +44,19 @@ const isSeniorDevUtil = async (reqAuth)=>{
   return reqAuth === seniorDevAuth.id;
 }
 
+function isArray ( obj ) { 
+  return isObject(obj) && (obj instanceof Array);
+}
+
+
+function isObject ( obj ) {
+  return obj && (typeof obj  === "object");
+}
 
 module.exports = {
   findSecQstn,
   isAdminUtil,
-  isSeniorDevUtil
+  isSeniorDevUtil,
+  isArray,
+  isObject
 }

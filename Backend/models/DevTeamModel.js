@@ -4,7 +4,7 @@ const {Developer} = require('./DeveloperModel');
 const {Project} = require('./ProjectModel');
 
 const DevTeam = db.sequelize.define( 'dev_team',{
-
+  
 },{
   timestamps:false
 } )
@@ -13,4 +13,4 @@ const DevTeam = db.sequelize.define( 'dev_team',{
 Developer.belongsToMany(Project, { through:'dev_team' });
 Project.belongsToMany(Developer, { through:'dev_team', onDelete:'CASCADE' });
 
-module.exports = { DevTeam };
+module.exports = { DevTeam }; 

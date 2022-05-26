@@ -74,6 +74,7 @@ module.exports = {
     Project,
     TicketAssignedDev,
     Ticket,
+    TicketTeam,
     Tpriority,
     Tstatus,
     Ttype,

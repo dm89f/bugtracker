@@ -1,6 +1,7 @@
-const { Ticket, Tpriority, Tstatus, Ttype, Developer, Project } = require('../models');
+const { Ticket, Tpriority, Tstatus, Ttype, Developer, Project, TicketTeam } = require('../models');
 const {catchAsync, AppError} = require('../utils/handleError');
 const { getTicketInfo,deleteTicketUtil } = require('../utils/ticketUtils')
+const { isArray } = require('../utils/utils')
 
 const getTicket = catchAsync( async(req, res, next)=>{
 
@@ -60,9 +61,78 @@ const deleteTicket = catchAsync( async (req, res, next)=>{
   else throw new AppError( "ticket not able to delete" );
 } );
 
+const getTicketTeam = catchAsync( async(req, res, next)=>{
+  
+  const {tid}  = req.params;
+  const team = await TicketTeam.findAll({
+    where:{
+      ticketId:tid
+    }
+  })
+
+  let dev = []
+  for( let item of team ){
+
+    const data = await Developer.findOne({
+      where:{
+        id:item.developerId
+      }
+    })
+
+    dev.push(data);
+
+  }
+
+  let ticketTeam = { ticketId:tid, team:dev };
+  res.json(ticketTeam); 
+
+})
+
+
+const addTicketTeam =catchAsync( async(req, res, next)=>{
+
+  const {tid}  = req.params;
+  const {devs} =req.body;
+  
+  if( !isArray(devs) && devs.length >0 ) throw new AppError("devs is not array",400)
+
+  for ( let devId of devs ){
+    await TicketTeam.create(
+      { ticketId:tid, developerId:devId }
+    );
+  }
+
+  res.json(devs)
+
+} )
+
+const updateTicketTeam =catchAsync( async(req, res, next)=>{
+
+  const {tid}  = req.params;
+  const {devs} =req.body;
+  
+  if( !isArray(devs) && devs.length>0 ) throw new AppError("devs is not array",400)
+
+  await TicketTeam.destroy({});
+
+  for ( let devId of devs ){
+    await TicketTeam.create(
+      { ticketId:tid, developerId:devId }
+    );
+  }
+
+  res.json(devs)
+
+
+} )
+
+
 
 module.exports={
   getTicket,
   updateTicket,
-  deleteTicket
+  deleteTicket,
+  addTicketTeam,
+  updateTicketTeam,
+  getTicketTeam
 }
