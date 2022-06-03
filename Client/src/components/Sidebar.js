@@ -7,6 +7,7 @@ import { FiMonitor} from 'react-icons/fi';
 import {AiTwotoneNotification} from 'react-icons/ai'
 import {FaUserShield} from 'react-icons/fa'
 import {GrUserAdmin} from 'react-icons/gr';
+import {BsUiChecks} from  'react-icons/bs';
 import {  Button, Nav, NavItem } from 'reactstrap';
 
 const {useGetDevLogout} = require('../contexts/UserContext')
@@ -37,6 +38,9 @@ function Sidebar() {
         </NavLink> 
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
           <FaUserShield /> Admin  
+        </NavLink>
+        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/todos" >
+          <BsUiChecks /> Todos  
         </NavLink>
           <NavItem >
             <Button onClick={reqDevLogout} color={'danger'} className={`ms-3 mt-3 ${darkTheme?"d-theme":""}`}>Logout</Button>

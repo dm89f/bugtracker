@@ -5,3 +5,4 @@ Backend/.env
 Client/node_modules
 Client/.env
 Client/tasks.txt
+Client/TODOS

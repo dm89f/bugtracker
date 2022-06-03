@@ -1,0 +1,30 @@
+todos
+profile
+socketio
+admin
+
+Theme
+Toast
+mobile nav
+Toggle Theme
+header 
+
+todo
+  id
+  title
+  description
+  devId
+  type:
+    open
+    finished
+
+profile
+  show dev info
+  edit email
+  edit psswd
+  
+admin 
+  all user and there project team
+  statistics
+
+socketio

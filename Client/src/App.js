@@ -1,5 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import{
+  BrowserRouter,
+  Routes,
+  Route,
+} from 'react-router-dom';
 
 import AddressNotFound from './Routes/AddressNotFound'
 import Login from './Routes/Login'
@@ -8,11 +13,7 @@ import Projects from './Routes/Projects';
 import Register from "./Routes/Register";
 import Tickets from "./Routes/Tickets";
 import AdminDashboard from "./Routes/AdminDashboard";
-import{
-  BrowserRouter,
-  Routes,
-  Route,
-} from 'react-router-dom'
+import Todos from "./Routes/Todos";
 import ProjectRoute from "./Routes/ProjectRoute";
 
 function App() {
@@ -29,13 +30,13 @@ function App() {
           </Route>
           
           <Route  path="/dev" element={<Dashboard />}>
+
             <Route path="dashboard" element={<Projects/>} />
             <Route path='tickets' element={<Tickets/>} />
-            <Route path="project/:id" 
-              element={ 
-                  <ProjectRoute/>              }  
-            />
+            <Route path="project/:id" element={ <ProjectRoute/> } />
+            <Route path="todos" element={ <Todos/> }/>
             <Route path="admin" element={<AdminDashboard/>} / >
+
           </Route>
           <Route path="*" element={<AddressNotFound/>} />
         </Routes>
