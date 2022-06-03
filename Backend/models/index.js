@@ -8,7 +8,8 @@ const {Tpriority} = require('./Tpriority');
 const {Tstatus} = require('./TstatusModel');
 const {Ttype} = require('./TtypeModel');
 const { SecQstn } = require('./SecQstnModel')
-const {TicketTeam} = require('./TicketTeam')
+const {TicketTeam} = require('./TicketTeam');
+const {Todo} = require('./TodoModel')
 initModels();
 
 
@@ -21,11 +22,11 @@ async function initModels(){
   await SecQstn.sync( {alter:true} );
   await Developer.sync( { alter:true } );
   await Project.sync( { alter:true } );
-  await Ticket.sync( { alter:true } );
+  await Ticket.sync( { alter:false } );
   await TicketAssignedDev.sync( {alter:true} );
   await DevTeam.sync( {alter:true} )
   await TicketTeam.sync( {alter:true} );
-
+  await Todo.sync( { alter:false } );
 }
 
 
@@ -78,5 +79,6 @@ module.exports = {
     Tpriority,
     Tstatus,
     Ttype,
-    SecQstn
+    SecQstn,
+    Todo
 }

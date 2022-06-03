@@ -15,6 +15,9 @@ const {testRouter} = require('./routes/api_v1/test');
 const { ticketsRouter } = require('./routes/api_v1/ticketsRouter');
 const { ticketRouter } = require('./routes/api_v1/ticketRouter');
 const {projectRouter} = require('./routes/api_v1/projectRouter');
+const { application } = require('express');
+const {todosRouter} = require('./routes/api_v1/todosRouter');
+const { todoRouter } = require('./routes/api_v1/todoRouter');
 
 const myStore = new SequelizeStore({
   checkExpirationInterval:15*60*1000,
@@ -73,8 +76,9 @@ app.use( '/api_v1/projects', projectsRouter  );
 app.use( '/api_v1/project', projectRouter )
 app.use( '/api_v1/project/:id/tickets', ticketsRouter );
 app.use( '/api_v1/project/:id/ticket', ticketRouter );
+app.use( '/api_v1/todos/', todosRouter );
+app.use( '/api_v1/todo/:todoId/', todoRouter );
 app.use( '/api_v1/test', testRouter );
-
 
 //testing session
 app.get( '/', (req, res)=>{

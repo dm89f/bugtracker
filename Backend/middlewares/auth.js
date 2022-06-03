@@ -1,6 +1,6 @@
 const {catchAsync, AppError} = require('../utils/handleError')
 const {Op} = require('sequelize')
-
+const {Todo} = require('../models')
 
 
 const isLoggedIn = (req, res, next)=>{
@@ -88,6 +88,20 @@ const reqAuthLevel5 = catchAsync( async( req, res, next )=>{
 
 } );
 
+const isTodoAuthor = catchAsync( async( req, res, next )=>{
+
+  const {todoId} = req.params;
+  
+  const todo = await Todo.findOne({
+    where:{
+      id:todoId
+    }
+  });
+
+  if( todo && todo.devId === req.user.id ) next();
+  else res.status(401).json({ "err_msg": "not author of todo" });
+
+} )
 
 async function isTeamMember(userId, projectId){
 
@@ -143,12 +157,14 @@ async function isProjectExist( projectId ){
 }
 
 
+
 module.exports = {
   isLoggedIn,
   reqAuthLevel1,
   reqAuthLevel2,
   reqAuthLevel3,
   reqAuthLevel4,
-  reqAuthLevel5
+  reqAuthLevel5,
+  isTodoAuthor
 
 }
