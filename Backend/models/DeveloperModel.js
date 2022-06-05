@@ -47,6 +47,7 @@ const Developer = db.sequelize.define( 'developer',{
     allowNull:false
 
   },
+
 } );
 
 Authorization.hasMany( Developer );
@@ -54,4 +55,9 @@ Developer.belongsTo(Authorization);
 
 SecQstn.hasMany(Developer);
 Developer.belongsTo(SecQstn);
+
+
+
+
+
 module.exports = { Developer};

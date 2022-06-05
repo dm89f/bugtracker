@@ -45,4 +45,5 @@ Ttype.hasMany( Ticket );
 Ticket.belongsTo(Ttype);
 
 
+
 module.exports = { Ticket };

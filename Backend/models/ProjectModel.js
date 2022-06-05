@@ -29,4 +29,8 @@ Developer.hasMany(Project, { foreignKey:'contributed_by' });
 Project.belongsTo(Developer, { foreignKey:'contributed_by' });
 
 
+
+
+
+
 module.exports =  {Project};

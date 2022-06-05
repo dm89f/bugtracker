@@ -18,6 +18,7 @@ const {projectRouter} = require('./routes/api_v1/projectRouter');
 const { application } = require('express');
 const {todosRouter} = require('./routes/api_v1/todosRouter');
 const { todoRouter } = require('./routes/api_v1/todoRouter');
+const { devRouter } = require('./routes/api_v1/dev');
 
 const myStore = new SequelizeStore({
   checkExpirationInterval:15*60*1000,
@@ -71,7 +72,8 @@ passport.deserializeUser( (userId, done)=>{
 
 
 //routers;
-app.use( '/api_v1/auth', authRouter );
+app.use( '/api_v1/auth/', authRouter );
+app.use( '/api_v1/dev/',devRouter );
 app.use( '/api_v1/projects', projectsRouter  );
 app.use( '/api_v1/project', projectRouter )
 app.use( '/api_v1/project/:id/tickets', ticketsRouter );
