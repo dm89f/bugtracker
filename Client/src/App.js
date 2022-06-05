@@ -15,6 +15,8 @@ import Tickets from "./Routes/Tickets";
 import AdminDashboard from "./Routes/AdminDashboard";
 import Todos from "./Routes/Todos";
 import ProjectRoute from "./Routes/ProjectRoute";
+import TodoContextProvider from "./contexts/TodoContext";
+
 
 function App() {
 
@@ -34,7 +36,10 @@ function App() {
             <Route path="dashboard" element={<Projects/>} />
             <Route path='tickets' element={<Tickets/>} />
             <Route path="project/:id" element={ <ProjectRoute/> } />
-            <Route path="todos" element={ <Todos/> }/>
+            <Route path="todos" element={ 
+              <TodoContextProvider>
+                <Todos/>
+              </TodoContextProvider> }/>
             <Route path="admin" element={<AdminDashboard/>} / >
 
           </Route>

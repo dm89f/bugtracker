@@ -99,7 +99,7 @@ function AddTicket({addTicket, toggleAddTicket, projectTeam}) {
 
 
   return (
-    <Modal isOpen={addTicket}  >
+    <Modal isOpen={addTicket} toggle={toggleAddTicket} >
       <ModalHeader toggle={toggleAddTicket} >Add New Ticket</ModalHeader>
       <ModalBody>
         <Form onSubmit={handleSubmit} >

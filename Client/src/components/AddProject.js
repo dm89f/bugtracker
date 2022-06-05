@@ -70,7 +70,7 @@ function AddProject({addProj, toggleAddProj}) {
 
 
   return (
-    <Modal isOpen={addProj} keyboard={true} >
+    <Modal isOpen={addProj} keyboard={true} toggle={()=>{ toggleAddProj((prev)=>(!prev)) }} >
       <ModalHeader toggle={()=>{ toggleAddProj((prev)=>(!prev)) }}>
         Add New Project
       </ModalHeader>

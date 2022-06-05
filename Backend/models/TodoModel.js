@@ -20,10 +20,11 @@ const Todo = db.sequelize.define( 'todo', {
   type:{
     type:DataTypes.STRING,
     validate:{
-      isIn: [[ "open", "finished" ]],      
+      isIn: [[ "active", "finished" ]],      
     },
+    defaultValue:"active",
     allowNull:false
-
+    
   }
   
 
