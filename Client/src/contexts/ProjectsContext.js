@@ -19,7 +19,6 @@ export function ProjectsContextProvider({children}){
   const refDevProjects = async()=>{    
 
     const resp = await  axios.get( API.PROJECTS_REQ, { withCredentials:true } );
-    console.log(resp.data);
     setProjects(resp.data)
 
   }

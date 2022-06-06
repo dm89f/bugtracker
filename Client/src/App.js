@@ -16,7 +16,7 @@ import AdminDashboard from "./Routes/AdminDashboard";
 import Todos from "./Routes/Todos";
 import ProjectRoute from "./Routes/ProjectRoute";
 import TodoContextProvider from "./contexts/TodoContext";
-
+import Profile from "./components/Profile";
 
 function App() {
 
@@ -32,7 +32,7 @@ function App() {
           </Route>
           
           <Route  path="/dev" element={<Dashboard />}>
-
+            <Route index element={<Profile/>} />
             <Route path="dashboard" element={<Projects/>} />
             <Route path='tickets' element={<Tickets/>} />
             <Route path="project/:id" element={ <ProjectRoute/> } />

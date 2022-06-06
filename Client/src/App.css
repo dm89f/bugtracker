@@ -125,20 +125,25 @@
 }
 
 .todos_hero{
-  margin-top:-5rem;
+  margin-top:-8rem;
   padding: .5rem;
 }
 
 .todo-card{
   width: 300px;
   min-height:200px;
-  margin: 1rem;
+  margin: .8rem;
 }
 
 .todos-contnr{
   display: flex;
   flex-wrap: wrap;
 }
+
+.profile-cntnr{
+  margin-top: -5rem;
+}
+
 /* d-theme setting */
 
 /* //main */

@@ -1,6 +1,6 @@
 const { catchAsync } = require("../utils/handleError");
-const { Developer, DevTeam, Ticket, Project } = require('../models')
-
+const { Developer, DevTeam, Ticket, Project, SecQstn } = require('../models')
+const {genPswdHash} = require('../config/passportConfig')
 const getDevInfo = catchAsync( async (req, res, next)=>{
 
   const tickets = await Ticket.findAll({
@@ -29,6 +29,32 @@ const getDevInfo = catchAsync( async (req, res, next)=>{
 
 } )
 
+const resetPswd = catchAsync( async(req, res, next)=>{
+
+  const { selSecQstn, secAns, pswd } = req.body;
+
+  const secQstn = await SecQstn.findOne({
+    where:{
+      title:selSecQstn
+    }
+  });
+
+  if( req.user.sec_ans === secAns && req.user.secQstnId === secQstn.id ) {
+    await Developer.update({
+      password_hash:genPswdHash(pswd)
+    })
+    req.logout();
+    return  res.status(200).end();
+  }else{
+    return res.status(400).end();
+  }
+
+
+} );
+
+
+
 module.exports={
-  getDevInfo
+  getDevInfo,
+  resetPswd
 }
