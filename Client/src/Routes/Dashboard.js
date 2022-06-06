@@ -1,25 +1,40 @@
 import React, { useEffect, useState } from 'react'
 import { Outlet, useNavigate,} from 'react-router-dom'
 import {AiOutlineMenuUnfold, AiOutlineUser} from 'react-icons/ai';
-import Sidebar from '../components/Sidebar'
-import { Link } from 'react-router-dom';
+import {HiOutlineLightBulb} from 'react-icons/hi'
+import Sidebar from '../components/Sidebar';
+import OfCanvasSideBar from '../components/Offcanvas';
+import { Link, useLocation } from 'react-router-dom';
 import {Button} from 'reactstrap';
 import {useGetDevLogout, useGetDev} from '../contexts/UserContext'
 
 import {useTheme, useToggleTheme} from '../contexts/ThemeContext'
-
 import {ProjectsContextProvider} from '../contexts/ProjectsContext'
 import {DevTeamContextProvider} from '../contexts/DevTeamCtx'
 
 const Dashboard = () => {
 
-const navigate = useNavigate();
-const devInfo = useGetDev();
-const reqDevLogout = useGetDevLogout();
-const darkTheme = useTheme();
-const toggleTheme = useToggleTheme();
+  const navigate = useNavigate();
+  const devInfo = useGetDev();
+  const reqDevLogout = useGetDevLogout();
+  const darkTheme = useTheme();
+  const toggleTheme = useToggleTheme();
+  const location = useLocation();
+  const dev = useGetDev();
+  const [ sideMenu, setSideMenu] = useState(false);
+  const [ pageHeading, setPageHeading ] = useState('');
+  
 
+  const toggleSideMenu = ()=>{
+    setSideMenu((prev)=>(!prev));
+  }
 
+  useEffect(()=>{
+    let curPath = '';
+    curPath = location.pathname.split('/');
+    setPageHeading(curPath[curPath.length-1].toUpperCase());
+    
+  },[location])
 
   useEffect(()=>{
 
@@ -36,31 +51,47 @@ const toggleTheme = useToggleTheme();
   return (
     <section>
       <Sidebar/>
+      <OfCanvasSideBar sideMenu={sideMenu}  toggleSideMenu={toggleSideMenu}/>
       <section className={`main-contnr ${darkTheme?'d-theme':""}`}>
-        <div className={`side-menu ${darkTheme?'d-theme':""}`}><AiOutlineMenuUnfold size={40}/></div>        
+        <div className={`side-menu ${darkTheme?'d-theme':""}`}>
+          <AiOutlineMenuUnfold 
+            color={`${darkTheme?"":"darkblue"}`}
+            onClick={toggleSideMenu}
+            size={40}
+          />
+        </div>        
         <section className={`brand-nav ${darkTheme?'d-theme':""} `} >
-          <div className={`top-nav ${darkTheme?'d-theme':""}`} >
-            <h1>BRAND</h1>
-            <Button className={`btn ms-auto btn-small ${darkTheme?'d-theme':""}`} onClick={ toggleTheme }>Toggle Theme</Button>
-            <div className={`ms-auto dropdown ${darkTheme?'d-theme':""}`}>
+          <div className={` d-flex flex-row-reverse  top-nav ${darkTheme?'d-theme':""}`} >
+            
+            <div className={`dropdown ${darkTheme?'d-theme':""}`}>
               
               <button  className={`btn-sm btn-secondary dropdown-toggle ${darkTheme?'d-theme':""}`} type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <AiOutlineUser className={`mb-2 ${darkTheme?'d-theme':""}`} size={30}/>
-                <h5 className={`d-inline px-3 ${darkTheme?'d-theme':""}`} >Dileep B C</h5>
+                <span className={`d-inline fs-5 px-3 ${darkTheme?'d-theme':""}`} >{ dev.firstname }</span>
               </button>
+              
               <ul className={`dropdown-menu ${darkTheme?'d-theme':""}`} aria-labelledby="dropdownMenuButton1">
-                <li className={`text-center ${darkTheme?'d-theme':""}`}>
+                <li className={`px-1   text-center ${darkTheme?'d-theme':""}`}>
                   <Link to="/dev" className={`dropdown-item ${darkTheme?'d-theme':""}`}>
-                    <h5>Profile</h5>
+                    <span className='fs-7'>Profile</span>
                   </Link>
                 </li>
-                <li className={`text-center ${darkTheme?'d-theme':""}`} >
+                <li className={`px-1   text-center ${darkTheme?'d-theme':""}`} >
                   <Link to="#" className={`dropdown-item ${darkTheme?'d-theme':""}`} onClick={reqDevLogout}s>
-                    <h5>Logout</h5>
+                    <span className='fs-7'>Logout</span>
                   </Link>
                 </li>                
               </ul>
             </div>
+
+            <div className='me-3 mt-1'>
+              <label htmlFor='theme-switch'><HiOutlineLightBulb size={30} color={`${darkTheme?'yellow':"darkblue"}`} />
+              </label>    
+              <input onChange={ toggleTheme } className='d-none' id='theme-switch' type='checkbox'></input>
+            </div>
+
+            <p className='fs-1 me-auto '>{pageHeading}</p>
+
           <div>
           </div>
           </div>

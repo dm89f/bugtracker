@@ -1,8 +1,13 @@
 import React from 'react'
 
+
 function Tickets() {
+;
+
   return (
-    <div>Tickets</div>
+    <section >
+
+    </section>
   )
 }
 
