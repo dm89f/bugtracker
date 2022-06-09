@@ -20,17 +20,38 @@ function Todos() {
   return (
    <section className='todos_hero'>
      <NewTodo addTodo={addTodo} toggleAddTodo={toggleAddTodo} />
-    <div >
-      <Button className="btn ms-3" onClick={toggleAddTodo} color='primary' > <FaPlusCircle/> new Todo </Button>
-    </div>
-    <div className='todos-contnr mt-2' >
-      {
-        isArray(todos)&&todos.map( (todo)=>{
 
-          return <Todo key={todo.id} todo={todo}/>
-        
-        } )
-      }
+    
+    <div className=' mt-2' >
+      <div className='d-flex justify-content-between'>
+        <p className='fs-3 ms-3 mb-0 mt-2'>Active Todos</p>
+        <div >
+          <Button className="btn me-4" onClick={toggleAddTodo} color='success' > <FaPlusCircle/> new Todo </Button>
+        </div>
+      </div>
+      <div className='todos-contnr'>
+        {
+          isArray(todos)&&todos.filter( (todo)=>{
+            return todo.type !== 'finished'
+          } ).map( (todo)=>{
+            return <Todo key={todo.id} todo={todo}/>
+          
+          } )
+        }
+      </div>
+    </div>
+    <div className='' >
+      <p className='fs-3 ms-3 mb-0 mt-2'>Finished Todos</p>
+      <div className='todos-contnr mt-2'>
+        {
+          isArray(todos)&&todos.filter( (todo)=>{
+            return todo.type === 'finished'
+          } ).map( (todo)=>{
+            return <Todo key={todo.id} todo={todo}/>
+          
+          } )
+        }
+      </div>
     </div>
 
    </section>
