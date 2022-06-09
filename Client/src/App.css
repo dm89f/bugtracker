@@ -179,6 +179,11 @@
   padding: 0 4rem;
 }
 
+.theme-switch-cntnr{
+  background-color: white;
+  padding: .3rem;
+  border-radius: 50%;
+}
 /* d-theme setting */
 
 /* //main */
@@ -256,6 +261,10 @@
   background-color: var(--dark-brand-cntnr);
 }
 
+
+.theme-switch-cntnr.d-theme{
+  background-color: darkblue;
+}
 
 
 @media( max-width: 1200px ){

@@ -86,7 +86,7 @@ const Dashboard = () => {
             </div>
 
             <div className='me-3 mt-1'>
-              <label htmlFor='theme-switch'><HiOutlineLightBulb size={30} color={`${darkTheme?'yellow':"darkblue"}`} />
+              <label className={`theme-switch-cntnr ${darkTheme?"d-theme":""}`} htmlFor='theme-switch'><HiOutlineLightBulb size={30} color={`${darkTheme?'yellow':"darkblue"}`} />
               </label>    
               <input onChange={ toggleTheme } className='d-none' id='theme-switch' type='checkbox'></input>
             </div>
