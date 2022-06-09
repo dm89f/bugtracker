@@ -10,6 +10,7 @@ import { API } from '../constants/routes'
 import { useGetDev } from '../contexts/UserContext'
 import { AppError } from '../utils/handleError'
 import {getDevStats, updatePassword} from '../utils/utils'
+import { toast } from 'react-toastify'
 
 
 const DevInfo =()=>{
@@ -129,17 +130,17 @@ const DevStats =()=>{
 const ResetPassword = ()=>{
 
   const [secQstns, setSecQstns] = useState([]);
-
   const [ selSecQstn, setSelSecQstn ] = useState('');
   const [secAns, setSecAns] = useState('');
   const [pswd, setPswd] = useState('');
   const [repPswd, setRepPswd] = useState('');
 
+  useEffect( ()=>{
+   init();
 
+  },[] );
 
-  useEffect(()=>{
-    init();
-  });
+  
 
   async function init(){
 
@@ -149,7 +150,7 @@ const ResetPassword = ()=>{
       setSecQstns(JSON.parse(resp.data))
 
     }catch(err){
-
+      
     }
 
   }
@@ -165,7 +166,9 @@ const ResetPassword = ()=>{
       console.log(data);
 
     }catch(error){
-      console.log(error)
+
+      toast.error(error);
+
     }
 
   }

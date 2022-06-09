@@ -13,7 +13,7 @@ import {  Button, Nav, NavItem } from 'reactstrap';
 const {useGetDevLogout} = require('../contexts/UserContext')
 const { useTheme } = require('../contexts/ThemeContext')
 
-function Sidebar() {
+function Sidebar({ authorization}) {
 
   const reqDevLogout = useGetDevLogout();
   const darkTheme = useTheme();
@@ -36,9 +36,17 @@ function Sidebar() {
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/tickets" >
           <AiTwotoneNotification /> Tickets 
         </NavLink> 
-        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
-          <FaUserShield /> Admin  
-        </NavLink>
+        {
+          authorization==='admin'  
+          ?        
+            <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
+              <FaUserShield /> Admin  
+            </NavLink>
+          :
+          ""
+
+        }
+
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/todos" >
           <BsUiChecks /> Todos  
         </NavLink>

@@ -50,8 +50,9 @@ const Dashboard = () => {
 
   return (
     <section>
-      <Sidebar/>
-      <OfCanvasSideBar sideMenu={sideMenu}  toggleSideMenu={toggleSideMenu}/>
+      <Sidebar authorization={dev.authorization} />
+      <OfCanvasSideBar authorization={dev.authorization} sideMenu={sideMenu}  toggleSideMenu={toggleSideMenu}/>
+
       <section className={`main-contnr ${darkTheme?'d-theme':""}`}>
         <div className={`side-menu ${darkTheme?'d-theme':""}`}>
           <AiOutlineMenuUnfold 

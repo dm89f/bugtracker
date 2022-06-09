@@ -17,12 +17,15 @@ import Todos from "./Routes/Todos";
 import ProjectRoute from "./Routes/ProjectRoute";
 import TodoContextProvider from "./contexts/TodoContext";
 import Profile from "./components/Profile";
+import AdminRoute from "./Routes/AdminRoute";
+import {ToastContainer} from 'react-toastify'
 
 function App() {
 
 
   return (
       <BrowserRouter>
+        <ToastContainer/>
         <Routes>
           <Route path='/'  >
             <Route path='login' 
@@ -40,7 +43,9 @@ function App() {
               <TodoContextProvider>
                 <Todos/>
               </TodoContextProvider> }/>
-            <Route path="admin" element={<AdminDashboard/>} / >
+            <Route path="admin" element={<AdminRoute/>} >
+              <Route index element={<AdminDashboard/>} />  
+            </Route>
 
           </Route>
           <Route path="*" element={<AddressNotFound/>} />

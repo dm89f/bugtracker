@@ -12,7 +12,7 @@ import {  Button, Nav, NavItem, Offcanvas, OffcanvasHeader, OffcanvasBody } from
 const {useGetDevLogout} = require('../contexts/UserContext')
 const { useTheme } = require('../contexts/ThemeContext')
 
-function OfCanvasSideBar({sideMenu ,toggleSideMenu}) {
+function OfCanvasSideBar({sideMenu ,toggleSideMenu, authorization }) {
 
   const reqDevLogout = useGetDevLogout();
   const darkTheme = useTheme();
@@ -36,9 +36,16 @@ function OfCanvasSideBar({sideMenu ,toggleSideMenu}) {
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/tickets" >
           <AiTwotoneNotification /> Tickets 
         </NavLink> 
-        <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
-          <FaUserShield /> Admin  
-        </NavLink>
+        {
+          authorization==='admin'
+            ?
+            <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/admin" >
+              <FaUserShield /> Admin  
+            </NavLink>
+            :
+            ""
+        }
+
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/todos" >
           <BsUiChecks /> Todos  
         </NavLink>
