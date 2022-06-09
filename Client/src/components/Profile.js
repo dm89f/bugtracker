@@ -7,10 +7,11 @@ import {
 } from 'reactstrap'
 import { API } from '../constants/routes'
 
-import { useGetDev } from '../contexts/UserContext'
+import { useGetDev, useGetDevLogout } from '../contexts/UserContext'
 import { AppError } from '../utils/handleError'
 import {getDevStats, updatePassword} from '../utils/utils'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 const DevInfo =()=>{
@@ -97,8 +98,8 @@ const DevStats =()=>{
   }
 
   return(
-    <div>
-      <Row>
+    <div className=''>
+      <Row className='border-bottom' >
         <Col xs={6} >
           <p className='fw-bolder' >No of Projects Contributed</p>
         </Col>
@@ -106,7 +107,7 @@ const DevStats =()=>{
           <p>{ devStats.no_projects_contributed }</p>
         </Col>
       </Row>
-      <Row>
+      <Row className='border-bottom' >
         <Col xs={6} >
           <p className='fw-bolder' >No of Projects involved</p>
         </Col>
@@ -114,7 +115,7 @@ const DevStats =()=>{
           <p>{devStats.no_team}</p>
         </Col>
       </Row>
-      <Row>
+      <Row className='border-bottom' >
         <Col xs={6} >
           <p className='fw-bolder' >No of Tickets Raised</p>
         </Col>
@@ -131,16 +132,16 @@ const ResetPassword = ()=>{
 
   const [secQstns, setSecQstns] = useState([]);
   const [ selSecQstn, setSelSecQstn ] = useState('');
-  const [secAns, setSecAns] = useState('');
-  const [pswd, setPswd] = useState('');
-  const [repPswd, setRepPswd] = useState('');
-
+  const [ secAns, setSecAns ] = useState('');
+  const [ pswd, setPswd ] = useState('');
+  const [ repPswd, setRepPswd ] = useState('');
+  const logoutDev = useGetDevLogout();
+  const navigate = useNavigate();
   useEffect( ()=>{
    init();
 
   },[] );
 
-  
 
   async function init(){
 
@@ -158,16 +159,19 @@ const ResetPassword = ()=>{
 
   const handleEditPswd = async(e)=>{
     e.preventDefault();
+
     try{
 
       if( pswd !== repPswd ) throw new AppError("password do not match Equal");
-      
-      const data = await updatePassword( selSecQstn, secAns, pswd );
-      console.log(data);
+      await updatePassword( selSecQstn, secAns, pswd );
 
+      toast.success("Password Reset successfull please login again");
+      await logoutDev();
+      navigate('/login');
+      
     }catch(error){
 
-      toast.error(error);
+        toast.error(error.message);
 
     }
 
@@ -179,6 +183,7 @@ const ResetPassword = ()=>{
       <Row className='mt-5'>
           <Form onSubmit={ handleEditPswd }>
             <Row>
+
               <Col>
                 <FormGroup>
                   <Label htmlFor='sec_qstn'> Select Secret Question</Label>
@@ -221,6 +226,7 @@ const ResetPassword = ()=>{
                   <Input required id='rep_pswd' type='password' value={repPswd} onChange={(e)=>{setRepPswd( e.target.value) }}  ></Input>
                 </FormGroup>
               </Col>
+            
             </Row>
             <Button color='success' type='submit' >Update Password</Button>
           </Form>
@@ -250,7 +256,7 @@ function Profile() {
         <Col className='mb-3' lg={8} >
           <Card  className='shadow'  >
             <CardHeader>
-              Profile 
+              <span className='fs-4'>Profile</span> 
             </CardHeader>
             <CardBody>
               <DevInfo/>
@@ -265,12 +271,12 @@ function Profile() {
         </Col>
 
         <Col>
-        <Card className='shadow' lg={4} >
+        <Card className='shadow mb-5' lg={4} >
           <CardHeader>
-            Dev Stats 
+            <span className='fs-4'>Dev Stats </span>
           </CardHeader>
           <CardBody>
-            <DevStats/>
+            <DevStats />
           </CardBody>
         </Card>
 

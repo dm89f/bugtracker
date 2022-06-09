@@ -10,7 +10,7 @@ export const API={
   "LOGOUT_REQ":`${API_DOMAIN}/api_v1/auth/logout`,
   "CHECK_LOGGED_IN":`${API_DOMAIN}/api_v1/auth/is_loggedin`,
   "GET_SEC_QSTNS":`${API_DOMAIN}/api_v1/auth/sec_qstn`,
-  "UPDATE_PSWD":`${API_DOMAIN}.api_v1/dev/reset_pswd`,
+  "UPDATE_PSWD":`${API_DOMAIN}/api_v1/dev/reset_pswd`,
 
   "GET_OPEN_DEVS":`${API_DOMAIN}/api_v1/projects/devs`,
   "PROJECTS_REQ":`${API_DOMAIN}/api_v1/projects`,

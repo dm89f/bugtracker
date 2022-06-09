@@ -26,14 +26,21 @@ const resetPswd = catchAsync( async(req, res, next)=>{
     }
   });
 
-  if( req.user.sec_ans === secAns && req.user.secQstnId === secQstn.id ) {
+  if( secQstn && req.user.sec_ans === secAns && req.user.secQstnId === secQstn.id ) {
+   
     await Developer.update({
       password_hash:genPswdHash(pswd)
+    },{
+      where:{
+        id:req.user.id
+      }
     })
-    req.logout();
-    return  res.status(200).end();
+    return  res.status(201).end();
+  
   }else{
+
     return res.status(400).end();
+  
   }
 
 

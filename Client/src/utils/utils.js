@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {API} from '../constants/routes'
+import { AppError } from './handleError';
 
 export async function getDevTickets(){
 
@@ -21,6 +22,8 @@ export async function updatePassword( selSecQstn, secAns, pswd ){
 
   const resp = await axios.put(API.UPDATE_PSWD, {selSecQstn, secAns, pswd}, {withCredentials:true});
 
+  if( resp.status !== 201 ) throw new AppError("something went wrong", resp.status)
+  else console.log("Password Reset successfull please login again")
 }
 
 
