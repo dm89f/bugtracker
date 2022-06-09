@@ -81,8 +81,7 @@ const reqAuthLevel4 = catchAsync( async( req, res, next )=>{
 const reqAuthLevel5 = catchAsync( async( req, res, next )=>{
 
   const userId = req.user.id;
-  const adminAuth = await isAdmin(userId);
-
+  const adminAuth = await isAdmin( req.user.authorizationId );
   if(adminAuth) next();
   else throw new AppError("only admin has access");
 

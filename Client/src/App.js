@@ -12,7 +12,7 @@ import Dashboard from './Routes/Dashboard'
 import Projects from './Routes/Projects';
 import Register from "./Routes/Register";
 import Tickets from "./Routes/Tickets";
-import AdminDashboard from "./Routes/AdminDashboard";
+import AdminDashboard from "./components/AdminDashboard";
 import Todos from "./Routes/Todos";
 import ProjectRoute from "./Routes/ProjectRoute";
 import TodoContextProvider from "./contexts/TodoContext";

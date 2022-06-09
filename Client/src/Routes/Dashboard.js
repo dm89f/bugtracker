@@ -50,8 +50,8 @@ const Dashboard = () => {
 
   return (
     <section>
-      <Sidebar authorization={dev.authorization} />
-      <OfCanvasSideBar authorization={dev.authorization} sideMenu={sideMenu}  toggleSideMenu={toggleSideMenu}/>
+      <Sidebar authorization={dev && dev.authorization} />
+      <OfCanvasSideBar authorization={dev && dev.authorization} sideMenu={sideMenu}  toggleSideMenu={toggleSideMenu}/>
 
       <section className={`main-contnr ${darkTheme?'d-theme':""}`}>
         <div className={`side-menu ${darkTheme?'d-theme':""}`}>
@@ -68,7 +68,7 @@ const Dashboard = () => {
               
               <button  className={`btn-sm btn-secondary dropdown-toggle ${darkTheme?'d-theme':""}`} type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <AiOutlineUser className={`mb-2 ${darkTheme?'d-theme':""}`} size={30}/>
-                <span className={`d-inline fs-5 px-3 ${darkTheme?'d-theme':""}`} >{ dev.firstname }</span>
+                <span className={`d-inline fs-5 px-3 ${darkTheme?'d-theme':""}`} >{ dev && dev.firstname }</span>
               </button>
               
               <ul className={`dropdown-menu ${darkTheme?'d-theme':""}`} aria-labelledby="dropdownMenuButton1">

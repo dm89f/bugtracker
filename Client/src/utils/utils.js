@@ -1,11 +1,21 @@
 import axios from 'axios'
 import {API} from '../constants/routes'
 
+export async function getDevTickets(){
+
+  const resp = await axios.get( API.DEV_TICKETS, { withCredentials:true });
+  return resp.data;
+}
+
+
+
 export async function getDevStats(){
 
   const resp = await axios.get(API.DEV_STATS, {withCredentials:true});
   return resp.data;
 }
+
+
 
 export async function updatePassword( selSecQstn, secAns, pswd ){
 

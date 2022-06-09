@@ -1,30 +1,17 @@
 const { catchAsync } = require("../utils/handleError");
-const { Developer, DevTeam, Ticket, Project, SecQstn } = require('../models')
-const {genPswdHash} = require('../config/passportConfig')
+const { Developer, DevTeam, Ticket, Project, SecQstn, Tpriority, Tstatus, Ttype  } = require('../models')
+const {genPswdHash} = require('../config/passportConfig');
+const { getDevStats } = require('../utils/devUtil')
+
+
 const getDevInfo = catchAsync( async (req, res, next)=>{
 
-  const tickets = await Ticket.findAll({
-    where:{
-      raised_by_dev:req.user.id
-    }
-  });
+  const {
+    no_tickets_raised , 
+    no_projects_contributed, no_team } = await getDevStats(req.user.id);
 
-  const projects = await Project.findAll({
-    where:{
-      contributed_by:req.user.id
-    }
-  });
-
-  const teams = await DevTeam.findAll({
-    where:{
-      developerId:req.user.id
-    }
-  })
-
-  res.status(200).json({
-    no_tickets_raised : tickets.length ,
-    no_projects_contributed : projects.length ,
-    no_team: teams.length
+  res.status(200).json({ 
+    no_tickets_raised , no_projects_contributed , no_team
   })
 
 } )
@@ -52,9 +39,21 @@ const resetPswd = catchAsync( async(req, res, next)=>{
 
 } );
 
+const getDevTickets = catchAsync( async(req, res, next) =>{
+
+  const userId = req.user.id;
+  const tickets = await Ticket.findAll({
+    raised_by_dev:userId,
+    include:[ {model:Ttype}, { model:Tstatus }, { model:Tpriority }, {model:Project} ]
+  })
+  res.status(200).json(tickets);
+
+
+});
 
 
 module.exports={
   getDevInfo,
-  resetPswd
+  resetPswd,
+  getDevTickets
 }

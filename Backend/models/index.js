@@ -58,7 +58,6 @@ const isAdmin = async(userAuthId)=>{
      title:'admin'
    }
  })
-
  return userAuthId === auth.id;
 }
 

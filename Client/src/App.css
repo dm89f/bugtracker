@@ -165,6 +165,19 @@
   color:var(--side-nav-link);
 }
 
+.dev-tickets{
+  margin-top:  -4rem;
+  padding: 0 4rem;
+}
+
+.dev-tickets-body{
+  height:500px
+}
+
+.admin-dashboard{
+  margin-top: -4rem;
+  padding: 0 4rem;
+}
 
 /* d-theme setting */
 

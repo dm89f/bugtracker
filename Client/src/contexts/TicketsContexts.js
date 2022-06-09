@@ -27,7 +27,6 @@ export function TicketsCtxProvider( {children, projectId} ){
 
   }
 
-
   async function addTicketHook(ticketInfo){
 
     const resp = await axios.post( `${API.PROJECT_ROUTE}/${projectId}/tickets`,{

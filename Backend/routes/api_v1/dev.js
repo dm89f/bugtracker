@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {isLoggedIn} = require('../../middlewares/auth')
-const {getDevInfo, resetPswd } = require('../../controllers/devController');
+const {getDevInfo, resetPswd, getDevTickets } = require('../../controllers/devController');
 
 
 router.get('/devInfo', isLoggedIn, getDevInfo  );
 router.put( '/reset_pswd', isLoggedIn, resetPswd  );
+router.get( '/tickets', isLoggedIn, getDevTickets );
 
 module.exports={
   devRouter:router

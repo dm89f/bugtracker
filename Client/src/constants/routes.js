@@ -19,5 +19,9 @@ export const API={
   "PROJECT_ROUTE":`${API_DOMAIN}/api_v1/project`,
   "TODOS_ROUTE":`${API_DOMAIN}/api_v1/todos`,
   "TODO_ROUTE":`${API_DOMAIN}/api_v1/todo`,
-  "DEV_STATS":`${API_DOMAIN}/api_v1/dev/devInfo`
+  "DEV_STATS":`${API_DOMAIN}/api_v1/dev/devInfo`,
+
+  "DEV_TICKETS":`${API_DOMAIN}/api_v1/dev/tickets`,
+  
+  "GET_DEVS":`${API_DOMAIN}/api_v1/dev/admin/devs`,
 }
