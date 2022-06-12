@@ -15,6 +15,8 @@ import AddTicket from './AddTicket';
 import { useDeleteTicket } from '../contexts/TicketsContexts'
 import EditTicket from './EditTicket';
 import UpdateDevTeam from './UpdateDevTeam';
+import DevMessages from './DevMessages';
+
 
 const Project = () => {
 
@@ -181,90 +183,83 @@ const Project = () => {
           </div>
         </div>
       </div>
-      <div className='row mt-5'>
+      <div className='row mt-3 mx-1'>
         <div className='shadow card'>
           <div className='card-header'>
             <h6>Selected Ticket Info</h6>
           </div>
           <div className='card-body'>
-          <div className='row'>
+            <div className='row'>
             <div className='col-xl'>
-              <div className='row mt-3'>
-                <div className='shadow card'>
-                  <div className='card-body'>
-                    <div className='row'>
-                      <div className='table-responsive'>
-                        <table className='table' >
-                          <thead>
-                            <tr>
-                              <th>Ticket Title</th>
-                              <th>Ticket Author</th>
-                              <th>Ticket Discription</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <th>{ticket.id&&ticket.title}</th>
-                              <td>{ticket.id&&ticket.developer.fullName}</td>
-                              <td>{ticket.id&&ticket.description}</td>
-                              <td>{ticket.id&&
-                                <div className={`btn-group dropend`} >
-                                  <button type="button" className={`btn btn-sm dropdown-toggle`}   
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <FaEdit/>
-                                  </button>
-                                  <ul className={`dropdown-menu proj-opt`}>
-                                    <li 
-                                      onClick={()=>{ setEditTicket(ticket) }} 
-                                    className ={`dropdown-item`}>Edit</li>
-                                    <li 
-                                      onClick = { ()=>{ deleteTicket(ticket.id) } }
-                                      className  ={`dropdown-item`}
-                                    >Delete</li>
-                                  </ul>
-                                </div>}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                    <div className='row mt-3'>
-                      <div className='table-responsive' >
-                        <table className='table'>
-                          <thead>
-                            <tr>
-                              <th>Ticket Priority</th>
-                              <th>Ticket Status</th>
-                              <th>Ticket Type</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>{ ticket.id && ticket.tpriority.title }</td>
-                              <td>{  ticket.id && ticket.tstatus.title }</td>
-                              <td>{ ticket.id && ticket.ttype.title }</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-xl'>
-              <div className='shadow card mt-3'>
+              <DevMessages/>
+          </div>
+          <div className='col-xl'>
+            <div className='row mt-3'>
+              <div className='shadow card'>
                 <div className='card-body'>
                   <div className='row'>
-                    <div className='col'>
-                      Messages
+                    <div className='table-responsive'>
+                      <table className='table' >
+                        <thead>
+                          <tr>
+                            <th>Ticket Title</th>
+                            <th>Ticket Author</th>
+                            <th>Ticket Discription</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <th>{ticket.id&&ticket.title}</th>
+                            <td>{ticket.id&&ticket.developer.fullName}</td>
+                            <td>{ticket.id&&ticket.description}</td>
+                            <td>{ticket.id&&
+                              <div className={`btn-group dropend`} >
+                                <button type="button" className={`btn btn-sm dropdown-toggle`}   
+                                  data-bs-toggle="dropdown" aria-expanded="false">
+                                  <FaEdit/>
+                                </button>
+                                <ul className={`dropdown-menu proj-opt`}>
+                                  <li 
+                                    onClick={()=>{ setEditTicket(ticket) }} 
+                                  className ={`dropdown-item`}>Edit</li>
+                                  <li 
+                                    onClick = { ()=>{ deleteTicket(ticket.id) } }
+                                    className  ={`dropdown-item`}
+                                  >Delete</li>
+                                </ul>
+                              </div>}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div className='row mt-3'>
+                    <div className='table-responsive' >
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th>Ticket Priority</th>
+                            <th>Ticket Status</th>
+                            <th>Ticket Type</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>{ ticket.id && ticket.tpriority.title }</td>
+                            <td>{  ticket.id && ticket.tstatus.title }</td>
+                            <td>{ ticket.id && ticket.ttype.title }</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+
           </div>
 
           </div>
