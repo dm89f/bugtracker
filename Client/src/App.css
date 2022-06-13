@@ -184,6 +184,44 @@
   padding: .3rem;
   border-radius: 50%;
 }
+
+/* ticket messages */
+
+.ticket-msg{
+
+  display: flex;
+  flex-direction: column-reverse;
+  height: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.msg{
+  margin-top: .5rem;
+  width:45%;
+  padding: .5rem;
+  color: #fff;
+  border-radius: 7px;
+}
+
+.msg-heading{
+  font:bolder;
+  font-size: smaller;
+}
+
+.msg-left{
+  display: block;
+  margin-right: auto;
+  background-color: #8CABBE;
+}
+
+.msg-right{
+  display: block;
+  margin-left: auto;
+  background-color: #A4BFEB;
+}
+
+
 /* d-theme setting */
 
 /* //main */

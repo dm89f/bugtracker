@@ -19,7 +19,7 @@ const { isAdmin, isJuniorDev, isSeniorDev, DevTeam, Project } = require('../mode
 
 
 const reqAuthLevel1 = catchAsync( async ( req, res, next )=>{
- 
+
   const seniorDevAuth = await isSeniorDev(req.user.authorizationId);
   const adminAuth = await isAdmin(req.user.authorizationId);
 

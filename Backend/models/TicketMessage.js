@@ -14,13 +14,13 @@ const TicketMessage = db.sequelize.define( 'ticket_message', {
     type:DataTypes.TEXT,
     allowNull:false
   },
-
-
+  developerId:{
+    type:DataTypes.STRING,
+    allowNull:false
+  }
 } );
 
 
-Developer.hasMany( TicketMessage, { onDelete:'CASCADE' } );
-TicketMessage.belongsTo( Developer );
 
 Ticket.hasMany( TicketMessage, { onDelete:"CASCADE" }  );
 TicketMessage.belongsTo( Ticket )

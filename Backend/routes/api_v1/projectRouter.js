@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams:true});
 
 const { 
   getProject, 
@@ -17,9 +17,9 @@ router.get('/:id', isLoggedIn, reqAuthLevel2, getProject  );
 router.put('/:id', isLoggedIn, reqAuthLevel4, updateProject);
 router.delete( '/:id', isLoggedIn, reqAuthLevel4, deleteProject );
 
-router.get( '/:id/team',reqAuthLevel1, getProjectTeam );
-router.post('/:id/team',reqAuthLevel1, addProjectTeam );
-router.put( '/:id/team',reqAuthLevel4, updateProjectTeam );
+router.get( '/:id/team',isLoggedIn, reqAuthLevel2,getProjectTeam );
+router.post('/:id/team',isLoggedIn, reqAuthLevel1, addProjectTeam );
+router.put( '/:id/team',isLoggedIn, reqAuthLevel4, updateProjectTeam );
 
 
 module.exports.projectRouter = router

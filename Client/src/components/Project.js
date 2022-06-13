@@ -17,6 +17,11 @@ import EditTicket from './EditTicket';
 import UpdateDevTeam from './UpdateDevTeam';
 import TicketMessage from './TicketMessage'
 
+import io from 'socket.io-client';
+import { toast } from 'react-toastify';
+import {useGetDev}from '../contexts/UserContext'
+const socket = io("http://localhost:3001");
+
 const Project = () => {
 
   const {id} = useParams();
@@ -28,6 +33,32 @@ const Project = () => {
   const deleteTicket = useDeleteTicket();
   const [ editTicket, setEditTicket  ] = useState({});
   const [ devTeamModal, setDevTeamModal ] = useState(false);
+  const dev = useGetDev();
+  const [ histMsg, setHistMsg ] = useState([])
+
+  //connect to room when selected ticked changes
+  useEffect( ()=>{
+
+    if(ticket.id){
+      socket.emit(
+        "join_room",
+        {"room":{
+            user:dev,
+            id:ticket.id, 
+            name:ticket.title
+        }},
+        (resp)=>{
+        setHistMsg(resp.msgHistory)
+       } 
+      );
+    }
+    
+    setHistMsg([]);
+
+  },[ticket] )
+
+
+
 
   useEffect(()=>{
 
@@ -190,7 +221,12 @@ const Project = () => {
           <div className='card-body'>
             <div className='row'>
             <div className='col-xl'>
-              <TicketMessage/>
+              <TicketMessage 
+                socket={socket} 
+                ticket={ticket}
+                histMsg={histMsg}
+                setHistMsg={setHistMsg}
+              />
           </div>
           <div className='col-xl'>
             <div className='row mt-3'>

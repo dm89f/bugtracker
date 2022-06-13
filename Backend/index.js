@@ -23,7 +23,9 @@ const {adminRouter} = require('./routes/api_v1/adminRouter');
 const http = require('http');
 const { Server } = require('socket.io');
 const server = http.createServer(app);
-
+const {TicketMessage} = require('./models/TicketMessage')
+const {getTicketMessages, addTicketMsg} = require('./utils/socketUtils');
+const { AppError } = require('./utils/handleError');
 const io = new Server(server, { 
   cors:{
     origin:"http://localhost:3000"
@@ -35,26 +37,48 @@ const io = new Server(server, {
 io.on( "connection", (socket)=>{
 
 
-  socket.on( "join_room",(data, resp )=>{
-    if(data && data.room){  
-      socket.join(data.room.id);
-      resp({msg:`joined to room ${data.room.name }`})
+  socket.on( "join_room", async (data, resp )=>{
+
+    try{
+      if(data && data.room){  
+
+        socket.join(data.room.id);
+        let msgHistory = await getTicketMessages(data.room.id);
+        resp({msgHistory:msgHistory,  msg:`joined to room ${data.room.name }`});
+  
+      }
+    }catch(error){
+      resp({ msg:"upable to connect to group" })
+      console.log(error)
     }
+
   } )
   
-  socket.on( "send_msg", (data,resp)=>{
-    
-    if( data.room.id && data.userId ){
-      io.to(data.room.id)
-        .emit( "receive_msg", { userId:data.userId, msg:data.msg }  
-      )
-      resp({ msg:"message sent" })
-    }else{
+  socket.on( "send_msg", async (data,resp)=>{
 
-      resp({ msg:"message did not sent" })
+    console.log(data);
+
+    try{
+      
+      if( data.room.id && data.user ){
+
+        const tickMsg = await addTicketMsg(data)
+        io.to(data.room.id)
+          .emit( "receive_msg", { tickMsg } )
+        resp({ msg:"message sent" })
+      
+      }else{
+        
+        throw new AppError("message did not sent")
+  
+      }
+  
+    }catch(error){
+
+      console.log(error)
+      resp({msg:"message did not sent"})
 
     }
-    
 
     
   } );
