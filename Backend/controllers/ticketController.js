@@ -1,4 +1,5 @@
 const { Ticket, Tpriority, Tstatus, Ttype, Developer, Project, TicketTeam } = require('../models');
+const { TicketMessage } = require('../models/TicketMessage');
 const {catchAsync, AppError} = require('../utils/handleError');
 const { getTicketInfo,deleteTicketUtil } = require('../utils/ticketUtils')
 const { isArray } = require('../utils/utils')
@@ -130,6 +131,18 @@ const updateTicketTeam =catchAsync( async(req, res, next)=>{
 
 } )
 
+const getTicketMessages = catchAsync( async( req, res, next )=>{
+
+  const {tid} = req.params;
+  const messages = await TicketMessage.findAll({
+    where:{
+      ticketId:tid
+    }
+  })
+
+  res.status(200).json(messages);
+
+} )
 
 
 module.exports={
@@ -138,5 +151,6 @@ module.exports={
   deleteTicket,
   addTicketTeam,
   updateTicketTeam,
-  getTicketTeam
+  getTicketTeam,
+  getTicketMessages
 }

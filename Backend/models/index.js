@@ -9,7 +9,9 @@ const {Tstatus} = require('./TstatusModel');
 const {Ttype} = require('./TtypeModel');
 const { SecQstn } = require('./SecQstnModel')
 const {TicketTeam} = require('./TicketTeam');
-const {Todo} = require('./TodoModel')
+const {Todo} = require('./TodoModel');
+const { TicketMessage } = require('./TicketMessage');
+
 initModels();
 
 
@@ -27,6 +29,7 @@ async function initModels(){
   await DevTeam.sync( {alter:true} )
   await TicketTeam.sync( {alter:true} );
   await Todo.sync( { alter:false } );
+  await TicketMessage.sync( { alter:true } );
 }
 
 

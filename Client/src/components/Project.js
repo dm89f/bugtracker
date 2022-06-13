@@ -15,8 +15,7 @@ import AddTicket from './AddTicket';
 import { useDeleteTicket } from '../contexts/TicketsContexts'
 import EditTicket from './EditTicket';
 import UpdateDevTeam from './UpdateDevTeam';
-import DevMessages from './DevMessages';
-
+import TicketMessage from './TicketMessage'
 
 const Project = () => {
 
@@ -191,7 +190,7 @@ const Project = () => {
           <div className='card-body'>
             <div className='row'>
             <div className='col-xl'>
-              <DevMessages/>
+              <TicketMessage/>
           </div>
           <div className='col-xl'>
             <div className='row mt-3'>

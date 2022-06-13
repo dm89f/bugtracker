@@ -20,6 +20,50 @@ const {todosRouter} = require('./routes/api_v1/todosRouter');
 const { todoRouter } = require('./routes/api_v1/todoRouter');
 const { devRouter } = require('./routes/api_v1/dev');
 const {adminRouter} = require('./routes/api_v1/adminRouter');
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+
+const io = new Server(server, { 
+  cors:{
+    origin:"http://localhost:3000"
+  }
+})
+
+
+
+io.on( "connection", (socket)=>{
+
+
+  socket.on( "join_room",(data, resp )=>{
+    if(data && data.room){  
+      socket.join(data.room.id);
+      resp({msg:`joined to room ${data.room.name }`})
+    }
+  } )
+  
+  socket.on( "send_msg", (data,resp)=>{
+    
+    if( data.room.id && data.userId ){
+      io.to(data.room.id)
+        .emit( "receive_msg", { userId:data.userId, msg:data.msg }  
+      )
+      resp({ msg:"message sent" })
+    }else{
+
+      resp({ msg:"message did not sent" })
+
+    }
+    
+
+    
+  } );
+
+
+
+} );
+
+
 
 const myStore = new SequelizeStore({
   checkExpirationInterval:15*60*1000,
@@ -28,7 +72,6 @@ const myStore = new SequelizeStore({
 myStore.sync();
 
 app.use( cors( { origin:"http://localhost:3000", credentials:true } ))
-// app.use(cors({credentials:true, origin:true}));
 app.use( session({
   secret:process.env.SESSION_SECRET,
   store:myStore,
@@ -134,6 +177,6 @@ app.use( (err, req, res, next)=>{
 
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, (res, err)=>{
+server.listen(PORT, (res, err)=>{
   console.log(`Server running at port ${PORT}`)
 })
