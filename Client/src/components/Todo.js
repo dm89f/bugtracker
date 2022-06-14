@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import {useEditTodo, useDeleteTodo} from '../contexts/TodoContext'
 import { Button, Card , CardBody, CardFooter, CardHeader,Input, FormGroup, Label   } from 'reactstrap' 
@@ -15,6 +15,18 @@ function Todo({todo}) {
   const [ type, setType ] = useState(todo.type)
   const editTodo = useEditTodo();
   const deleteTodo = useDeleteTodo();
+  const [todoDate, setTodoDate] = useState("");
+
+
+
+  useEffect(()=>{
+    let date = new Date(todo.createdAt);
+    const DAYS = [ "Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" ];
+    const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November","December"];
+    setTodoDate( `${DAYS[date.getDay()] +" "+ date.getDate() +" "+ MONTHS[date.getMonth()] +" "+ date.getFullYear()%100}` )
+
+
+  },[todo])
 
 
   const handleSubmit = async(e)=>{
@@ -57,30 +69,34 @@ function Todo({todo}) {
               />
             </div>
             :
-            <div className='d-flex justify-content-between' > 
-              <h5 className=''>{title}</h5> 
-              <div className="dropdown">
-                <button className="btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  more
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li>
-                    <a
-                      onClick={()=>{ toggleEdit((prev)=>(!prev)) }} 
-                      className="dropdown-item" href="#"><FaEdit color='blue'
-                    /> Edit</a></li>
-                  <li>
-                    <a 
+            <div>
+              <div className='d-flex justify-content-between' > 
+                <h5 className=''>{title}</h5> 
+                <div className="dropdown">
+                  <button className="btn-sm btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    more
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                      <a
+                        onClick={()=>{ toggleEdit((prev)=>(!prev)) }} 
+                        className="dropdown-item" href="#"><FaEdit color='blue'
+                      /> Edit</a></li>
+                    <li>
+                      <a 
 
-                      onClick={handleDelete}    
-                      className="dropdown-item" href="#"
-                    >
-                        <MdDelete color='red' /> Remove
-                    </a>
-                  </li>
-                </ul>
+                        onClick={handleDelete}    
+                        className="dropdown-item" href="#"
+                      >
+                          <MdDelete color='red' /> Remove
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
+              <span className='fs-smaller fw-light fst-italic'>{todoDate}</span>
             </div>
+            
         }
         
       </CardHeader>

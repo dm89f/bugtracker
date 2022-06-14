@@ -22,6 +22,6 @@ export const API={
   "DEV_STATS":`${API_DOMAIN}/api_v1/dev/devInfo`,
 
   "DEV_TICKETS":`${API_DOMAIN}/api_v1/dev/tickets`,
-  
+  "DEV_TICKET_STATS":`${API_DOMAIN}/api_v1/dev/ticket_stats`,
   "GET_DEVS":`${API_DOMAIN}/api_v1/dev/admin/devs`,
 }

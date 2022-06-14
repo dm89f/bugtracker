@@ -83,7 +83,7 @@
 
 .top-nav{
   padding: 0px  2rem;
-  padding-top: 4rem;
+  padding-top: 1.5rem;
   display: flex;
 
 }
@@ -92,23 +92,36 @@
 .hero-contnr{
   
   position: relative;
-  top:-100px;
+  top:-200px;
   background-color:transparent;
   margin:0px 50px;
 }
 
+.project-list-body{
+  height: 300px;
+  overflow-y: scroll;
+}
+
+
 .tickets-graph-container{
-  border:1px solid black;
-  margin-top: 50px;
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 
-.ticket-graph{
+
+
+
+
+/* .ticket-graph{
+
+} */
+
+.ticket-graph > .card-body{
   width:400px;
-  height: 300px;
+  padding: 1rem 2rem;
 }
 
 .side-menu{
@@ -122,17 +135,17 @@
 }
 
 
-.proj-opt{
+/* .proj-opt{
 
-}
+} */
 
 .todos_hero{
-  margin-top:-8rem;
+  margin-top:-200px;
   padding: .5rem;
 }
 
 .todo-card{
-  width: 300px;
+  width: 380px;
   min-height:200px;
   margin: .8rem;
 }
@@ -166,16 +179,16 @@
 }
 
 .dev-tickets{
-  margin-top:  -4rem;
+  margin-top:  -200px;
   padding: 0 4rem;
 }
 
 .dev-tickets-body{
-  height:500px
+  height:400px
 }
 
 .admin-dashboard{
-  margin-top: -4rem;
+  margin-top: -200px;
   padding: 0 4rem;
 }
 

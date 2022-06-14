@@ -8,7 +8,7 @@ import EditProject from '../components/EditProject'
 import {isArray} from '../utils/utils'
 import { Link } from 'react-router-dom';
 import {useGetDev} from '../contexts/UserContext';
-
+import TicketGraph from '../components/TicketGraph'
 
 const Projects = () => {
   
@@ -18,7 +18,6 @@ const Projects = () => {
   const [showProjects, setShowProjects] = useState([]) ;
   const [addProj, toggleAddProj ] = useState(false);
   const [projectInfo, setProjectInfo] = useState({})
-  const dev = useGetDev();
   const deleteDevProject = useDeleteDevProject();
 
 
@@ -57,7 +56,7 @@ const Projects = () => {
                 </div>   
               </div>           
             </div>
-            <div className={`card-body ${darkTheme?"d-theme":""}`}>
+            <div className={`card-body ${darkTheme?"d-theme":""} project-list-body `}>
               <div className={`table-responsive ${darkTheme?"d-theme":""}`}>
                 <table className={`table ${darkTheme?"d-theme":""}`}>
                   <thead>
@@ -110,20 +109,12 @@ const Projects = () => {
                 </table>
               </div>
             </div>
-            <div className={`card-footer`}>
-            </div>
+            {/* <div className={`card-footer`}>
+            </div> */}
           </section>
-          <section className={`tickets-graph-container ${darkTheme?"d-theme":""}`}>
-            <div className={`mt-3 ticket-graph card shadow ${darkTheme?"d-theme":""}`} >
-              <h5 className={`card-header ${darkTheme?"d-theme":""}`} >Tickets by</h5>
-            </div>
-            <div className={`mt-3 ticket-graph card shadow ${darkTheme?"d-theme":""}`} >
-              <h5 className={`card-header ${darkTheme?"d-theme":""}`} >Tickets by</h5>
-            </div>
-            <div className={`mt-3 ticket-graph card shadow ${darkTheme?"d-theme":""}`} >
-              <h5 className={`card-header ${darkTheme?"d-theme":""}`} >Tickets by</h5>
-            </div>
-          </section>
+          
+          <TicketGraph />
+
         </section>
     </div>
   )

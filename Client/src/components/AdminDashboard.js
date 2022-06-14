@@ -86,7 +86,6 @@ function AdminDashboard() {
                 } )
               }
             </CardBody>
-            <CardFooter></CardFooter>
           </Card>
         </Col>
         
@@ -222,7 +221,6 @@ function AdminDashboard() {
                   </table>
                 </div>
               </CardBody>
-              <CardFooter> </CardFooter>
           </Card>
         </Col>
       </Row>

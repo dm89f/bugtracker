@@ -59,8 +59,6 @@ function Tickets() {
             </Table>
           </div>
         </CardBody>
-        <CardFooter></CardFooter>
-
       </Card>
     </section>
   )

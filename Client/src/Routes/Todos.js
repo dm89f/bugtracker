@@ -31,9 +31,13 @@ function Todos() {
       </div>
       <div className='todos-contnr'>
         {
-          isArray(todos)&&todos.filter( (todo)=>{
+          isArray(todos)&&todos.sort(( a, b)=>{
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          })
+          .filter( (todo)=>{
             return todo.type !== 'finished'
-          } ).map( (todo)=>{
+          } )
+          .map( (todo)=>{
             return <Todo key={todo.id} todo={todo}/>
           
           } )
@@ -44,9 +48,13 @@ function Todos() {
       <p className='fs-3 ms-3 mb-0 mt-2'>Finished Todos</p>
       <div className='todos-contnr mt-2'>
         {
-          isArray(todos)&&todos.filter( (todo)=>{
+          isArray(todos)&&todos.sort(( a, b)=>{
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          })
+          .filter( (todo)=>{
             return todo.type === 'finished'
-          } ).map( (todo)=>{
+          } )
+          .map( (todo)=>{
             return <Todo key={todo.id} todo={todo}/>
           
           } )
