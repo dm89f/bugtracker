@@ -14,12 +14,16 @@
   --dark-brand-cntnr: #000420;
   --dark-card-cntnr:#08242d;
   --dark-card-header:#0b525b;
+  --dark-card-body:#08242d;
+  --dark-body-footer:#0b525b;
   --dark-sidebar-cntnr:#01093d;
   --dark-side-nav-link:#008b8b;
   --dark-secondary-link:#5e0652;
   --dark-text-color:#ced3f2;
   --dark-danger:#b02a37;
-  --dark-primary:#40269C;
+  --dark-primary:#3a015c;
+  --dark-table-header:#a323d1;
+  --dark-table-row:#f8edeb;
 }
 
 
@@ -235,6 +239,10 @@
 }
 
 
+/* row  */
+/* .row{
+  padding: 0rem 0rem;
+} */
 /* d-theme setting */
 
 /* //main */
@@ -315,6 +323,32 @@
 
 .theme-switch-cntnr.d-theme{
   background-color: darkblue;
+}
+
+
+
+/* //dark theme */
+.dark-card-header{
+  background-color: var(--dark-card-header);
+  color: var(--dark-table-row);
+}
+.dark-card-body{
+  background-color: var(--dark-card-body);
+  color: var(--dark-table-row);
+
+}
+.dark-card-footer{
+  background-color: var(--dark-body-footer);
+  color: var(--dark-table-row);
+
+}
+
+table.d-theme > thead>tr{
+  color:var(--dark-table-header);
+}
+
+table.d-theme > tbody > tr{
+  color:var(--dark-table-row);
 }
 
 

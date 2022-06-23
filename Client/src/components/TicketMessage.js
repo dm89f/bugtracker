@@ -3,6 +3,7 @@ import { Button } from 'reactstrap'
 import {MdOutlineSend} from 'react-icons/md'
 import { toast } from 'react-toastify';
 import { useGetDev} from '../contexts/UserContext'
+import { useTheme } from '../contexts/ThemeContext';
 
 // room =>
 // {
@@ -20,7 +21,7 @@ function TicketMessage( params ) {
   const [ messageSend, setMessageSend ] = useState("");
   const [ messageRec, setMessageRec ] = useState("hello");
   const dev = useGetDev();
-
+  const darkTheme = useTheme();
   socket.on( "receive_msg", (data)=>{
     console.log(data);
     setHistMsg( [ ...histMsg, { ...data.tickMsg } ] )
@@ -47,12 +48,12 @@ function TicketMessage( params ) {
 
   return (
     <div
-      className='shadow card mt-3'>
-        <div className='card-header'>
+      className='shadow card mt-3 border-0'>
+        <div className={`card-header ${darkTheme?"dark-card-header":""}`}>
           { ticket.title||"Select Ticket" }
         </div>
         <div 
-          className='card-body ticket-msg'
+          className={`card-body ticket-msg ${darkTheme?"dark-card-body":""}`}
         >
           {
             histMsg&&histMsg.map( (item)=>{

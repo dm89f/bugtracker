@@ -10,6 +10,7 @@ import {
 
 import {useAddNewDevProject} from '../contexts/ProjectsContext';
 import {addProjectTeam} from '../utils/devTeamUtils';
+import {useTheme} from '../contexts/ThemeContext'
 
 function AddProject({addProj, toggleAddProj}) {
    
@@ -18,7 +19,8 @@ function AddProject({addProj, toggleAddProj}) {
   const [projTitle, setProjTitle] = useState('');
   const [projDesc, setProjDesc] = useState('');
   const addNewDevProject = useAddNewDevProject();
-
+  const darkTheme = useTheme();
+  
   useEffect(()=>{
     
     if(addProj){

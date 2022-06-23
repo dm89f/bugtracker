@@ -3,9 +3,12 @@ import { Table, Card, CardBody, CardHeader, CardFooter } from 'reactstrap';
 import { getDevTickets } from '../utils/utils'
 import {Link} from 'react-router-dom'
 
+import {useTheme} from '../contexts/ThemeContext'
+
 function Tickets() {
 
   const [ devTickets, setDevTickets ] = useState([]);
+  const darkTheme = useTheme();
   useEffect(()=>{
 
     refTickets();
@@ -20,11 +23,12 @@ function Tickets() {
 
 
   return (
-    <section className='dev-tickets'  >
-      <Card>
-        <CardBody className='dev-tickets-body'>
+    <div   className='dev-tickets '  >
+      <Card className='border-0'>
+        <CardHeader className={`${darkTheme?"dark-card-header":""}`}> <h5>Tickets</h5> </CardHeader>
+        <CardBody className={`dev-tickets-body ${darkTheme?"dark-card-body":""}`}>
           <div className='table-responsive'>
-            <Table>
+            <Table className={`table ${darkTheme?"d-theme":""}`}>
               <thead>
                 <tr>
                   <th>Name</th>
@@ -57,10 +61,10 @@ function Tickets() {
                 }
               </tbody>
             </Table>
-          </div>
+          </div>``
         </CardBody>
       </Card>
-    </section>
+    </div>
   )
 }
 

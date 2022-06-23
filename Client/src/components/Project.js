@@ -20,6 +20,7 @@ import TicketMessage from './TicketMessage'
 import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 import {useGetDev}from '../contexts/UserContext'
+import { useTheme } from '../contexts/ThemeContext';
 const socket = io("http://localhost:3001");
 
 const Project = () => {
@@ -35,7 +36,7 @@ const Project = () => {
   const [ devTeamModal, setDevTeamModal ] = useState(false);
   const dev = useGetDev();
   const [ histMsg, setHistMsg ] = useState([])
-
+  const darkTheme = useTheme();
   //connect to room when selected ticked changes
   useEffect( ()=>{
 
@@ -56,8 +57,6 @@ const Project = () => {
     setHistMsg([]);
 
   },[ticket] )
-
-
 
 
   useEffect(()=>{
@@ -101,8 +100,8 @@ const Project = () => {
     <section className='container-fluid mt--5'>
       <div className='row'>
         <div className='col-xl-4 mt-3'>
-          <div className='shadow card'>
-            <div className='card-header'>
+          <div className='shadow card border-0 '>
+            <div className={`card-header ${darkTheme?"dark-card-header":""}`}>
               <div className='row align-items-center mb-2'>
                 <div className='col'>
                   <h5 className='mb-0' >Team</h5>
@@ -110,18 +109,21 @@ const Project = () => {
                 <div className='col'>
                   <Button 
                     onClick={()=>setDevTeamModal(true)}
-                    className=' btn-sm d-block ms-auto'
+                    className={`btn-sm btn-primary  d-block ms-auto ${darkTheme?"d-theme":""}`}
                   >Update Team</Button>
                 </div>
               </div>
+
+            </div>
+            <div className={`card-body ${darkTheme?"dark-card-body":""}`}>
               <div className='table-responsive'>
-                <table className='align-items-center table-flush table'>
+                <table className={`align-items-center table-flush table ${darkTheme?"d-theme":""}`} >
                   <thead className='thead-light'>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col">Email</th>
                       <th scope="col">Phone</th>
-                      <th scope="col"></th>
+                      {/* <th scope="col"></th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -135,34 +137,41 @@ const Project = () => {
                               </tr>
                             )                          
                           } 
-                       )
+                      )
 
                       }
 
                   </tbody>
                 </table>
               </div>
-              <div className='card-footer'>Footer</div>
+            </div>
+
+            <div className={`card-footer ${darkTheme?"dark-card-footer":""}`}>
+              
             </div>
 
           </div>
         </div>
         <div className='col-xl-8 mt-3'>
-          <div className='shadow card'>
-            <div className='card-header'>
+          <div className='shadow card border-0'>
+
+            <div className={`card-header ${darkTheme?"dark-card-header":""}`}>
               <div className='row align-items-center mb-2'>
                 <div className='col'>
                   <h5 className='mb-0' >Tickets</h5>
                 </div>
                 <div className='col'>
                   <Button 
-                    className=' btn-sm d-block ms-auto'
+                    className={`btn-sm btn-primary  d-block ms-auto ${darkTheme?"d-theme":""}`}
                     onClick={toggleAddTicket}
                   >Raise New Ticket</Button>
                 </div>
               </div>
+
+            </div>
+            <div className={`card-body ${darkTheme?"dark-card-body":""}`}>
               <div className='table-responsive'>
-                <table className='align-items-center table-flush table'>
+                <table className={`align-items-center table-flush table ${darkTheme?"d-theme":""}`}>
                   <thead className='thead-light'>
                     <tr>
                     <th scope="col">Ticket Title</th>
@@ -207,18 +216,20 @@ const Project = () => {
                   </tbody>
                 </table>
               </div>
-              <div className='card-footer'>Footer</div>
-            </div>
 
+            </div>
+            <div className={`card-footer ${darkTheme?"dark-card-footer":""}`}>
+                
+            </div>
           </div>
         </div>
       </div>
-      <div className='row mt-3 mx-1'>
-        <div className='shadow card'>
-          <div className='card-header'>
+      <div className=' mt-3 mx-1'>
+        <div className='shadow card border-0 '>
+          <div className={`card-header ${darkTheme?"dark-card-header":""}`}>
             <h6>Selected Ticket Info</h6>
           </div>
-          <div className='card-body'>
+          <div className={`card-body ${darkTheme?"dark-card-body":""}`}>
             <div className='row'>
             <div className='col-xl'>
               <TicketMessage 
@@ -229,12 +240,15 @@ const Project = () => {
               />
           </div>
           <div className='col-xl'>
-            <div className='row mt-3'>
-              <div className='shadow card'>
-                <div className='card-body'>
+            <div className='mt-3'>
+              <div className='shadow card border-0'>
+                <div className={`card-header ${darkTheme?"dark-card-header":""}`}>
+                  <h6>Selected Ticket Info</h6>
+                </div>
+                <div className={`card-body ${darkTheme?"dark-card-body":""}`}>
                   <div className='row'>
                     <div className='table-responsive'>
-                      <table className='table' >
+                      <table className={`table ${darkTheme?"d-theme":""}`} >
                         <thead>
                           <tr>
                             <th>Ticket Title</th>
@@ -272,7 +286,7 @@ const Project = () => {
                   </div>
                   <div className='row mt-3'>
                     <div className='table-responsive' >
-                      <table className='table'>
+                      <table className={`table ${darkTheme?"d-theme":""}`}>
                         <thead>
                           <tr>
                             <th>Ticket Priority</th>
@@ -290,6 +304,9 @@ const Project = () => {
                       </table>
                     </div>
                   </div>
+                </div>
+                <div className={`card-footer ${darkTheme?"dark-card-footer":""}`}>
+                  
                 </div>
               </div>
             </div>

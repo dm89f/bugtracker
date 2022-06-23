@@ -60,12 +60,12 @@ const Projects = () => {
               <div className={`table-responsive ${darkTheme?"d-theme":""}`}>
                 <table className={`table ${darkTheme?"d-theme":""}`}>
                   <thead>
-                  <tr>
-                    <th scope='col'>Project Title</th>
-                    <th scope='col'>Description</th>
-                    <th scope='col'>Contributed by</th>
-                    <th scope='col'></th>
-                  </tr>
+                    <tr>
+                      <th scope='col'>Project Title</th>
+                      <th scope='col'>Description</th>
+                      <th scope='col'>Contributed by</th>
+                      <th scope='col'></th>
+                    </tr>
                   </thead>
                   <tbody>
                       {

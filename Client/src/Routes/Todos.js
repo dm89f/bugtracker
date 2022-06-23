@@ -6,12 +6,14 @@ import { useGetTodos, useRefTodos, } from '../contexts/TodoContext'
 import Todo from '../components/Todo';
 import NewTodo from '../components/NewTodo';
 import {FaPlusCircle} from 'react-icons/fa';
+import { useTheme } from '../contexts/ThemeContext';
 
 function Todos() {
 
   const todos = useGetTodos();
   const [addTodo, setAddTodo] = useState(false);
-  
+  const darkTheme = useTheme();
+
   function toggleAddTodo(){
     setAddTodo( (prev)=>(!prev) );
   }
@@ -26,7 +28,13 @@ function Todos() {
       <div className='d-flex justify-content-between'>
         <p className='fs-3 ms-3 mb-0 mt-2'>Active Todos</p>
         <div >
-          <Button className="btn me-4" onClick={toggleAddTodo} color='success' > <FaPlusCircle/> new Todo </Button>
+          <Button 
+            className={`btn btn-primary me-4 ${darkTheme?"d-theme":""}`} 
+            onClick={toggleAddTodo}
+          > 
+            <FaPlusCircle/>{" "} 
+            new Todo 
+          </Button>
         </div>
       </div>
       <div className='todos-contnr'>

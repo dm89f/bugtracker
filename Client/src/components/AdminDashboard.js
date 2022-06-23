@@ -5,7 +5,7 @@ import {Row, Col, Card, CardBody, CardHeader, CardFooter, Button, Form} from 're
 import {getAllDevs, getDevInfoUtil, updateDevRole} from '../utils/adminUtils'
 import {FaEdit} from 'react-icons/fa'
 import {toast} from 'react-toastify'
-
+import {useTheme} from '../contexts/ThemeContext'
 import { useGetDev } from '../contexts/UserContext'
 
 
@@ -18,7 +18,7 @@ function AdminDashboard() {
   const [ devInfo, setDevInfo ] = useState({});
   const [ editRole, setEditRole ] = useState(false);
   const [role, setRole] = useState('');
-
+  const darkTheme = useTheme();
   useEffect( ()=>{
     getdevs();
   },[] );
@@ -68,9 +68,11 @@ function AdminDashboard() {
       <Row>
         
         <Col md={4} >
-          <Card>
-            <CardHeader> <span className='fs-4 fw-bolder'>Developers</span> </CardHeader>
-            <CardBody>
+          <Card className='border-0'>
+            <CardHeader className={`${darkTheme?"dark-card-header":""}`}>
+              <span className='fs-4 fw-bolder'>Developers</span> 
+            </CardHeader>
+            <CardBody className={`${darkTheme?"dark-card-body":""}`}>
               <Row className='border-bottom'>
                 <Col><span className='fs-5 fw-bolder'>Name</span></Col>
                 <Col><span className='fs-5 fw-bolder'>Role</span></Col>
@@ -90,12 +92,14 @@ function AdminDashboard() {
         </Col>
         
         <Col md={5} >
-          <Card>
-              <CardHeader><span className='fs-4 fw-bolder'>Developer Info</span></CardHeader>
-              <CardBody> 
+          <Card className='border-0'>
+              <CardHeader className={`${darkTheme?"dark-card-header":""}`}>
+                <span className='fs-4 fw-bolder'>Developer Info</span>
+              </CardHeader>
+              <CardBody className={`${darkTheme?"dark-card-body":""}`}> 
 
                 <div className='table-responsive'>
-                  <table className='table'>
+                  <table className={`table ${darkTheme?"d-theme":""}`}>
                     <tbody>
                       <tr> 
                         <th>

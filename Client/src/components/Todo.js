@@ -5,6 +5,7 @@ import { Button, Card , CardBody, CardFooter, CardHeader,Input, FormGroup, Label
 import {FaEdit} from 'react-icons/fa';
 // import {FiMoreVertical} from 'react-icons/fi';
 import {MdDelete} from 'react-icons/md';
+import { useTheme } from '../contexts/ThemeContext';
 
 
 function Todo({todo}) {
@@ -16,7 +17,7 @@ function Todo({todo}) {
   const editTodo = useEditTodo();
   const deleteTodo = useDeleteTodo();
   const [todoDate, setTodoDate] = useState("");
-
+  const darkTheme = useTheme();
 
 
   useEffect(()=>{
@@ -58,8 +59,8 @@ function Todo({todo}) {
 
 
   return (
-    <Card className='shadow todo-card'>
-      <CardHeader>
+    <Card className='shadow todo-card border-0'>
+      <CardHeader className={`${darkTheme?"dark-card-header":""}`}>
         {
           edit ? 
             <div>
@@ -100,7 +101,7 @@ function Todo({todo}) {
         }
         
       </CardHeader>
-      <CardBody>
+      <CardBody  className={`${darkTheme?"dark-card-body":""}`} >
        {
         edit ? 
           <div> 
