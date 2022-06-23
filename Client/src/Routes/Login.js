@@ -39,7 +39,13 @@ function Login() {
 
     }catch(error){
 
-      console.log(error);
+      if( error.response ){
+        
+        toast.error(error.response.data.error_msg)
+      
+      }else{
+        toast.error("Login error")
+      }
       setEmail("");
       setPassword("");
 
