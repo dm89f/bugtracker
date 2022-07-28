@@ -21,7 +21,10 @@ import io from 'socket.io-client';
 import { toast } from 'react-toastify';
 import {useGetDev}from '../contexts/UserContext'
 import { useTheme } from '../contexts/ThemeContext';
+import {useSetTabTitle} from '../contexts/RouteTitleContext'
+
 const socket = io("http://localhost:3001");
+
 
 const Project = () => {
 
@@ -37,6 +40,7 @@ const Project = () => {
   const dev = useGetDev();
   const [ histMsg, setHistMsg ] = useState([])
   const darkTheme = useTheme();
+  const setTabTitle = useSetTabTitle();
   //connect to room when selected ticked changes
   useEffect( ()=>{
 
@@ -82,7 +86,9 @@ const Project = () => {
       const data = await getProjectTeam(id);
       setProjectTeam({"project_team":data})
       const resp = await getDevProject(id);
-      setProject(resp)
+      setProject(resp);
+      setTabTitle(resp.title)
+      console.log(resp);
     }catch(error){
       console.log(error);
     }

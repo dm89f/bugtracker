@@ -12,11 +12,14 @@ import { AppError } from '../utils/handleError'
 import {getDevStats, updatePassword} from '../utils/utils'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-
+import {useSetTabTitle} from '../contexts/RouteTitleContext'
 
 const DevInfo =()=>{
   
-  
+  const setTabTitle = useSetTabTitle()
+  useEffect(()=>{
+    setTabTitle("Profile")
+  },[])
   const dev = useGetDev();
   useEffect(()=>{
   },[dev]);

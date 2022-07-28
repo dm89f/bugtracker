@@ -11,6 +11,7 @@ import {useGetDevLogout, useGetDev} from '../contexts/UserContext'
 import {useTheme, useToggleTheme} from '../contexts/ThemeContext'
 import {ProjectsContextProvider} from '../contexts/ProjectsContext'
 import {DevTeamContextProvider} from '../contexts/DevTeamCtx'
+import {useTabTitle} from '../contexts/RouteTitleContext'
 
 const Dashboard = () => {
 
@@ -23,18 +24,17 @@ const Dashboard = () => {
   const dev = useGetDev();
   const [ sideMenu, setSideMenu] = useState(false);
   const [ pageHeading, setPageHeading ] = useState('');
-  
+  const tabTitle =useTabTitle();
 
   const toggleSideMenu = ()=>{
     setSideMenu((prev)=>(!prev));
   }
 
   useEffect(()=>{
-    let curPath = '';
-    curPath = location.pathname.split('/');
-    setPageHeading(curPath[curPath.length-1].toUpperCase());
-    
-  },[location])
+
+    setPageHeading(tabTitle);
+    document.title = tabTitle;    
+  },[tabTitle]);
 
   useEffect(()=>{
 

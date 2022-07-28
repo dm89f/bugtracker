@@ -4,13 +4,14 @@ import { getDevTickets } from '../utils/utils'
 import {Link} from 'react-router-dom'
 
 import {useTheme} from '../contexts/ThemeContext'
-
+import {useSetTabTitle} from '../contexts/RouteTitleContext'
 function Tickets() {
 
   const [ devTickets, setDevTickets ] = useState([]);
   const darkTheme = useTheme();
+  const setTabTitle = useSetTabTitle();
   useEffect(()=>{
-
+    setTabTitle("Tickets")
     refTickets();
 
   },[])

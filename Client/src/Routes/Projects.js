@@ -9,6 +9,7 @@ import {isArray} from '../utils/utils'
 import { Link } from 'react-router-dom';
 import {useGetDev} from '../contexts/UserContext';
 import TicketGraph from '../components/TicketGraph'
+import {useSetTabTitle} from "../contexts/RouteTitleContext"
 
 const Projects = () => {
   
@@ -19,7 +20,11 @@ const Projects = () => {
   const [addProj, toggleAddProj ] = useState(false);
   const [projectInfo, setProjectInfo] = useState({})
   const deleteDevProject = useDeleteDevProject();
-
+  const setTabTitle = useSetTabTitle();
+  
+  useEffect(()=>{
+    setTabTitle("Projects")
+  },[])
 
   useEffect(()=>{
     if(isArray(projects)){

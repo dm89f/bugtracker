@@ -7,7 +7,7 @@ import {FaEdit} from 'react-icons/fa'
 import {toast} from 'react-toastify'
 import {useTheme} from '../contexts/ThemeContext'
 import { useGetDev } from '../contexts/UserContext'
-
+import {useSetTabTitle } from "../contexts/RouteTitleContext" 
 
 
 function AdminDashboard() {
@@ -19,8 +19,11 @@ function AdminDashboard() {
   const [ editRole, setEditRole ] = useState(false);
   const [role, setRole] = useState('');
   const darkTheme = useTheme();
+  const setTabTitle = useSetTabTitle();
+
   useEffect( ()=>{
     getdevs();
+    setTabTitle("Admin")
   },[] );
 
   

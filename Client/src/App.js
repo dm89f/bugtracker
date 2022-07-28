@@ -19,6 +19,7 @@ import TodoContextProvider from "./contexts/TodoContext";
 import Profile from "./components/Profile";
 import AdminRoute from "./Routes/AdminRoute";
 import {ToastContainer} from 'react-toastify'
+import {RouteTitleContextProvider} from './contexts/RouteTitleContext'
 
 function App() {
 
@@ -34,7 +35,11 @@ function App() {
             <Route path='register' element={ <Register/> }  />
           </Route>
           
-          <Route  path="/dev" element={<Dashboard />}>
+          <Route  path="/dev" element={
+            <RouteTitleContextProvider>
+              <Dashboard />
+            </RouteTitleContextProvider>
+          }>
             <Route index element={<Profile/>} />
             <Route path="dashboard" element={<Projects/>} />
             <Route path='tickets' element={<Tickets/>} />
