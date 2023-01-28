@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Play:wght@700&family=Playfair+Display:wght@500;600&display=swap');
 
 :root{
   
@@ -292,6 +293,18 @@
   outline: none;
 }
 
+.bug-icon-text{
+  font-family: 'Play', sans-serif;
+  color:#00b59b;
+}
+
+.devlpd-by{
+  position: absolute;
+  bottom: 5px;
+  font-family: 'Play', sans-serif;
+  color: #6f7298;
+}
+
 /* Projects */
 .btn-primary.d-theme{
   background-color: var(--dark-primary);
@@ -350,6 +363,8 @@ table.d-theme > thead>tr{
 table.d-theme > tbody > tr{
   color:var(--dark-table-row);
 }
+
+
 
 
 @media( max-width: 1200px ){

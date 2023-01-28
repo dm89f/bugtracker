@@ -22,13 +22,20 @@ function Sidebar({ authorization}) {
     <section >
       <Nav className={`side-nav shadow ${darkTheme?"d-theme":""}`} vertical>
 
-        <NavItem>
+        {/* <NavItem>
           <div className={`text-center mt-4 ${darkTheme?"d-theme":""}`}>
             <FaBug size={35}/>
           </div>
           <h3 className={`text-center ${darkTheme?"d-theme":""}`} >Bug Tracker</h3>
+        </NavItem> */}
+        <NavItem>
+          <div className='d-flex justify-content-center '>
+            <div>
+            <FaBug className='bug' size={'2em'} style={{color:'#ad0039'}}/> 
+            </div>
+            <h4 className='mx-2 bug-icon-text'  >Bug Tracker</h4>
+          </div>
         </NavItem>
-
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/dashboard" >
           <FiMonitor /> Dashboard
         </NavLink>
@@ -50,10 +57,11 @@ function Sidebar({ authorization}) {
         <NavLink className={`nav-link ${darkTheme?"d-theme":""}`} to="/dev/todos" >
           <BsUiChecks /> Todos  
         </NavLink>
-          <NavItem >
-            <Button onClick={reqDevLogout} color={'danger'} className={`ms-3 mt-3 ${darkTheme?"d-theme":""}`}>Logout</Button>
-          </NavItem>
+        <NavItem >
+          <Button onClick={reqDevLogout} color={'danger'} className={`ms-3 mt-3 ${darkTheme?"d-theme":""}`}>Logout</Button>
+        </NavItem>
         
+        <NavItem className='devlpd-by'>Built BY Dileep BC</NavItem>
       </Nav>
     </section>
   );

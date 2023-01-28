@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import {  Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { useNavigate, Link } from 'react-router-dom';
-import {  FaUser } from 'react-icons/fa'
+import {  FaBug, FaUser } from 'react-icons/fa'
 import { toast, ToastContainer } from 'react-toastify';
 
 const { useGetDev, useGetDevLogin } = require('../contexts/UserContext')
@@ -61,7 +61,7 @@ function Login() {
     <section>
         <div className={`auth-bg light  ${darkTheme?"d-theme":""}`} >
           <Form className={`auth-info card shadow ${darkTheme?"d-theme":""}`} onSubmit={handleSubmit} >
-            <h3 className='text-center' > <FaUser/> Login </h3>
+            <h2 className='text-center' > <FaUser/> Login </h2>
             <FormGroup>
               <Label htmlFor="email">
                 Email 
@@ -96,6 +96,12 @@ function Login() {
                   Dont Have an account Sign Up {"   "}
                   <Link className='text-primary' to={"/register"} >here</Link>
                 </p>
+            </div>
+            <div className='d-flex justify-content-center '>
+              <div>
+                <FaBug className='bug' size={'2em'} style={{color:'#ad0039'}}/> 
+              </div>
+              <h2 className='mx-2 bug-icon-text'>Bug Tracker</h2>
             </div>
           </Form>
         </div>

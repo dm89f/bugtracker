@@ -20,6 +20,7 @@ import Profile from "./components/Profile";
 import AdminRoute from "./Routes/AdminRoute";
 import {ToastContainer} from 'react-toastify'
 import {RouteTitleContextProvider} from './contexts/RouteTitleContext'
+import Home from "./components/Home";
 
 function App() {
 
@@ -28,12 +29,13 @@ function App() {
       <BrowserRouter>
         <ToastContainer/>
         <Routes>
-          <Route path='/'  >
-            <Route path='login' 
-              element={ <Login /> }
-            />
-            <Route path='register' element={ <Register/> }  />
+          <Route path="/" element={<Home/>}>
+
           </Route>
+          <Route path='/login' 
+            element={ <Login /> }
+          />
+          <Route path='/register' element={ <Register/> }  />
           
           <Route  path="/dev" element={
             <RouteTitleContextProvider>

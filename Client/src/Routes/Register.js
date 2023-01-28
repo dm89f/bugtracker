@@ -6,7 +6,8 @@ import {
   FormGroup, Row, Col
 } from 'reactstrap'
 import {
-  FaUserPlus
+  FaUserPlus,
+  FaBug
 } from 'react-icons/fa'
 import { useNavigate, Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css';
@@ -246,8 +247,15 @@ const Register = () => {
                 <Link className={`text-primary ${darkTheme?'d-theme':""}`} to={"/login"} >here</Link>
               </p>
           </div>
+          <div className='d-flex justify-content-center '>
+            <div>
+            <FaBug className='bug' size={'2em'} style={{color:'#ad0039'}}/> 
+            </div>
+              <h2 className='mx-2 bug-icon-text'>Bug Tracker</h2>
+        </div>
         </Form>
       </div>
+      
     </section>
   )
 }
